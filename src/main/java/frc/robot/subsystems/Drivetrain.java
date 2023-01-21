@@ -3,9 +3,11 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+
 import frc.robot.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -27,7 +29,7 @@ public class Drivetrain extends Subsystem610 {
 
         pidgey_m = new PigeonIMU(CAN_PIGEON);
 
-        odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0));
+        // odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), );
     }
 
 
