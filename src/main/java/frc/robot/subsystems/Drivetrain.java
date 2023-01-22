@@ -3,8 +3,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 
@@ -95,7 +94,8 @@ public class Drivetrain extends Subsystem610 {
     /**
      * Sets the right batman to a desired output percentage, overloaded
      * with desired control mode
-     * @param mode Mode of output metric
+     * 
+     * @param mode   Mode of output metric
      * @param output Desired output in percentage
      */
     public void setRight(ControlMode mode, double output) {
@@ -114,6 +114,7 @@ public class Drivetrain extends Subsystem610 {
         leftBatman_m.setSelectedSensorPosition(0);
         rightBatman_m.setSelectedSensorPosition(0);
     }
+
     /**
      * @return The number of meters the left batman has travelled
      */
@@ -121,7 +122,7 @@ public class Drivetrain extends Subsystem610 {
         return leftBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
     }
 
-     /**
+    /**
      * @return The number of meters the right batman has travelled
      */
 
@@ -129,7 +130,11 @@ public class Drivetrain extends Subsystem610 {
         return rightBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
     }
 
-
+    public DifferentialDriveWheelSpeeds getWheelSpeeds() {
+        return new DifferentialDriveWheelSpeeds(
+                leftBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10,
+                rightBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10);
+    }
 
     @Override
     public void initSendable(SendableBuilder builder) {

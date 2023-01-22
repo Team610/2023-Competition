@@ -1,6 +1,8 @@
 package frc.robot;
 
 public final class Constants {
+    public static final int PORT_DRIVER = 0;
+    public static final int PORT_OPERATOR = 1;
     
     public static class Drivetrain {
         public static final int CAN_LEFT_BATMAN = 11;
@@ -8,6 +10,11 @@ public final class Constants {
         public static final int CAN_RIGHT_BATMAN = 4;
         public static final int CAN_RIGHT_ROBIN = 5;
         public static final int CAN_PIGEON = 1;
+
+        public static final double UNIT_TICKS_PER_REV = 21580;
+        public static final double UNIT_DIST_PER_REV = 0.4930;
+
+        public static final double VAL_DEADBAND = 0.03;
     }
 
     public static class exampleSubsystem {
