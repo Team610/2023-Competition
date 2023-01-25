@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -18,6 +21,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
     private TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
+    private DifferentialDriveOdometry odometry_m;
     private PigeonIMU pidgey_m;
 
     private Drivetrain() {
@@ -28,6 +32,8 @@ public class Drivetrain extends Subsystem610 {
         rightRobin_m = MotorConfig.configDriveFollower(CAN_RIGHT_ROBIN, CAN_RIGHT_BATMAN, true, false);
 
         pidgey_m = new PigeonIMU(CAN_PIGEON);
+
+        odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
 
     public static Drivetrain getInstance() {
@@ -108,14 +114,6 @@ public class Drivetrain extends Subsystem610 {
     }
 
     /**
-     * Resets the drivetrain motor sensors to a value of 0
-     */
-    public void resetSensors() {
-        leftBatman_m.setSelectedSensorPosition(0);
-        rightBatman_m.setSelectedSensorPosition(0);
-    }
-
-    /**
      * @return The number of meters the left batman has travelled
      */
     public double getLeftMeters() {
@@ -134,6 +132,19 @@ public class Drivetrain extends Subsystem610 {
         return new DifferentialDriveWheelSpeeds(
                 leftBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10,
                 rightBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10);
+    }
+
+    /**
+     * Resets the drivetrain motor sensors to a value of 0
+     */
+    public void resetSensors() {
+        leftBatman_m.setSelectedSensorPosition(0);
+        rightBatman_m.setSelectedSensorPosition(0);
+    }
+
+    public void resetOdometry(Pose2d pose) {
+        resetSensors();
+        odometry_m.resetPosition(Rotation2d.fromDegrees(pidgey_m.getFusedHeading()), getLeftMeters(), getRightMeters(), pose);
     }
 
     @Override
