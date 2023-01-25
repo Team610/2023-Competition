@@ -147,16 +147,26 @@ public class Drivetrain extends Subsystem610 {
         odometry_m.resetPosition(Rotation2d.fromDegrees(pidgey_m.getFusedHeading()), getLeftMeters(), getRightMeters(), pose);
     }
 
+    /**
+     * @return The position of the robot on the field
+     */
+    public Pose2d getPose() {
+        return odometry_m.getPoseMeters();
+    }
+
+    @Override
+    public void periodic() {
+        odometry_m.update(Rotation2d.fromDegrees(pidgey_m.getFusedHeading()), getLeftMeters(), getRightMeters());
+    }
+
     @Override
     public void initSendable(SendableBuilder builder) {
         // TODO Auto-generated method stub
-
     }
 
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
         // TODO Auto-generated method stub
-
     }
 
 }
