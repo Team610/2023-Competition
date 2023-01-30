@@ -24,7 +24,7 @@ public class MotorConfig {
     }
 
     /**
-     * Creates a motor on default settings
+     * Creates a motor on default settings, helper method to set up the other motors
      * @param CAN_ID tells the code which CAN id it uses
      * @param FX indicates whether or not it is an FX
      * @return returns the talon created
@@ -37,6 +37,13 @@ public class MotorConfig {
         return talon;
     }
 
+    /**
+     * Creates a BATMAN motor on default settings
+     * @param CAN_ID tells the code which CAN id it uses
+     * @param inverted tells the code whether or not to invert the motor
+     * @param sensorPhase tells the code whether or not it is inverted
+     * @return returns the talon created
+     */
     public static TalonFX configDriveMotor(int CAN_ID, boolean inverted, boolean sensorPhase) {
         TalonFX talon = (TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
         talon.setInverted(inverted);
@@ -44,6 +51,15 @@ public class MotorConfig {
         talon.setNeutralMode(NeutralMode.Brake);
         return talon;
     }
+
+    /**
+     * Creates a BATMAN motor on default settings
+     * @param CAN_ID tells the code which CAN id it uses
+     * @param remoteId tells the code which motor to follow
+     * @param inverted tells the code whether or not to invert the motor
+     * @param sensorPhase tells the code whether or not it is inverted
+     * @return returns the talon created
+     */
 
     public static TalonFX configDriveFollower(int CAN_ID, int remoteId, boolean inverted, boolean sensorPhase) {
         TalonFX talon = MotorConfig.configDriveMotor(CAN_ID, inverted, sensorPhase);

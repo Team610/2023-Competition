@@ -62,7 +62,6 @@ public class Drivetrain extends Subsystem610 {
 
     /**
      * Sets the left batman to a desired output percentage
-     * 
      * @param output Desired left side output as a percentage
      */
     public void setLeft(double output) {
@@ -95,7 +94,7 @@ public class Drivetrain extends Subsystem610 {
      * Sets the right batman to a desired output percentage, overloaded
      * with desired control mode
      * 
-     * @param mode   Mode of output metric
+     * @param mode Mode of output metric
      * @param output Desired output in percentage
      */
     public void setRight(ControlMode mode, double output) {

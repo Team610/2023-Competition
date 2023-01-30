@@ -15,12 +15,22 @@ public class ComboButton {
     m_button = new JoystickButton(m_joystick, button);
     s_shift = new JoystickButton(m_joystick, BTN_START);
   }
-
+  
+  /**
+   * When the button is pressed, the command will be executed. If the button is held, the command will be executed repeatedly.
+   * @param command The command to execute
+   * @return
+   */
   public ComboButton whenPressed(final Command command) {
     (s_shift.negate().and(m_button)).onTrue(command);
     return this;
   }
 
+  /**
+   * When the button and the start button is pressed, the command will be executed. If the button is held, the command will be executed repeatedly.
+   * @param command The command to execute
+   * @return
+   */
   public ComboButton whenShiftPressed(final Command command) {
     (s_shift.and(m_button)).onTrue(command);
     return this;
