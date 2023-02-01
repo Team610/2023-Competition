@@ -46,7 +46,6 @@ public class Drivetrain extends Subsystem610 {
     /**
      * Sets all drivetrain motors to coast mode
      */
-
     public void setCoast() {
         leftBatman_m.setNeutralMode(NeutralMode.Coast);
         leftRobin_m.setNeutralMode(NeutralMode.Coast);
@@ -57,7 +56,6 @@ public class Drivetrain extends Subsystem610 {
     /**
      * Sets all drivetrain motors to brake mode
      */
-
     public void setBrake() {
 
         leftBatman_m.setNeutralMode(NeutralMode.Brake);
@@ -79,7 +77,6 @@ public class Drivetrain extends Subsystem610 {
      * 
      * @param output Desired right side output as a percentage
      */
-
     public void setRight(double output) {
         rightBatman_m.set(ControlMode.PercentOutput, output);
     }
@@ -91,7 +88,6 @@ public class Drivetrain extends Subsystem610 {
      * @param mode   Mode of output metric
      * @param output Desired output in percentage
      */
-
     public void setLeft(ControlMode mode, double output) {
         leftBatman_m.set(mode, output);
     }
@@ -107,6 +103,11 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m.set(mode, output);
     }
 
+    /**
+     * Sets the robot to drive based on a voltage number, uses setLeft and setRight methods to do it
+     * @param leftVolts the desired voltage for the left motor
+     * @param rightVolts the desired voltage for the right motor
+     */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
         setLeft(leftVolts / 12.0);
         setRight(rightVolts / 12.0);
@@ -122,11 +123,13 @@ public class Drivetrain extends Subsystem610 {
     /**
      * @return The number of meters the right batman has travelled
      */
-
     public double getRightMeters() {
         return rightBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
     }
 
+    /**
+     * @return The number of meters the robot has travelled
+     */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(
                 leftBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10,
@@ -141,6 +144,10 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m.setSelectedSensorPosition(0);
     }
 
+    /**
+     * Resets the odometry of the robot
+     * @param pose The pose to reset the odometry to
+     */
     public void resetOdometry(Pose2d pose) {
         resetSensors();
         odometry_m.resetPosition(Rotation2d.fromDegrees(pidgey_m.getFusedHeading()), getLeftMeters(), getRightMeters(), pose);

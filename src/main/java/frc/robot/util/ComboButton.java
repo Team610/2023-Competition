@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import static frc.robot.Constants.XBoxConstants.*;
 
 public class ComboButton {
-  private XboxController m_joystick;
-  private JoystickButton m_button;
-  private static JoystickButton s_shift;
+  private XboxController joystick_m;
+  private JoystickButton button_m;
+  private static JoystickButton shift_s;
 
   public ComboButton(XboxController controller, int button) {
-    m_joystick = controller;
-    m_button = new JoystickButton(m_joystick, button);
-    s_shift = new JoystickButton(m_joystick, BTN_START);
+    joystick_m = controller;
+    button_m = new JoystickButton(joystick_m, button);
+    shift_s = new JoystickButton(joystick_m, BTN_START);
   }
   
   /**
@@ -22,7 +22,7 @@ public class ComboButton {
    * @return
    */
   public ComboButton whenPressed(final Command command) {
-    (s_shift.negate().and(m_button)).onTrue(command);
+    (shift_s.negate().and(button_m)).onTrue(command);
     return this;
   }
 
@@ -32,7 +32,7 @@ public class ComboButton {
    * @return
    */
   public ComboButton whenShiftPressed(final Command command) {
-    (s_shift.and(m_button)).onTrue(command);
+    (shift_s.and(button_m)).onTrue(command);
     return this;
   }
 }

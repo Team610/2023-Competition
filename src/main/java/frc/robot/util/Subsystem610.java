@@ -59,5 +59,8 @@ public abstract class Subsystem610 implements Subsystem, Sendable {
         isManual_m = manual;
     }
 
+    /**
+     * @param tab the tab to add to the driver shuffleboard
+     */
     public abstract void addToDriveTab(ShuffleboardTab tab);
 }

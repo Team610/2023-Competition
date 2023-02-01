@@ -15,7 +15,7 @@ public class MotorConfig {
      * @param CAN_ID Tells the method which CAN Id the motor uses
      * @param FX A boolean that indicates whether it is an FX or not(meaning its an SRX)
      */
-    private MotorConfig(int CAN_ID, Boolean FX) {
+    private MotorConfig(int CAN_ID, boolean FX) {
         BaseTalon motor;
 
         motor = FX ? new TalonFX(CAN_ID) : new TalonSRX(CAN_ID);
@@ -53,14 +53,13 @@ public class MotorConfig {
     }
 
     /**
-     * Creates a BATMAN motor on default settings
+     * Creates a ROBIN motor on default settings
      * @param CAN_ID tells the code which CAN id it uses
      * @param remoteId tells the code which motor to follow
      * @param inverted tells the code whether or not to invert the motor
      * @param sensorPhase tells the code whether or not it is inverted
      * @return returns the talon created
      */
-
     public static TalonFX configDriveFollower(int CAN_ID, int remoteId, boolean inverted, boolean sensorPhase) {
         TalonFX talon = MotorConfig.configDriveMotor(CAN_ID, inverted, sensorPhase);
         talon.set(ControlMode.Follower, remoteId);
