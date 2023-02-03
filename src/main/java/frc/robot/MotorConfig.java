@@ -5,8 +5,8 @@ import static frc.robot.Constants.*;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class MotorConfig {
     
@@ -18,9 +18,9 @@ public class MotorConfig {
     private MotorConfig(int CAN_ID, boolean FX) {
         BaseTalon motor;
 
-        motor = FX ? new TalonFX(CAN_ID) : new TalonSRX(CAN_ID);
-        if(FX) ((TalonFX) motor).setNeutralMode(NeutralMode.Coast);
-        else ((TalonSRX) motor).setNeutralMode(NeutralMode.Coast);
+        motor = FX ? new WPI_TalonFX(CAN_ID) : new WPI_TalonSRX(CAN_ID);
+        if(FX) ((WPI_TalonFX) motor).setNeutralMode(NeutralMode.Coast);
+        else ((WPI_TalonSRX) motor).setNeutralMode(NeutralMode.Coast);
     }
 
     /**
@@ -31,7 +31,7 @@ public class MotorConfig {
      */
     public static BaseTalon createDefaultTalon(int CAN_ID, boolean FX) {
         BaseTalon talon;
-        talon = FX ? new TalonFX(CAN_ID) : new TalonSRX(CAN_ID);
+        talon = FX ? new WPI_TalonFX(CAN_ID) : new WPI_TalonSRX(CAN_ID);
 
         talon.configFactoryDefault();
         return talon;
@@ -44,8 +44,8 @@ public class MotorConfig {
      * @param sensorPhase tells the code whether or not it is inverted
      * @return returns the talon created
      */
-    public static TalonFX configDriveMotor(int CAN_ID, boolean inverted, boolean sensorPhase) {
-        TalonFX talon = (TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
+    public static WPI_TalonFX configDriveMotor(int CAN_ID, boolean inverted, boolean sensorPhase) {
+        WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
         talon.setInverted(inverted);
         talon.setSensorPhase(sensorPhase);
         talon.setNeutralMode(NeutralMode.Brake);
@@ -60,8 +60,8 @@ public class MotorConfig {
      * @param sensorPhase tells the code whether or not it is inverted
      * @return returns the talon created
      */
-    public static TalonFX configDriveFollower(int CAN_ID, int remoteId, boolean inverted, boolean sensorPhase) {
-        TalonFX talon = MotorConfig.configDriveMotor(CAN_ID, inverted, sensorPhase);
+    public static WPI_TalonFX configDriveFollower(int CAN_ID, int remoteId, boolean inverted, boolean sensorPhase) {
+        WPI_TalonFX talon = MotorConfig.configDriveMotor(CAN_ID, inverted, sensorPhase);
         talon.set(ControlMode.Follower, remoteId);
         return talon;
     }
