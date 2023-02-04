@@ -1,15 +1,15 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.math.MathUtil;
-// import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-
+/**
+ * Default teleop drive mode
+ */
 public class T_Drivetrain_ArcadeDrive extends CommandBase {
     private Drivetrain drivetrainInst_m;
 
@@ -21,9 +21,12 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
 
     @Override
     public void execute() {
+        //left joystick for up/down movement
         double y = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftY(), VAL_DEADBAND);
+        //right joystick for left/right movement
         double x = MathUtil.applyDeadband(RobotContainer.driver_s.getRightX(), VAL_DEADBAND);
-        boolean turbo = RobotContainer.driver_s.leftBumper().getAsBoolean();    
+        //left bumper for turbo mode when held
+        boolean turbo = RobotContainer.driver_s.leftBumper().getAsBoolean();
 
         y = y * y * y;
         x = x * x * x;

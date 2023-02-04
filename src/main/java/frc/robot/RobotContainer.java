@@ -8,18 +8,13 @@ import static frc.robot.Constants.*;
 
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.util.ComboButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-// import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   public static CommandXboxController driver_s;
   public static CommandXboxController operator_s;
-
-  // private static final Trigger driverShift_s = driver_s.start();
-  // private static final Trigger operatorShift_s = operator_s.start();
 
   public static Drivetrain drivetrainInst_s;
 
@@ -34,9 +29,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    new ComboButton(driver_s.x(), driver_s.start())
-      .whenShiftPressed(Commands.print("X button pressed with shift"))
-      .whenPressed(Commands.print("X button pressed")); 
+
   }
 
   public Command getAutonomousCommand() {
