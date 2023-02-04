@@ -23,7 +23,7 @@ public class RobotContainer {
     driver_s = new XboxController(PORT_DRIVER);
     operator_s = new XboxController(PORT_OPERATOR);
 
-    drivetrainInst_s= Drivetrain.getInstance();
+    drivetrainInst_s = Drivetrain.getInstance();
     drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
 
     configureBindings();
