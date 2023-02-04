@@ -26,7 +26,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    RobotContainer.drivetrainInst_s.setCoast();
+  }
 
   @Override
   public void disabledExit() {}
@@ -44,7 +46,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    RobotContainer.drivetrainInst_s.setBrake();
   }
 
   @Override
