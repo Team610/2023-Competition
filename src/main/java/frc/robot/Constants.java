@@ -11,7 +11,7 @@ public final class Constants {
         public static final int CAN_LEFT_ROBIN = 5;
         public static final int CAN_RIGHT_BATMAN = 3;
         public static final int CAN_RIGHT_ROBIN = 2;
-        public static final int CAN_PIGEON = 1;
+        public static final int CAN_PIDGEY = 1;
 
         public static final double UNIT_TICKS_PER_REV = 21580;
         public static final double UNIT_DIST_PER_REV = 0.4930;

@@ -31,7 +31,7 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m = MotorConfig.configDriveMotor(CAN_RIGHT_BATMAN, true, false);
         rightRobin_m = MotorConfig.configDriveFollower(CAN_RIGHT_ROBIN, CAN_RIGHT_BATMAN, true, false);
 
-        pidgey_m = new WPI_Pigeon2(CAN_PIGEON, CAN_BUS_NAME);
+        pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
