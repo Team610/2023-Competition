@@ -5,12 +5,9 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
-  private Command autonomousCommand_m;
-
   private RobotContainer robotContainer_m;
 
   @Override
@@ -29,7 +26,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    RobotContainer.drivetrainInst_s.setCoast();
+  }
 
   @Override
   public void disabledExit() {}
@@ -37,12 +36,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     RobotContainer.drivetrainInst_s.setBrake();
-    
-    autonomousCommand_m = robotContainer_m.getAutonomousCommand();
-
-    if (autonomousCommand_m != null) {
-      autonomousCommand_m.schedule();
-    }
   }
 
   @Override
@@ -53,10 +46,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    RobotContainer.drivetrainInst_s.setBrake();
-    if (autonomousCommand_m != null) {
-      autonomousCommand_m.cancel();
-    }
   }
 
   @Override

@@ -9,8 +9,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-
-import frc.robot.MotorConfig;
+import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
