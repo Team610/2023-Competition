@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class T_Drivetrain_ArcadeDrive extends CommandBase {
     private Drivetrain drivetrainInst_m;
-    private XboxController driver;
 
     public T_Drivetrain_ArcadeDrive() {
         drivetrainInst_m = Drivetrain.getInstance();
@@ -22,14 +21,14 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
 
     @Override
     public void execute() {
-        double y = MathUtil.applyDeadband(driver.getLeftY(), VAL_DEADBAND);
-        double x = MathUtil.applyDeadband(driver.getRightX(), VAL_DEADBAND);
+        double y = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftY(), VAL_DEADBAND);
+        double x = MathUtil.applyDeadband(RobotContainer.driver_s.getRightX(), VAL_DEADBAND);
         boolean turbo = RobotContainer.driver_s.getLeftBumper();
 
         y = y * y * y;
         x = x * x * x;
 
-        y *= turbo ? 0.75 : 0.6;
+        y *= turbo ? 1 : 0.8;
         x *= 0.7;
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;
