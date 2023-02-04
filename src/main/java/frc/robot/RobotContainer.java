@@ -8,20 +8,19 @@ import static frc.robot.Constants.*;
 
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Drivetrain;
-
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 public class RobotContainer {
-  public static XboxController driver_s;
-  public static XboxController operator_s;
+  public static CommandXboxController driver_s;
+  public static CommandXboxController operator_s;
 
   public static Drivetrain drivetrainInst_s;
 
   public RobotContainer() {
-    driver_s = new XboxController(PORT_DRIVER);
-    operator_s = new XboxController(PORT_OPERATOR);
+    driver_s = new CommandXboxController(PORT_DRIVER);
+    operator_s = new CommandXboxController(PORT_OPERATOR);
 
     drivetrainInst_s = Drivetrain.getInstance();
     drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
@@ -30,7 +29,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    
+
   }
 
   public Command getAutonomousCommand() {
