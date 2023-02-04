@@ -3,6 +3,8 @@ package frc.robot;
 public final class Constants {
     public static final int PORT_DRIVER = 0;
     public static final int PORT_OPERATOR = 1;
+    public static final String CAN_BUS_NAME = "Vulture";
+
     
     public static class Drivetrain {
         public static final int CAN_LEFT_BATMAN = 11;

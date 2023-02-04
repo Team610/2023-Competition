@@ -16,13 +16,13 @@ import frc.robot.util.Subsystem610;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.sensors.PigeonIMU;
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
     private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
     private DifferentialDriveOdometry odometry_m;
-    private PigeonIMU pidgey_m;
+    private WPI_Pigeon2 pidgey_m;
 
     private Drivetrain() {
         super("Drivetrain");
@@ -31,7 +31,7 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m = MotorConfig.configDriveMotor(CAN_RIGHT_BATMAN, true, false);
         rightRobin_m = MotorConfig.configDriveFollower(CAN_RIGHT_ROBIN, CAN_RIGHT_BATMAN, true, false);
 
-        pidgey_m = new PigeonIMU(CAN_PIGEON);
+        pidgey_m = new WPI_Pigeon2(CAN_PIGEON, CAN_BUS_NAME);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
@@ -150,7 +150,7 @@ public class Drivetrain extends Subsystem610 {
      */
     public void resetOdometry(Pose2d pose) {
         resetSensors();
-        odometry_m.resetPosition(Rotation2d.fromDegrees(pidgey_m.getFusedHeading()), getLeftMeters(), getRightMeters(), pose);
+        odometry_m.resetPosition(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters(), pose);
     }
 
     /**
@@ -162,7 +162,7 @@ public class Drivetrain extends Subsystem610 {
 
     @Override
     public void periodic() {
-        odometry_m.update(Rotation2d.fromDegrees(pidgey_m.getFusedHeading()), getLeftMeters(), getRightMeters());
+        odometry_m.update(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters());
     }
 
     @Override
