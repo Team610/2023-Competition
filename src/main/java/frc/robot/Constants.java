@@ -17,8 +17,4 @@ public final class Constants {
 
         public static final double VAL_DEADBAND = 0.03;
     }
-
-    public static class exampleSubsystem {
-        public static final int CAN_EXAMPLE_MOTOR = 0;
-    }
 }
