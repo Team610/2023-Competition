@@ -1,23 +1,33 @@
 package frc.robot.util;
 
-import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import static frc.robot.Constants.XBoxConstants.*;
+// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
+// import static frc.robot.Constants.XBoxConstants.*;
+
+/**
+ * A trigger that checks if both these buttons are pressed.
+ * Schedules 2 commands, one for with shift press and one for without shift press
+ */
 public class ComboButton {
-  private XboxController joystick_m;
-  private JoystickButton button_m;
-  private static JoystickButton shift_s;
+  private Trigger button_m;
+  private static Trigger shift_s;
 
-  public ComboButton(XboxController controller, int button) {
-    joystick_m = controller;
-    button_m = new JoystickButton(joystick_m, button);
-    shift_s = new JoystickButton(joystick_m, BTN_START);
+
+  /**
+   * Creates a new ComboButton
+   * @param button the button to be pressed
+   * @param shift the button to serve as the shift button
+   */
+  public ComboButton(Trigger button, Trigger shift) {
+    button_m = button;
+    shift_s = shift;
   }
   
   /**
-   * When the button is pressed, the command will be executed. If the button is held, the command will be executed repeatedly.
+   * When the button is pressed and shift is not, the command will be executed.
    * @param command The command to execute
    * @return
    */
@@ -27,7 +37,7 @@ public class ComboButton {
   }
 
   /**
-   * When the button and the start button is pressed, the command will be executed. If the button is held, the command will be executed repeatedly.
+   * When the button and the shift button is pressed, the command will be executed.
    * @param command The command to execute
    * @return
    */
