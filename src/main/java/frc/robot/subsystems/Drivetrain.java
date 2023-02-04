@@ -7,22 +7,38 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-
+import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.MotorConfig;
 import frc.robot.util.Subsystem610;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXSimCollection;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import com.ctre.phoenix.sensors.BasePigeonSimCollection;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+
+
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
     private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
+    
+    TalonFXSimCollection leftBatmanSim_m;
+    TalonFXSimCollection rightBatmanSim_m;
+    BasePigeonSimCollection pidgeySim_m;
+    DifferentialDrivetrainSim driveSim_m;
+
+    Field2d field_m = new Field2d();
+
 
     private Drivetrain() {
         super("Drivetrain");
@@ -31,10 +47,75 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m = MotorConfig.configDriveMotor(CAN_RIGHT_BATMAN, true, false);
         rightRobin_m = MotorConfig.configDriveFollower(CAN_RIGHT_ROBIN, CAN_RIGHT_BATMAN, true, false);
 
+        leftBatmanSim_m = leftBatman_m.getSimCollection();
+        rightBatmanSim_m = rightBatman_m.getSimCollection();
+
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
+        pidgeySim_m = pidgey_m.getSimCollection();
+        
+
+        driveSim_m = new DifferentialDrivetrainSim(
+            DCMotor.getFalcon500(2),  //2 Falcon 500s on each side of the drivetrain.
+            10.71,               //Standard AndyMark Gearing reduction.
+            2.1,                      //MOI of 2.1 kg m^2 (from CAD model).
+            26.5,                     // Mass of the robot.
+            0.0762,  // wheel radius in metres.
+            0.546,                    // distance between wheels is.
+            /*
+            * The standard deviations for measurement noise:
+            * x and y:          0.001 m
+            * heading:          0.001 rad
+            * l and r velocity: 0.1   m/s
+            * l and r position: 0.005 m
+            */
+            null //VecBuilder.fill(0.001, 0.001, 0.001, 0.1, 0.1, 0.005, 0.005) //Uncomment this line to add measurement noise.
+        );
+        
+        field_m = new Field2d();
+        SmartDashboard.putData("Field", field_m);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
+
+    @Override
+    public void periodic(){
+        // odometry_m.update(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters());
+        odometry_m.update(pidgey_m.getRotation2d(),
+                      nativeUnitsToDistanceMeters(leftBatman_m.getSelectedSensorPosition()),
+                      nativeUnitsToDistanceMeters(rightBatman_m.getSelectedSensorPosition()));
+        field_m.setRobotPose(odometry_m.getPoseMeters());
+    }
+
+    public void simulationPeriodic() {
+        /* Pass the robot battery voltage to the simulated Talon FXs */
+        leftBatmanSim_m.setBusVoltage(RobotController.getBatteryVoltage());
+        rightBatmanSim_m.setBusVoltage(RobotController.getBatteryVoltage());
+    
+
+        driveSim_m.setInputs(leftBatmanSim_m.getMotorOutputLeadVoltage(),
+                             -rightBatmanSim_m.getMotorOutputLeadVoltage());
+    
+        driveSim_m.update(0.02);
+
+    
+        leftBatmanSim_m.setIntegratedSensorRawPosition(
+                        distanceToNativeUnits(
+                            driveSim_m.getLeftPositionMeters()
+                        ));
+        leftBatmanSim_m.setIntegratedSensorVelocity(
+                        velocityToNativeUnits(
+                            driveSim_m.getLeftVelocityMetersPerSecond()
+                        ));
+        rightBatmanSim_m.setIntegratedSensorRawPosition(
+                        distanceToNativeUnits(
+                            -driveSim_m.getRightPositionMeters()
+                        ));
+        rightBatmanSim_m.setIntegratedSensorVelocity(
+                        velocityToNativeUnits(
+                            -driveSim_m.getRightVelocityMetersPerSecond()
+                        ));
+        pidgeySim_m.setRawHeading(driveSim_m.getHeading().getDegrees());
+      }
 
     public static Drivetrain getInstance() {
         if (driveInst_s == null) {
@@ -161,11 +242,6 @@ public class Drivetrain extends Subsystem610 {
     }
 
     @Override
-    public void periodic() {
-        odometry_m.update(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters());
-    }
-
-    @Override
     public void initSendable(SendableBuilder builder) {
         // TODO Auto-generated method stub
     }
@@ -175,4 +251,25 @@ public class Drivetrain extends Subsystem610 {
         // TODO Auto-generated method stub
     }
 
+    private int velocityToNativeUnits(double velocityMetersPerSecond){
+        double wheelRotationsPerSecond = velocityMetersPerSecond/(2 * Math.PI * 0.0762);
+        double motorRotationsPerSecond = wheelRotationsPerSecond * 1;
+        double motorRotationsPer100ms = motorRotationsPerSecond / 10;
+        int sensorCountsPer100ms = (int)(motorRotationsPer100ms * 2048);
+        return sensorCountsPer100ms;
+      }
+
+    private int distanceToNativeUnits(double positionMeters){
+        double wheelRotations = positionMeters/(2 * Math.PI * 0.0762);
+        double motorRotations = wheelRotations * 1;
+        int sensorCounts = (int)(motorRotations * 2048);
+        return sensorCounts;
+    }
+
+    private double nativeUnitsToDistanceMeters(double sensorCounts){
+        double motorRotations = (double)sensorCounts / 2048;
+        double wheelRotations = motorRotations *  (168/2500);
+        double positionMeters = wheelRotations * 2.12206;
+        return positionMeters;
+      }
 }

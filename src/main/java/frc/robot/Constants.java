@@ -13,8 +13,8 @@ public final class Constants {
         public static final int CAN_RIGHT_ROBIN = 2;
         public static final int CAN_PIDGEY = 1;
 
-        public static final double UNIT_TICKS_PER_REV = 21580;
-        public static final double UNIT_DIST_PER_REV = 0.4930;
+        public static final double UNIT_TICKS_PER_REV = 29500;
+        public static final double UNIT_DIST_PER_REV = 0.47878; // Metres
 
         public static final double VAL_DEADBAND = 0.03;
     }
