@@ -31,7 +31,7 @@ public class MotorConfig {
      */
     public static BaseTalon createDefaultTalon(int CAN_ID, boolean FX) {
         BaseTalon talon;
-        talon = FX ? new WPI_TalonFX(CAN_ID) : new WPI_TalonSRX(CAN_ID);
+        talon = FX ? new WPI_TalonFX(CAN_ID, CAN_BUS_NAME) : new WPI_TalonSRX(CAN_ID);
 
         talon.configFactoryDefault();
         return talon;
