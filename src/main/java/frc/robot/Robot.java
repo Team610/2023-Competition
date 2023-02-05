@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.A_Test_Path;
 
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer_m;
@@ -36,10 +37,13 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     RobotContainer.drivetrainInst_s.setBrake();
+    new A_Test_Path().schedule();
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    
+  }
 
   @Override
   public void autonomousExit() {}
