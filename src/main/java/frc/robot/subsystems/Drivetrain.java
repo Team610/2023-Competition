@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.simulation.DifferentialDrivetrainSim;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.MotorConfig;
+import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
