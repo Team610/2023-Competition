@@ -21,6 +21,14 @@ public final class Constants {
         public static final double VAL_DEADBAND = 0.03;
     }
 
+    public static class Simulation {
+        public static final double VAL_GEARING = 14.8809;
+        public static final double VAL_INERTIA = 2.1; //kgm^2
+        public static final double VAL_MASS = 56; //Kilograms
+        public static final double VAL_WHEEL_RAD = 0.0762; //Metres
+        public static final double VAL_TRACK_WIDTH = 0.59492; //Metres
+    }
+
     public static class XBoxConstants {
         public static final int BTN_X = 3;
         public static final int BTN_A = 1;

@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
+import static frc.robot.Constants.Simulation.*;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -56,11 +57,11 @@ public class Drivetrain extends Subsystem610 {
 
         driveSim_m = new DifferentialDrivetrainSim(
             DCMotor.getFalcon500(2),  //2 Falcon 500s on each side of the drivetrain.
-            10.71,               //Standard AndyMark Gearing reduction.
-            2.1,                      //MOI of 2.1 kg m^2 (from CAD model).
-            26.5,                     // Mass of the robot.
-            0.0762,  // wheel radius in metres.
-            0.546,                    // distance between wheels is.
+            VAL_GEARING,               //Standard AndyMark Gearing reduction.
+            VAL_INERTIA,                      //MOI of 2.1 kg m^2 (from CAD model).
+            VAL_MASS,                     // Mass of the robot.
+            VAL_WHEEL_RAD,  // wheel radius in metres.
+            VAL_TRACK_WIDTH,                    // distance between wheels is.
             /*
             * The standard deviations for measurement noise:
             * x and y:          0.001 m
