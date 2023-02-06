@@ -17,4 +17,8 @@ public final class Constants {
 
         public static final double VAL_DEADBAND = 0.03;
     }
+
+    public static class Roller{
+        public static final int CAN_ROLLER = 6; //TODO: Change to correct CAN ID
+    }
 }
