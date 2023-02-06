@@ -251,25 +251,25 @@ public class Drivetrain extends Subsystem610 {
         // TODO Auto-generated method stub
     }
 
-    private int velocityToNativeUnits(double velocityMetersPerSecond){
-        double wheelRotationsPerSecond = velocityMetersPerSecond/(2 * Math.PI * 0.0762);
-        double motorRotationsPerSecond = wheelRotationsPerSecond * 1;
-        double motorRotationsPer100ms = motorRotationsPerSecond / 10;
-        int sensorCountsPer100ms = (int)(motorRotationsPer100ms * 2048);
-        return sensorCountsPer100ms;
-      }
-
     private int distanceToNativeUnits(double positionMeters){
-        double wheelRotations = positionMeters/(2 * Math.PI * 0.0762);
+        double wheelRotations = positionMeters/(2 * Math.PI * 0.076);
         double motorRotations = wheelRotations * 1;
         int sensorCounts = (int)(motorRotations * 2048);
         return sensorCounts;
     }
 
+    private int velocityToNativeUnits(double velocityMetersPerSecond){
+        double wheelRotationsPerSecond = velocityMetersPerSecond/(2 * Math.PI *0.076);
+        double motorRotationsPerSecond = wheelRotationsPerSecond * 1;
+        double motorRotationsPer100ms = motorRotationsPerSecond / 10;
+        int sensorCountsPer100ms = (int)(motorRotationsPer100ms * 2048);
+        return sensorCountsPer100ms;
+    }
+
     private double nativeUnitsToDistanceMeters(double sensorCounts){
         double motorRotations = (double)sensorCounts / 2048;
-        double wheelRotations = motorRotations *  (168/2500);
-        double positionMeters = wheelRotations * 2.12206;
+        double wheelRotations = motorRotations / 1;
+        double positionMeters = wheelRotations * (2 * Math.PI * 0.076);
         return positionMeters;
-      }
+    }
 }
