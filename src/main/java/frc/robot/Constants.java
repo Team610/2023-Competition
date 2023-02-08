@@ -1,9 +1,11 @@
 package frc.robot;
 
 public final class Constants {
+    // Common
     public static final int PORT_DRIVER = 0;
     public static final int PORT_OPERATOR = 1;
     public static final String CAN_BUS_NAME = "Vulture";
+    public static final int VAL_CONFIG_TIMEOUT = 20;
     
     public static class Drivetrain {
         public static final int CAN_LEFT_BATMAN = 4;
@@ -16,5 +18,10 @@ public final class Constants {
         public static final double UNIT_DIST_PER_REV = 0.4930;
 
         public static final double VAL_DEADBAND = 0.03;
+    }
+
+    public static class Cascade {
+        public static final int CAN_CASCADE = 0;
+        public static final double VAL_CLIMB_SPEED = 0.5;
     }
 }
