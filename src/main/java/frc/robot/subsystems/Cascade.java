@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -13,10 +14,14 @@ import static frc.robot.Constants.Cascade.*;
 public class Cascade extends Subsystem610 {
     private static Cascade cascadeInst_s;
     private WPI_TalonFX cascadeFX_m;
+    private boolean isHomed_m;
+    private boolean safety_m;
 
     private Cascade() {
         super("Cascade");
-        cascadeFX_m = MotorConfig.configCascadeMotor(CAN_CASCADE);
+        isHomed_m = false;
+        safety_m = true;
+        cascadeFX_m = MotorConfig.configCascadeMotor(CAN_CASCADE, true, true);
     }
 
     public static Cascade getInstance(){
@@ -41,8 +46,42 @@ public class Cascade extends Subsystem610 {
         cascadeFX_m.set(ControlMode.PercentOutput, 0);
     }
 
-    public boolean isCascadeLimit() {
-        return cascadeFX_m.isRevLimitSwitchClosed() == 1;
+    /**
+     * Sets the cascadeFX encoder to zero position (ticks)
+     */
+    public void resetCascadeFX() {
+        cascadeFX_m.setSelectedSensorPosition(0);
+    }
+
+    public void homing() {
+        isHomed_m = false;
+        
+    }
+    
+    /**
+     * Returns the state of the cascade limit switch, and updates the state of the isHomed variable
+     */
+    public boolean cascadeLimitCheck() {
+        return isHomed_m = cascadeFX_m.isRevLimitSwitchClosed() == 1;
+    }
+
+    //? Accessors
+    /**
+     * Safety on means will NOT move
+     * @param safety The value to set safety to
+     */
+    public void setSafety(boolean safety) {
+        safety_m = safety;
+        SmartDashboard.putBoolean("Safety", safety_m);
+        SmartDashboard.setPersistent("Safety");
+    }
+
+    public boolean getSafety() {
+        return safety_m;
+    }
+
+    @Override
+    public void periodic() {
     }
 
     @Override
@@ -52,6 +91,4 @@ public class Cascade extends Subsystem610 {
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
     }
-
-    
 }

@@ -8,8 +8,8 @@ public final class Constants {
     public static final int VAL_CONFIG_TIMEOUT = 20;
     
     public static class Drivetrain {
-        public static final int CAN_LEFT_BATMAN = 4;
-        public static final int CAN_LEFT_ROBIN = 5;
+        public static final int CAN_LEFT_BATMAN = 5;
+        public static final int CAN_LEFT_ROBIN = 6;
         public static final int CAN_RIGHT_BATMAN = 3;
         public static final int CAN_RIGHT_ROBIN = 2;
         public static final int CAN_PIDGEY = 1;
@@ -21,7 +21,9 @@ public final class Constants {
     }
 
     public static class Cascade {
-        public static final int CAN_CASCADE = 0;
-        public static final double VAL_CLIMB_SPEED = 0.5;
+        public static final int CAN_CASCADE = 4;
+        public static final double VAL_MAX_SPEED = 0.5;
+
+        public static final double VAL_TICKS_PER_REV = 20176;
     }
 }

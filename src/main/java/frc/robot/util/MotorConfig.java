@@ -68,11 +68,12 @@ public class MotorConfig {
         return talon;
     }
 
-    public static WPI_TalonFX configCascadeMotor(int CAN_ID){
-        WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, false);
+    public static WPI_TalonFX configCascadeMotor(int CAN_ID, boolean inverted, boolean sensorPhase){
+        WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
         talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, VAL_CONFIG_TIMEOUT);
         talon.setNeutralMode(NeutralMode.Brake);
+        talon.setInverted(inverted);
+        talon.setSensorPhase(sensorPhase);
         return talon;
     }
-
 }

@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
@@ -13,6 +14,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robotContainer_m = new RobotContainer();
+    RobotContainer.cascadeInst_s.setSafety(true);
   }
 
   @Override
@@ -23,6 +25,7 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
     RobotContainer.drivetrainInst_s.setCoast();
+    RobotContainer.cascadeInst_s.setSafety(true);
   }
 
   @Override
@@ -45,6 +48,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     RobotContainer.drivetrainInst_s.setBrake();
+    RobotContainer.cascadeInst_s.setSafety(SmartDashboard.getBoolean("Safety", true));
   }
 
   @Override
