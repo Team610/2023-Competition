@@ -21,6 +21,8 @@ public final class Constants {
         public static final double VAL_KA = 0.20518;
         public static final double VAL_KP = 1.4449;
         public static final double VAL_KD = 0.0;
+        public static final double VAL_KI = 0.0;
+        
 
         public static final double VAL_TRACK_WIDTH = 0.59492;
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(VAL_TRACK_WIDTH);
@@ -39,6 +41,8 @@ public final class Constants {
         public static final double UNIT_DIST_PER_REV = 0.47878;
         
         public static final double VAL_DEADBAND = 0.03;
+
+        public static final double VAL_GRAVVECTOR[] = {0,0,1};
     }
 
     public static class Simulation {

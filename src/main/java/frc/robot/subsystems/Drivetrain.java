@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.Simulation.*;
+import edu.wpi.first.math.controller.PIDController;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -40,6 +41,7 @@ public class Drivetrain extends Subsystem610 {
 
     Field2d field_m = new Field2d();
 
+    private PIDController pid_m;
 
     private Drivetrain() {
         super("Drivetrain");
@@ -74,6 +76,9 @@ public class Drivetrain extends Subsystem610 {
         
         field_m = new Field2d();
         SmartDashboard.putData("Field", field_m);
+
+        pid_m  = new PIDController(VAL_KP, VAL_KI, VAL_KD);
+
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
@@ -125,9 +130,24 @@ public class Drivetrain extends Subsystem610 {
         return driveInst_s;
     }
 
+     /**
+     * Calibrate Pigeon 2.0 
+     */
+    public void calibratePidgey(){
+        pidgey_m.calibrate();
+    }
+
+    /**
+     * Get gravity vector
+     */
+    public double getRoll(){
+        return pidgey_m.getRoll();
+    }
+
     /**
      * Sets all drivetrain motors to coast mode
      */
+
     public void setCoast() {
         leftBatman_m.setNeutralMode(NeutralMode.Coast);
         leftRobin_m.setNeutralMode(NeutralMode.Coast);
@@ -184,7 +204,6 @@ public class Drivetrain extends Subsystem610 {
     public void setRight(ControlMode mode, double output) {
         rightBatman_m.set(mode, output);
     }
-
     /**
      * Sets the robot to drive based on a voltage number, uses setLeft and setRight methods to do it
      * @param leftVolts the desired voltage for the left motor
@@ -240,6 +259,12 @@ public class Drivetrain extends Subsystem610 {
      */
     public Pose2d getPose() {
         return odometry_m.getPoseMeters();
+    }
+
+    public void adjustPID(){
+        pid_m.setTolerance(1.4, 0);
+        driveInst_s.setLeft(-pid_m.calculate(pidgey_m.getYaw(), 0));
+        driveInst_s.setRight(pid_m.calculate(pidgey_m.getYaw(), 0));
     }
 
     @Override
