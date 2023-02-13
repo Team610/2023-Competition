@@ -13,7 +13,7 @@ public class T_Cascade_Home extends CommandBase {
 
     @Override
     public void initialize() {
-        cascadeInst_m.cascadeLimitCheck();
+        cascadeInst_m.cascadeBotLimitCheck();
         cascadeInst_m.spin(-0.2);
     }
 
@@ -26,7 +26,7 @@ public class T_Cascade_Home extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        return cascadeInst_m.cascadeLimitCheck();
+        return cascadeInst_m.cascadeBotLimitCheck();
     }
 
     @Override

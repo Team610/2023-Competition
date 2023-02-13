@@ -52,17 +52,16 @@ public class Cascade extends Subsystem610 {
     public void resetCascadeFX() {
         cascadeFX_m.setSelectedSensorPosition(0);
     }
-
-    public void homing() {
-        isHomed_m = false;
-        
-    }
     
     /**
      * Returns the state of the cascade limit switch, and updates the state of the isHomed variable
      */
-    public boolean cascadeLimitCheck() {
+    public boolean cascadeBotLimitCheck() {
         return isHomed_m = cascadeFX_m.isRevLimitSwitchClosed() == 1;
+    }
+
+    public boolean cascadeTopLimitCheck() {
+        return cascadeFX_m.getSelectedSensorPosition() == VAL_MAX_HEIGHT * UNITS_INCH_TO_TICKS;
     }
 
     //? Accessors
