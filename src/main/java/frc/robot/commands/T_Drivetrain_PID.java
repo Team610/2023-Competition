@@ -7,10 +7,10 @@ import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class A_Drivetrain_PID extends CommandBase {
+public class T_Drivetrain_PID extends CommandBase {
     private Drivetrain drivetrainInst_m;
 
-    public A_Drivetrain_PID() {
+    public T_Drivetrain_PID() {
         drivetrainInst_m = Drivetrain.getInstance();
         addRequirements(drivetrainInst_m);
     }

@@ -4,8 +4,11 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.XBoxConstants.*;
+import static frc.robot.Constants.CAN_BUS_NAME;
 import static frc.robot.Constants.*;
 
+import frc.robot.commands.T_Drivetrain_PID;
 import frc.robot.commands.A_Test_Path;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Drivetrain;
@@ -13,6 +16,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 public class RobotContainer {
   SendableChooser<Command> autoChooser_m = new SendableChooser<>();
@@ -35,7 +40,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-
+    driver_s.y().whileTrue((new T_Drivetrain_PID()));
   }
 
   public Command getAutonomousCommand() {

@@ -3,6 +3,8 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.Simulation.*;
+
+import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.PIDController;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -42,6 +44,7 @@ public class Drivetrain extends Subsystem610 {
     Field2d field_m = new Field2d();
 
     private PIDController pid_m;
+    private BangBangController bang_m;
 
     private Drivetrain() {
         super("Drivetrain");
@@ -78,7 +81,7 @@ public class Drivetrain extends Subsystem610 {
         SmartDashboard.putData("Field", field_m);
 
         pid_m  = new PIDController(VAL_KP, VAL_KI, VAL_KD);
-
+        bang_m = new BangBangController();
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
@@ -103,7 +106,7 @@ public class Drivetrain extends Subsystem610 {
     
         driveSim_m.update(0.02);
 
-    
+        
         leftBatmanSim_m.setIntegratedSensorRawPosition(
                         distanceToNativeUnits(
                             driveSim_m.getLeftPositionMeters()
@@ -262,9 +265,13 @@ public class Drivetrain extends Subsystem610 {
     }
 
     public void adjustPID(){
-        pid_m.setTolerance(1.4, 0);
-        driveInst_s.setLeft(-pid_m.calculate(pidgey_m.getYaw(), 0));
-        driveInst_s.setRight(pid_m.calculate(pidgey_m.getYaw(), 0));
+        if(pidgey_m.getYaw()>=0&&pidgey_m.getYaw()<=180){
+            driveInst_s.setLeft(-100);
+            driveInst_s.setRight(100);
+        }else{
+            driveInst_s.setLeft(100);
+            driveInst_s.setRight(-100);
+        }
     }
 
     @Override
