@@ -76,6 +76,11 @@ public final class Constants {
     }
 
     public static class StationPID{
-        public static final double VAL_MULTIPLIER = 100;
+        public static final double VAL_MULTIPLIER = 110;
+        public static final double VAL_BACKMULTIPLIER = 1.1;
+        public static final double VAL_TOLERANCE = 3;
+        public static final double VAL_PID_MULTIPLIER = 0.5;
+        
+
     }
 }

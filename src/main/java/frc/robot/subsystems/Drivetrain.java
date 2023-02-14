@@ -11,7 +11,7 @@ import static frc.robot.Constants.StationPID.*;
 
 import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.PIDController;
-
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -40,18 +40,17 @@ public class Drivetrain extends Subsystem610 {
     private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
+    private PIDController pid_m;
+    private BangBangController bang_m;
+    private SimpleMotorFeedforward feedforward_m;
     
     TalonFXSimCollection leftBatmanSim_m;
     TalonFXSimCollection rightBatmanSim_m;
     BasePigeonSimCollection pidgeySim_m;
     DifferentialDrivetrainSim driveSim_m;
-
     Field2d field_m = new Field2d();
 
-    private PIDController pid_m;
-    private BangBangController bang_m;
     private static double error_s;
-    private static double sinError_s;
     private static double drivePower_s;
 
     private Drivetrain() {
@@ -66,7 +65,7 @@ public class Drivetrain extends Subsystem610 {
 
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
         pidgeySim_m = pidgey_m.getSimCollection();
-        
+        feedforward_m = new SimpleMotorFeedforward(VAL_KS, VAL_KV, VAL_KA);
 
         driveSim_m = new DifferentialDrivetrainSim(
             DCMotor.getFalcon500(2),  //2 Falcon 500s on each side of the drivetrain.
@@ -310,8 +309,8 @@ public class Drivetrain extends Subsystem610 {
      * TODO look into feedback controller
      */
     public void adjustBangStation(){
-        driveInst_s.setLeft(bang_m.calculate(pidgey_m.getPitch(),0));
-        driveInst_s.setRight(bang_m.calculate(pidgey_m.getPitch(),0));
+        driveInst_s.setLeft(bang_m.calculate(pidgey_m.getPitch(),0)*12.0+0.9* 12.0 + 0.9 * feedforward_m.calculate(0));
+        driveInst_s.setRight(bang_m.calculate(pidgey_m.getPitch(),0)*12.0+0.9* 12.0 + 0.9 * feedforward_m.calculate(0));
     }
 
     /**

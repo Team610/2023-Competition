@@ -8,7 +8,7 @@ import static frc.robot.Constants.XBoxConstants.*;
 import static frc.robot.Constants.CAN_BUS_NAME;
 import static frc.robot.Constants.*;
 
-import frc.robot.commands.T_Drivetrain_PID;
+import frc.robot.commands.A_Drivetrain_PID;
 import frc.robot.commands.A_Test_Path;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Drivetrain;
@@ -40,7 +40,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver_s.y().whileTrue((new T_Drivetrain_PID()));
+    driver_s.y().whileTrue((new A_Drivetrain_PID()));
   }
 
   public Command getAutonomousCommand() {
