@@ -17,7 +17,7 @@ public class T_Drivetrain_PID extends CommandBase {
 
     @Override
     public void execute() {
-        drivetrainInst_m.adjustPID();
+        drivetrainInst_m.adjustStation();
     }
 
     @Override

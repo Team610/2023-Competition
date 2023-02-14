@@ -1,8 +1,13 @@
 package frc.robot.subsystems;
 
+import java.lang.Math;
+import java.security.DrbgParameters;
+
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.Simulation.*;
+import static frc.robot.Constants.StationPID.*;
+
 
 import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.PIDController;
@@ -45,6 +50,9 @@ public class Drivetrain extends Subsystem610 {
 
     private PIDController pid_m;
     private BangBangController bang_m;
+    private static double error_s;
+    private static double sinError_s;
+    private static double drivePower_s;
 
     private Drivetrain() {
         super("Drivetrain");
@@ -81,7 +89,7 @@ public class Drivetrain extends Subsystem610 {
         SmartDashboard.putData("Field", field_m);
 
         pid_m  = new PIDController(VAL_KP, VAL_KI, VAL_KD);
-        bang_m = new BangBangController();
+        bang_m = new BangBangController(VAL_TOLERANCE);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
@@ -141,10 +149,17 @@ public class Drivetrain extends Subsystem610 {
     }
 
     /**
-     * Get gravity vector
+     * Get roll on gyro
      */
     public double getRoll(){
         return pidgey_m.getRoll();
+    }
+
+    /**
+     * Get yaw on gyro
+     */
+    public double getYaw(){
+        return pidgey_m.getYaw();
     }
 
     /**
@@ -185,7 +200,6 @@ public class Drivetrain extends Subsystem610 {
     public void setRight(double output) {
         rightBatman_m.set(ControlMode.PercentOutput, output);
     }
-
     /**
      * Sets the left batman to a desired output percentage, overloaded
      * with desired control mode
@@ -264,14 +278,54 @@ public class Drivetrain extends Subsystem610 {
         return odometry_m.getPoseMeters();
     }
 
-    public void adjustPID(){
-        if(pidgey_m.getYaw()>=0&&pidgey_m.getYaw()<=180){
-            driveInst_s.setLeft(-100);
-            driveInst_s.setRight(100);
-        }else{
-            driveInst_s.setLeft(100);
-            driveInst_s.setRight(-100);
+    /**
+     * Method to adjust the speed and direction of the motor based on the speed of the charging station (Uses Sin)
+     * TODO check if motor force is fast enough to climb 
+    */
+
+    public void adjustStation(){
+        error_s = pidgey_m.getPitch();
+        drivePower_s = Math.sin(error_s) * VAL_MULTIPLIER;
+        // Max drive power is 56.28%
+        // Min drive power is 19.08%
+        driveInst_s.setLeft(drivePower_s);
+        driveInst_s.setRight(drivePower_s);
+    }
+
+    /**
+     * Method to adjust the speed and direction of the motor based on the speed of the charging station (Uses PID)
+     * TODO check logic, especially with signs
+    */
+
+    public void adjustPIDStation(){
+        pid_m.setTolerance(VAL_TOLERANCE,0);
+        driveInst_s.setLeft(pid_m.calculate(pidgey_m.getPitch(),0)*VAL_PID_MULTIPLIER);
+        driveInst_s.setRight(pid_m.calculate(pidgey_m.getPitch(),0)*VAL_PID_MULTIPLIER);
+    }
+
+    /**
+     * Method to adjust the speed and direction of the motor based on the speed of the charging station (Uses Bang Bang)
+     * ? Best Control method
+     * TODO check logic, especially with signs
+     * TODO look into feedback controller
+     */
+    public void adjustBangStation(){
+        driveInst_s.setLeft(bang_m.calculate(pidgey_m.getPitch(),0));
+        driveInst_s.setRight(bang_m.calculate(pidgey_m.getPitch(),0));
+    }
+
+    /**
+     * Method to help with debugging charging station
+     * Go forward 1 meter
+    */
+
+    public void driveStation(){
+        while(Math.min(getLeftMeters(), getRightMeters())<1){
+            driveInst_s.setLeft(70);
+            driveInst_s.setRight(70);
         }
+        driveInst_s.setLeft(0);
+        driveInst_s.setRight(0);
     }
 
     @Override

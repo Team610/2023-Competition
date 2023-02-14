@@ -75,7 +75,7 @@ public final class Constants {
         public static final int BTN_RIGHT_JOYSTICK = 10;
     }
 
-    public static class exampleSubsystem {
-        public static final int CAN_EXAMPLE_MOTOR = 0;
+    public static class StationPID{
+        public static final double VAL_MULTIPLIER = 100;
     }
 }
