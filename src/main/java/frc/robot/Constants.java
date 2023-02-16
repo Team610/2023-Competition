@@ -17,4 +17,10 @@ public final class Constants {
 
         public static final double VAL_DEADBAND = 0.03;
     }
+
+    public static class HamsterWheel {
+        public static final int CAN_SPIN_SRX = 0;  //TODO: Update with canid it is plugged into
+        public static final int CAN_INTAKE_SRX = 1;  //TODO: Update with canid it is plugged into
+        public static final double VAL_MAX_SPEED = 0.5;
+    }
 }
