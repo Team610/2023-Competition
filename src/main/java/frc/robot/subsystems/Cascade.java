@@ -21,7 +21,7 @@ public class Cascade extends Subsystem610 {
         super("Cascade");
         isHomed_m = false;
         safety_m = true;
-        cascadeFX_m = MotorConfig.configCascadeMotor(CAN_CASCADE, true, true);
+        cascadeFX_m = MotorConfig.configCascadeMotor(CAN_CASCADE, false, true);
     }
 
     public static Cascade getInstance(){
@@ -54,14 +54,17 @@ public class Cascade extends Subsystem610 {
     }
     
     /**
-     * Returns the state of the cascade limit switch, and updates the state of the isHomed variable
+     * @return If the bottom limit switch is pressed
      */
     public boolean cascadeBotLimitCheck() {
         return isHomed_m = cascadeFX_m.isRevLimitSwitchClosed() == 1;
     }
 
+    /**
+     * @return True when the ticks are greater than our soft limit
+     */
     public boolean cascadeTopLimitCheck() {
-        return cascadeFX_m.getSelectedSensorPosition() == VAL_MAX_HEIGHT * UNITS_INCH_TO_TICKS;
+        return cascadeFX_m.getSelectedSensorPosition() >= VAL_MAX_TICKS;
     }
 
     //? Accessors
