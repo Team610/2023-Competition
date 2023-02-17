@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import java.lang.Math;
 
-import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.Simulation.*;
 import static frc.robot.Constants.StationPID.*;
@@ -62,7 +61,7 @@ public class Drivetrain extends Subsystem610 {
         leftBatmanSim_m = leftBatman_m.getSimCollection();
         rightBatmanSim_m = rightBatman_m.getSimCollection();
 
-        pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
+        pidgey_m = new WPI_Pigeon2(CAN_PIDGEY);
         pidgeySim_m = pidgey_m.getSimCollection();
         feedforward_m = new SimpleMotorFeedforward(VAL_KS, VAL_KV, VAL_KA);
 
@@ -364,3 +363,5 @@ public class Drivetrain extends Subsystem610 {
         return positionMeters;
     }
 }
+
+

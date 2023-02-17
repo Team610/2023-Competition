@@ -1,56 +1,72 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "Pigeon 2[1]": {
+      "Pigeon 2[0]": {
         "header": {
           "open": true
         }
       },
-      "Talon FX[3]": {
+      "Talon FX[10]": {
         "header": {
           "open": true
         }
       },
-      "Talon FX[4]": {
+      "Talon FX[10]/Fwd Limit": {
         "header": {
           "open": true
         }
-      }
-    },
-    "RoboRIO": {
-      "window": {
-        "visible": true
+      },
+      "Talon FX[10]/Integrated Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[10]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[11]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[11]/Fwd Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[11]/Integrated Sensor": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[11]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[4]/Rev Limit": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[5]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[5]/Integrated Sensor": {
+        "header": {
+          "open": true
+        }
       }
     }
   },
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
-      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
-      "/LiveWindow/Ungrouped/Pigeon 2 [1]": "Gyro",
-      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
-      "/LiveWindow/Ungrouped/Talon FX [2]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [3]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [4]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Talon FX [5]": "Motor Controller",
-      "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d"
-    },
-    "windows": {
-      "/SmartDashboard/Auto Chooser": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Field": {
-        "Robot": {
-          "style": "Box/Image"
-        },
-        "window": {
-          "visible": true
-        }
-      }
     }
   }
 }

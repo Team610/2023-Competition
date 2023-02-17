@@ -4,15 +4,14 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class Constants {
     public static final int PORT_DRIVER = 0;
-    public static final int PORT_OPERATOR = 1;
-    public static final String CAN_BUS_NAME = "Vulture";
+    //public static final String CAN_BUS_NAME = "Vulture";
     
     public static class Drivetrain {
-        public static final int CAN_LEFT_BATMAN = 4;
-        public static final int CAN_LEFT_ROBIN = 5;
-        public static final int CAN_RIGHT_BATMAN = 3;
-        public static final int CAN_RIGHT_ROBIN = 2;
-        public static final int CAN_PIDGEY = 1;
+        public static final int CAN_LEFT_BATMAN = 11;
+        public static final int CAN_LEFT_ROBIN = 10;
+        public static final int CAN_RIGHT_BATMAN = 4;
+        public static final int CAN_RIGHT_ROBIN = 5;
+        public static final int CAN_PIDGEY = 0; 
 
         // units are in meters for Ramsete
 

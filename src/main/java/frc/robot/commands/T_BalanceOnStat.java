@@ -25,7 +25,7 @@ public class T_BalanceOnStat extends CommandBase {
      * Call to get current error and adjust speed accordingly
      */
     public void execute() {
-        error_s = drivetrainInst_m.getPitch();
+        error_s = drivetrainInst_m.getYaw();
         percPow_s = Math.sin(error_s) * VAL_MULTIPLIER;
         // Max drive power is 56.28%
         // Min drive power is 19.08%
