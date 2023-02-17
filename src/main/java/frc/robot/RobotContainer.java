@@ -6,33 +6,35 @@ package frc.robot;
 
 import static frc.robot.Constants.*;
 
-import frc.robot.commands.T_Drivetrain_ArcadeDrive;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.commands.T_Arm_Stop;
+import frc.robot.subsystems.Arm;
+import frc.robot.commands.T_Arm_Run;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+
 
 public class RobotContainer {
+  SendableChooser<Command> autoChooser_m = new SendableChooser<>();
   public static CommandXboxController driver_s;
-  public static CommandXboxController operator_s;
+  private static Arm armInst_m;
 
-  public static Drivetrain drivetrainInst_s;
 
   public RobotContainer() {
     driver_s = new CommandXboxController(PORT_DRIVER);
-    operator_s = new CommandXboxController(PORT_OPERATOR);
-
-    drivetrainInst_s = Drivetrain.getInstance();
-    drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
-
+    armInst_m = Arm.getInstance();
+    armInst_m.setDefaultCommand(new T_Arm_Stop());
     configureBindings();
   }
 
   private void configureBindings() {
-
+    driver_s.x().onTrue(new T_Arm_Run());
+    driver_s.y().onTrue(new T_Arm_Stop());
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return autoChooser_m.getSelected();
   }
 }
