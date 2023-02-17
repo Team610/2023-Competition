@@ -2,6 +2,10 @@ package frc.robot.subsystems;
 
 import java.lang.Math;
 
+import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.Logger;
+
+import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.Simulation.*;
 import static frc.robot.Constants.StationPID.*;
@@ -23,7 +27,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXSimCollection;
@@ -50,6 +53,8 @@ public class Drivetrain extends Subsystem610 {
 
     private static double error_s;
     private static double drivePower_s;
+
+    private static DrivetrainIOInputsAutoLogged inputs = new DrivetrainIOInputsAutoLogged();
 
     private Drivetrain() {
         super("Drivetrain");
@@ -98,6 +103,14 @@ public class Drivetrain extends Subsystem610 {
                       nativeUnitsToDistanceMeters(leftBatman_m.getSelectedSensorPosition()),
                       nativeUnitsToDistanceMeters(rightBatman_m.getSelectedSensorPosition()));
         field_m.setRobotPose(odometry_m.getPoseMeters());
+
+        inputs.distanceTraveled = getLeftMeters();
+        inputs.pitch = getPitch();
+        inputs.speed = getWheelSpeeds().leftMetersPerSecond;
+        inputs.yaw = getYaw();
+        Logger.getInstance().processInputs("Drivetrain", inputs);
+
+        Logger.getInstance().recordOutput("distance traveled", getLeftMeters());
     }
 
     public void simulationPeriodic() {
@@ -362,6 +375,14 @@ public class Drivetrain extends Subsystem610 {
         double positionMeters = wheelRotations * (2 * Math.PI * 0.076);
         return positionMeters;
     }
+}
+
+@AutoLog
+class DrivetrainIOInputs{
+    public double distanceTraveled = 0;
+    public double speed = 0;
+    public double pitch = 0;
+    public double yaw;
 }
 
 

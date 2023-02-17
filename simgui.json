@@ -68,5 +68,8 @@
       "/FMSInfo": "FMSInfo",
       "/SmartDashboard/Field": "Field2d"
     }
+  },
+  "NetworkTables View": {
+    "visible": false
   }
 }
