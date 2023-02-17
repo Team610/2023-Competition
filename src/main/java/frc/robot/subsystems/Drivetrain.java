@@ -66,7 +66,7 @@ public class Drivetrain extends Subsystem610 {
         leftBatmanSim_m = leftBatman_m.getSimCollection();
         rightBatmanSim_m = rightBatman_m.getSimCollection();
 
-        pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
+        pidgey_m = new WPI_Pigeon2(CAN_PIDGEY);
         pidgeySim_m = pidgey_m.getSimCollection();
         feedforward_m = new SimpleMotorFeedforward(VAL_KS, VAL_KV, VAL_KA);
 
