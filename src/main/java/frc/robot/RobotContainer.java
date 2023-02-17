@@ -4,31 +4,28 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.XBoxConstants.*;
-import static frc.robot.Constants.CAN_BUS_NAME;
 import static frc.robot.Constants.*;
 
-import frc.robot.commands.A_Drivetrain_PID;
-import frc.robot.commands.A_Test_Path;
+import frc.robot.commands.G_Drivetrain_Group;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
 public class RobotContainer {
-  SendableChooser<Command> autoChooser_m = new SendableChooser<>();
+  //SendableChooser<Command> autoChooser_m = new SendableChooser<>();
   public static CommandXboxController driver_s;
   public static CommandXboxController operator_s;
 
   public static Drivetrain drivetrainInst_s;
 
   public RobotContainer() {
-    autoChooser_m.setDefaultOption("Test Path", new A_Test_Path());
-    SmartDashboard.putData("Auto Chooser", autoChooser_m);
+    // autoChooser_m.setDefaultOption("DriveForward & Balance", new G_Drivetrain_Group());
+    // SmartDashboard.putData("Auto Chooser", autoChooser_m);
 
     driver_s = new CommandXboxController(PORT_DRIVER);
     operator_s = new CommandXboxController(PORT_OPERATOR);
@@ -40,10 +37,11 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver_s.y().whileTrue((new A_Drivetrain_PID()));
+    driver_s.y().onTrue(new G_Drivetrain_Group());
   }
 
   public Command getAutonomousCommand() {
-    return autoChooser_m.getSelected();
+    return Commands.print("No autonomous command configured");
+    //return autoChooser_m.getSelected();
   }
 }

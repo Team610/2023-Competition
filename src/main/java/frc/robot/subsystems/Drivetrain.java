@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import java.lang.Math;
-import java.security.DrbgParameters;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
@@ -145,6 +144,13 @@ public class Drivetrain extends Subsystem610 {
      */
     public void calibratePidgey(){
         pidgey_m.calibrate();
+    }
+
+    /**
+     * Get pitch on gyro
+     */
+    public double getPitch(){
+        return pidgey_m.getPitch();
     }
 
     /**
@@ -314,9 +320,8 @@ public class Drivetrain extends Subsystem610 {
     }
 
     /**
-     * Method to help with debugging charging station
-     * Go forward 1 meter
-    */
+     * method to drive to charging station
+     */
 
     public void driveStation(){
         while(Math.min(getLeftMeters(), getRightMeters())<1){
