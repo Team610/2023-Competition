@@ -1,17 +1,17 @@
 package frc.robot.commands;
 
 import static frc.robot.Constants.StationPID.*;
+
 import frc.robot.subsystems.Drivetrain;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class T_BalanceOnStat extends CommandBase {
+public class T_BalanceOnStatPID extends CommandBase {
 
     private Drivetrain drivetrainInst_m;
-    private static double error_s;
-    private static double percPow_s;
 
-    public T_BalanceOnStat() {
+    public T_BalanceOnStatPID() {
         drivetrainInst_m = Drivetrain.getInstance();
         addRequirements(drivetrainInst_m);
     }
@@ -25,12 +25,7 @@ public class T_BalanceOnStat extends CommandBase {
      * Call to get current error and adjust speed accordingly
      */
     public void execute() {
-        error_s = drivetrainInst_m.getPitch();
-        percPow_s = -Math.sin(Math.toRadians(error_s)) * VAL_MULTIPLIER;
-        // Max drive power is 56.28%
-        // Min drive power is 19.08%
-        drivetrainInst_m.setLeft(percPow_s);
-        drivetrainInst_m.setRight(percPow_s);
+        drivetrainInst_m.adjustPIDStation();
     }
 
     /**

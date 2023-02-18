@@ -4,6 +4,8 @@ import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 public final class Constants {
     public static final int PORT_DRIVER = 0;
+    public static final int PORT_OPERATOR = 1;
+    public static final int VAL_CONFIG_TIMEOUT = 20;
     //public static final String CAN_BUS_NAME = "Vulture";
     
     public static class Drivetrain {
@@ -11,7 +13,7 @@ public final class Constants {
         public static final int CAN_LEFT_ROBIN = 10;
         public static final int CAN_RIGHT_BATMAN = 4;
         public static final int CAN_RIGHT_ROBIN = 5;
-        public static final int CAN_PIDGEY = 0; 
+        public static final int CAN_PIDGEY = 0;
 
         // units are in meters for Ramsete
 
@@ -75,10 +77,13 @@ public final class Constants {
     }
 
     public static class StationPID{
-        public static final double VAL_MULTIPLIER = 110;
+        public static final double VAL_MULTIPLIER = 0.5;
         public static final double VAL_BACKMULTIPLIER = 1.1;
         public static final double VAL_TOLERANCE = 3;
         public static final double VAL_PID_MULTIPLIER = 0.5;
+        public static final double VAL_KP_PID = 1.4449;
+        public static final double VAL_KD_PID = 0.0;
+        public static final double VAL_KI_PID = 0.0;
         
 
     }

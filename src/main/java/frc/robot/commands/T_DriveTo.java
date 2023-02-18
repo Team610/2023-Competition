@@ -22,7 +22,7 @@ public class T_DriveTo extends CommandBase {
      */
     @Override
     public void initialize() {
-        initDis_s = drivetrainInst_m.getRightMeters();
+        initDis_s = drivetrainInst_m.getLeftMeters();
         drivetrainInst_m.setLeft(percPow_s);
         drivetrainInst_m.setRight(percPow_s);
     }

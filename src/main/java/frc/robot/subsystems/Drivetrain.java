@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.lang.Math;
 
-import org.littletonrobotics.junction.AutoLog;
-import org.littletonrobotics.junction.Logger;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
@@ -38,6 +36,8 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
+    private static double kPPID_s;
+    private static double kDPID_s;
     private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
@@ -54,7 +54,6 @@ public class Drivetrain extends Subsystem610 {
     private static double error_s;
     private static double drivePower_s;
 
-    private static DrivetrainIOInputsAutoLogged inputs = new DrivetrainIOInputsAutoLogged();
 
     private Drivetrain() {
         super("Drivetrain");
@@ -89,9 +88,10 @@ public class Drivetrain extends Subsystem610 {
         
         field_m = new Field2d();
         SmartDashboard.putData("Field", field_m);
+        kPPID_s = Math.sin(Math.toRadians(pidgey_m.getPitch()))*0.44;
+        kDPID_s = kPPID_s*0.1;
 
-        pid_m  = new PIDController(VAL_KP, VAL_KI, VAL_KD);
-        bang_m = new BangBangController(VAL_TOLERANCE);
+        pid_m  = new PIDController(kPPID_s, VAL_KI_PID, kDPID_s);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
@@ -104,13 +104,6 @@ public class Drivetrain extends Subsystem610 {
                       nativeUnitsToDistanceMeters(rightBatman_m.getSelectedSensorPosition()));
         field_m.setRobotPose(odometry_m.getPoseMeters());
 
-        inputs.distanceTraveled = getLeftMeters();
-        inputs.pitch = getPitch();
-        inputs.speed = getWheelSpeeds().leftMetersPerSecond;
-        inputs.yaw = getYaw();
-        Logger.getInstance().processInputs("Drivetrain", inputs);
-
-        Logger.getInstance().recordOutput("distance traveled", getLeftMeters());
     }
 
     public void simulationPeriodic() {
@@ -182,12 +175,12 @@ public class Drivetrain extends Subsystem610 {
     /**
      * Sets all drivetrain motors to coast mode
      */
-
+    //TODO temp change to Brake
     public void setCoast() {
-        leftBatman_m.setNeutralMode(NeutralMode.Coast);
-        leftRobin_m.setNeutralMode(NeutralMode.Coast);
-        rightBatman_m.setNeutralMode(NeutralMode.Coast);
-        rightRobin_m.setNeutralMode(NeutralMode.Coast);
+        leftBatman_m.setNeutralMode(NeutralMode.Brake);
+        leftRobin_m.setNeutralMode(NeutralMode.Brake);
+        rightBatman_m.setNeutralMode(NeutralMode.Brake);
+        rightRobin_m.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -316,8 +309,8 @@ public class Drivetrain extends Subsystem610 {
 
     public void adjustPIDStation(){
         pid_m.setTolerance(VAL_TOLERANCE,0);
-        driveInst_s.setLeft(pid_m.calculate(pidgey_m.getPitch(),0)*VAL_PID_MULTIPLIER);
-        driveInst_s.setRight(pid_m.calculate(pidgey_m.getPitch(),0)*VAL_PID_MULTIPLIER);
+        driveInst_s.setLeft(pid_m.calculate(pidgey_m.getPitch(),0));
+        driveInst_s.setRight(pid_m.calculate(pidgey_m.getPitch(),0));
     }
 
     /**
@@ -377,7 +370,6 @@ public class Drivetrain extends Subsystem610 {
     }
 }
 
-@AutoLog
 class DrivetrainIOInputs{
     public double distanceTraveled = 0;
     public double speed = 0;

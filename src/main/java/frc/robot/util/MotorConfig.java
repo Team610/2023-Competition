@@ -3,6 +3,8 @@ package frc.robot.util;
 import static frc.robot.Constants.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -19,8 +21,8 @@ public class MotorConfig {
         BaseTalon motor;
 
         motor = FX ? new WPI_TalonFX(CAN_ID) : new WPI_TalonSRX(CAN_ID);
-        if(FX) ((WPI_TalonFX) motor).setNeutralMode(NeutralMode.Coast);
-        else ((WPI_TalonSRX) motor).setNeutralMode(NeutralMode.Coast);
+        if(FX) ((WPI_TalonFX) motor).setNeutralMode(NeutralMode.Brake);
+        else ((WPI_TalonSRX) motor).setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -66,4 +68,12 @@ public class MotorConfig {
         return talon;
     }
 
+    public static WPI_TalonFX configCascadeMotor(int CAN_ID, boolean inverted, boolean sensorPhase){
+        WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
+        talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, VAL_CONFIG_TIMEOUT);
+        talon.setNeutralMode(NeutralMode.Brake);
+        talon.setInverted(inverted);
+        talon.setSensorPhase(sensorPhase);
+        return talon;
+    }
 }

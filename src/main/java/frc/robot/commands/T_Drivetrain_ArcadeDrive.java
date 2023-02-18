@@ -5,6 +5,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
@@ -19,6 +20,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
     }
     @Override
     public void execute() {
+        SmartDashboard.putNumber("Pitch Value", drivetrainInst_m.getPitch());   
         //left joystick for up/down movement
         double y = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftY(), VAL_DEADBAND);
         //right joystick for left/right movement
