@@ -26,7 +26,7 @@ public class T_BalanceOnStat extends CommandBase {
      */
     public void execute() {
         error_s = drivetrainInst_m.getPitch();
-        percPow_s = Math.sin(error_s) * VAL_MULTIPLIER;
+        percPow_s = -Math.sin(90-error_s) * VAL_MULTIPLIER;
         // Max drive power is 56.28%
         // Min drive power is 19.08%
         drivetrainInst_m.setLeft(percPow_s);
