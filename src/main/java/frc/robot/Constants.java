@@ -35,9 +35,12 @@ public final class Constants {
         public static final double VAL_KD = 15;
         public static final double VAL_KF = 0.3;
 
-        public static final double VAL_TICKS_PER_REV = 20176;
-        public static final double VAL_BELT_LENGTH = 9.42477796077;
-        public static final double UNITS_INCH_TO_TICKS = VAL_TICKS_PER_REV / VAL_BELT_LENGTH;
+        public static final double VAL_TICKS_PER_REV = 20480;
+        public static final double VAL_DIAM_PULLEY = 3.36; // average diameter of pulley, accounting for piling strings
+        public static final double VAL_DIST_PER_REV = VAL_DIAM_PULLEY * Math.PI;                    // in inches
+        public static final double UNITS_TICKS_TO_INCHES = VAL_DIST_PER_REV / VAL_TICKS_PER_REV;
+        public static final double UNITS_INCHES_TO_TICKS =  VAL_TICKS_PER_REV / VAL_DIST_PER_REV;
+
     }
 
     public static class TronWheel {
