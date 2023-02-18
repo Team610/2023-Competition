@@ -22,12 +22,10 @@ public class T_TronWheel_Rotate extends CommandBase {
 
     @Override
     public void execute() {
-        // if(!tronWheelInst_m.getManual()){
-            double speed = MathUtil.applyDeadband(RobotContainer.operator_s.getRightY() * VAL_MAX_SPEED, 0.02);
+        if(tronWheelInst_m.getManual()){
+            double speed = MathUtil.applyDeadband(-RobotContainer.operator_s.getRightY() * VAL_MAX_SPEED, VAL_DEADBAND);
             tronWheelInst_m.rotate(speed);
-        // } else {
-
-        // }
+        }
     }
 
     /**

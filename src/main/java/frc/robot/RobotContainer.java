@@ -9,6 +9,7 @@ import static frc.robot.Constants.*;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.commands.T_Intake_In;
 import frc.robot.commands.T_Intake_Out;
+import frc.robot.commands.T_Subsystem_Manual;
 import frc.robot.commands.T_TronWheel_Rotate;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
@@ -35,7 +36,7 @@ public class RobotContainer {
     intakeInst_s = Intake.getInstance();
 
     drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
-    // tronWheelInst_s.setDefaultCommand(new T_TronWheel_Rotate());
+    tronWheelInst_s.setDefaultCommand(new T_TronWheel_Rotate());
     // intakeInst_s.setDefaultCommand(new T_Intake_Intake());
 
     configureBindings();
@@ -44,7 +45,7 @@ public class RobotContainer {
   private void configureBindings() {
     operator_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
     operator_s.leftTrigger(0.5).toggleOnTrue(new T_Intake_Out());
-    // new ComboButton(operator_s.start(), operator_s.a());
+    new ComboButton(operator_s.start(), operator_s.a()).whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s));
   }
 
   public Command getAutonomousCommand() {
