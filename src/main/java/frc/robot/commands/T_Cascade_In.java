@@ -20,7 +20,7 @@ public class T_Cascade_In extends CommandBase{
     @Override
     public void execute() {
         if(!cascadeInst_m.getSafety()){
-            cascadeInst_m.spin(-VAL_MAX_SPEED);
+            cascadeInst_m.spin(-VAL_MAX_SPEED_IN);
         }
     }
 

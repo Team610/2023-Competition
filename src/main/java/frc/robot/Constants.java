@@ -22,7 +22,9 @@ public final class Constants {
 
     public static class Cascade {
         public static final int CAN_CASCADE = 4;
-        public static final double VAL_MAX_SPEED = 0.2;
+        public static final double VAL_MAX_SPEED_MANUAL = 0.5;
+        public static final double VAL_MAX_SPEED_OUT = 0.3;
+        public static final double VAL_MAX_SPEED_IN = 0.2;
 
         public static final int VAL_MAX_TICKS = 145000;  // Max ticks for cascade to extend
         public static final double VAL_CRUISE_VELO = 145000/15;  // Ticks per 100ms

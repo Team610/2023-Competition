@@ -21,7 +21,7 @@ public class T_Cascade_Move extends CommandBase {
     @Override
     public void execute() {
         if(!cascadeInst_m.getSafety()){
-            double speed = MathUtil.applyDeadband(RobotContainer.operator_s.getLeftY() * VAL_MAX_SPEED, 0.02);
+            double speed = MathUtil.applyDeadband(RobotContainer.operator_s.getLeftY() * VAL_MAX_SPEED_MANUAL, 0.02);
             cascadeInst_m.spin(speed);
         }
     }
