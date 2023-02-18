@@ -10,7 +10,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.TronWheel.*;
-import static frc.robot.Constants.Cascade.*;
 
 public class MotorConfig {
     
@@ -75,16 +74,16 @@ public class MotorConfig {
         talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, VAL_CONFIG_TIMEOUT);
         talon.configClearPositionOnLimitR(true, VAL_CONFIG_TIMEOUT);
         talon.configForwardSoftLimitEnable(true);
-        talon.configForwardSoftLimitThreshold(VAL_CASCADE_MAX_TICKS);
+        talon.configForwardSoftLimitThreshold(Cascade.VAL_MAX_TICKS);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.setInverted(inverted);
         talon.setSensorPhase(sensorPhase);
-        talon.configMotionAcceleration(VAL_CASCADE_MAX_ACCEL, VAL_CONFIG_TIMEOUT);
-        talon.configMotionCruiseVelocity(VAL_CASCADE_CRUISE_VELO, VAL_CONFIG_TIMEOUT);
-        talon.config_kF(0, VAL_CASCADE_KF);
-        talon.config_kP(0, VAL_CASCADE_KP);
-        talon.config_kI(0, VAL_CASCADE_KI);
-        talon.config_kD(0, VAL_CASCADE_KD);
+        talon.configMotionAcceleration(Cascade.VAL_MAX_ACCEL, VAL_CONFIG_TIMEOUT);
+        talon.configMotionCruiseVelocity(Cascade.VAL_CRUISE_VELO, VAL_CONFIG_TIMEOUT);
+        talon.config_kF(0, Cascade.VAL_KF);
+        talon.config_kP(0, Cascade.VAL_KP);
+        talon.config_kI(0, Cascade.VAL_KI);
+        talon.config_kD(0, Cascade.VAL_KD);
         return talon;
     }
 
@@ -98,12 +97,12 @@ public class MotorConfig {
         talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         talon.configClearPositionOnLimitR(true, VAL_CONFIG_TIMEOUT);
         talon.setSensorPhase(true);
-        talon.configMotionAcceleration(VAL_TRON_MAX_ACCEL, VAL_CONFIG_TIMEOUT);
-        talon.configMotionCruiseVelocity(VAL_TRON_CRUISE_VELO, VAL_CONFIG_TIMEOUT);
-        talon.config_kF(0, VAL_TRON_KF);
-        talon.config_kP(0, VAL_TRON_KP);
-        talon.config_kI(0, VAL_TRON_KI);
-        talon.config_kD(0, VAL_TRON_KD);
+        talon.configMotionAcceleration(TronWheel.VAL_MAX_ACCEL, VAL_CONFIG_TIMEOUT);
+        talon.configMotionCruiseVelocity(TronWheel.VAL_CRUISE_VELO, VAL_CONFIG_TIMEOUT);
+        talon.config_kF(0, TronWheel.VAL_KF);
+        talon.config_kP(0, TronWheel.VAL_KP);
+        talon.config_kI(0, TronWheel.VAL_KI);
+        talon.config_kD(0, TronWheel.VAL_KD);
         return talon;
     }
 

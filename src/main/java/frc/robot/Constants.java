@@ -22,16 +22,16 @@ public final class Constants {
 
     public static class Cascade {
         public static final int CAN_CASCADE = 4;
-        public static final double VAL_MAX_SPEED = 0.5;
+        public static final double VAL_MAX_SPEED = 0.2;
 
-        public static final int VAL_CASCADE_MAX_TICKS = 145000;  // Max ticks for cascade to extend
-        public static final double VAL_CASCADE_CRUISE_VELO = 145000/15;  // Ticks per 100ms
-        public static final double VAL_CASCADE_MAX_ACCEL = VAL_CASCADE_CRUISE_VELO*2;
+        public static final int VAL_MAX_TICKS = 145000;  // Max ticks for cascade to extend
+        public static final double VAL_CRUISE_VELO = 145000/15;  // Ticks per 100ms
+        public static final double VAL_MAX_ACCEL = VAL_CRUISE_VELO*2;
         
-        public static final double VAL_CASCADE_KP = 0.153;
-        public static final double VAL_CASCADE_KI = 0;
-        public static final double VAL_CASCADE_KD = 15;
-        public static final double VAL_CASCADE_KF = 0.3;
+        public static final double VAL_KP = 0.153;
+        public static final double VAL_KI = 0;
+        public static final double VAL_KD = 15;
+        public static final double VAL_KF = 0.3;
 
         public static final double VAL_TICKS_PER_REV = 20176;
         public static final double VAL_BELT_LENGTH = 9.42477796077;
@@ -51,14 +51,14 @@ public final class Constants {
 
         public static final double VAL_FWD_LIM = 30000;
         
-        public static final double VAL_TRON_MAX_ACCEL = 4480;
-        public static final double VAL_TRON_MAX_VELO = 2240;  // Ticks per 100 ms
-        public static final double VAL_TRON_CRUISE_VELO = VAL_TRON_MAX_VELO * 0.7;
+        public static final double VAL_MAX_ACCEL = 4480;
+        public static final double VAL_MAX_VELO = 2240;  // Ticks per 100 ms
+        public static final double VAL_CRUISE_VELO = VAL_MAX_VELO * 0.7;
 
-        public static final double VAL_TRON_KP = 0.4;
-        public static final double VAL_TRON_KI = 0;
-        public static final double VAL_TRON_KD = 0;
-        public static final double VAL_TRON_KF = 0.4;
+        public static final double VAL_KP = 0.4;
+        public static final double VAL_KI = 0;
+        public static final double VAL_KD = 0;
+        public static final double VAL_KF = 0.4;
     }
 
     public static class Intake {

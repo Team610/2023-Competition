@@ -8,6 +8,11 @@ import static frc.robot.Constants.Cascade.*;
 public class T_Cascade_Out extends CommandBase{
     private Cascade cascadeInst_m;
 
+    public T_Cascade_Out(){
+        cascadeInst_m = Cascade.getInstance();
+        addRequirements(cascadeInst_m);
+    }
+
     /**
      * Move cascade out at a fixed speed based on scoring enum
      */
