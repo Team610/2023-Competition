@@ -75,6 +75,24 @@ public class Cascade extends Subsystem610 {
         return safety_m;
     }
 
+    /**
+     * converts ticks of cascade encoder to inches travelled
+     * @param ticks: encoder ticks of distance travelled
+     * @return inches of distance travelled
+     */
+    public double ticksToIn(double ticks){
+        return ticks * UNITS_TICKS_TO_INCHES;
+    }
+
+    /**
+     * converts inches of cascade travel to encoder ticks
+     * @param in: inches of cascade travelled
+     * @return encoder ticks travelled
+     */
+    public double inToTicks(double in){
+        return in * UNITS_INCHES_TO_TICKS;
+    }
+
     @Override
     public void periodic() {
     }
