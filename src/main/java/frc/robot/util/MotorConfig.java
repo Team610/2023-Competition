@@ -101,11 +101,6 @@ public class MotorConfig {
         talon.configNominalOutputReverse(-0.3);
         talon.configPeakOutputForward(0.8);
         talon.configPeakOutputReverse(-0.8);
-        talon.configAllowableClosedloopError(0, 0);
-        talon.config_kP(0, 0.1);
-        talon.config_kI(0, 0.001);
-        talon.config_kD(0, 0);
-        talon.config_kF(0, 0);
         talon.configPeakCurrentLimit(27);
         talon.configContinuousCurrentLimit(10);
         talon.configPeakCurrentDuration(100);
