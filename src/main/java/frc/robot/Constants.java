@@ -7,8 +7,8 @@ public final class Constants {
     public static final int VAL_CONFIG_TIMEOUT = 10;
     
     public static class Drivetrain {
-        public static final int CAN_LEFT_BATMAN = 4;
-        public static final int CAN_LEFT_ROBIN = 5;
+        public static final int CAN_LEFT_BATMAN = 5;
+        public static final int CAN_LEFT_ROBIN = 6;
         public static final int CAN_RIGHT_BATMAN = 3;
         public static final int CAN_RIGHT_ROBIN = 2;
         public static final int CAN_PIDGEY = 1;
@@ -45,7 +45,8 @@ public final class Constants {
     public static class Intake {
         public static final int CAN_INTAKE_SRX = 3;
 
-        public static final double VAL_INTAKE_PERCENT = 1.0;
+        public static final double VAL_IN_PERCENT = 11/12.0;
+        public static final double VAL_OUT_PERCENT = -0.5;
         public static final double VAL_HOLD_PERCENT = 0.3;
 
         public static final double VAL_KP = 0;
