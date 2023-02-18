@@ -1,19 +1,18 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.HamsterWheel;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TronWheel;
 
 import static frc.robot.Constants.*;
-import static frc.robot.Constants.HamsterWheel.*;
+import static frc.robot.Constants.TronWheel.*;
 
-public class T_HamsterWheel_Intake extends CommandBase {
-    private HamsterWheel hamsterWheelInst_m;
+public class T_Intake_Outtake extends CommandBase {
+    private Intake intakeInst_m;
 
-    public T_HamsterWheel_Intake() {
-        hamsterWheelInst_m = HamsterWheel.getInstance();
-        addRequirements(hamsterWheelInst_m);
+    public T_Intake_Outtake() {
+        intakeInst_m = Intake.getInstance();
+        addRequirements(intakeInst_m);
     }
 
     @Override
@@ -22,7 +21,7 @@ public class T_HamsterWheel_Intake extends CommandBase {
 
     @Override
     public void execute() {
-        hamsterWheelInst_m.intake(1);
+        intakeInst_m.intake(-1);
     }
 
     /**
@@ -35,5 +34,6 @@ public class T_HamsterWheel_Intake extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        intakeInst_m.stopIntake();
     }
 }

@@ -7,7 +7,13 @@ package frc.robot;
 import static frc.robot.Constants.*;
 
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
+import frc.robot.commands.T_Intake_Intake;
+import frc.robot.commands.T_Intake_Outtake;
+import frc.robot.commands.T_TronWheel_Rotate;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TronWheel;
+import frc.robot.util.ComboButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -17,19 +23,28 @@ public class RobotContainer {
   public static CommandXboxController operator_s;
 
   public static Drivetrain drivetrainInst_s;
+  public static TronWheel tronWheelInst_s;
+  public static Intake intakeInst_s;
 
   public RobotContainer() {
     driver_s = new CommandXboxController(PORT_DRIVER);
     operator_s = new CommandXboxController(PORT_OPERATOR);
 
     drivetrainInst_s = Drivetrain.getInstance();
-    drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
+    tronWheelInst_s = TronWheel.getInstance();
+    intakeInst_s = Intake.getInstance();
+
+    // drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
+    // tronWheelInst_s.setDefaultCommand(new T_TronWheel_Rotate());
+    // intakeInst_s.setDefaultCommand(new T_Intake_Intake());
 
     configureBindings();
   }
 
   private void configureBindings() {
-
+    operator_s.rightBumper().toggleOnTrue(new T_Intake_Intake());
+    operator_s.leftBumper().toggleOnTrue(new T_Intake_Outtake());
+    // new ComboButton(operator_s.start(), operator_s.a());
   }
 
   public Command getAutonomousCommand() {
