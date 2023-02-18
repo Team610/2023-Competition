@@ -26,6 +26,7 @@ public final class Constants {
         public static final int VAL_MAX_TICKS = 145000;  // Max ticks for cascade to extend
         public static final double VAL_MAX_VELO = 145000/15;  // Ticks per 100ms
         public static final double VAL_MAX_ACCEL = VAL_MAX_VELO*2;
+        public static final int VAL_CONCERT_TICKS = 1450; //converts cascade ticks into percentage of extension
         
         public static final double VAL_KP = 0.153;
         public static final double VAL_KI = 0;

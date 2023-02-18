@@ -24,8 +24,8 @@ public class Cascade extends Subsystem610 {
         cascadeFX_m = MotorConfig.configCascadeMotor(CAN_CASCADE, false, true);
     }
 
-    public static Cascade getInstance(){
-        if(cascadeInst_s == null){
+    public static Cascade getInstance() {
+        if (cascadeInst_s == null) {
             cascadeInst_s = new Cascade();
         }
         return cascadeInst_s;
@@ -33,6 +33,7 @@ public class Cascade extends Subsystem610 {
 
     /**
      * Spins the Cascade motor, in terms of percentage.
+     * 
      * @param spin The desired speed percentage
      */
     public void spin(double spin) {
@@ -52,7 +53,7 @@ public class Cascade extends Subsystem610 {
     public void resetCascadeFX() {
         cascadeFX_m.setSelectedSensorPosition(0);
     }
-    
+
     /**
      * @return If the bottom limit switch is pressed
      */
@@ -67,9 +68,14 @@ public class Cascade extends Subsystem610 {
         return cascadeFX_m.getSelectedSensorPosition() >= VAL_MAX_TICKS;
     }
 
-    //? Accessors
+    public double cascadeTickPercent() {
+        return cascadeFX_m.getSelectedSensorPosition() / VAL_CONCERT_TICKS;
+    }
+
+    // ? Accessors
     /**
      * Safety on means will NOT move
+     * 
      * @param safety The value to set safety to
      */
     public void setSafety(boolean safety) {
