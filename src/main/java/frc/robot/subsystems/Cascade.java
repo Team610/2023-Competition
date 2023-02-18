@@ -36,21 +36,14 @@ public class Cascade extends Subsystem610 {
      * @param spin The desired speed percentage
      */
     public void spin(double spin) {
-        cascadeFX_m.set(ControlMode.PercentOutput, spin);
+        cascadeFX_m.set(ControlMode.MotionMagic, spin);
     }
 
     /**
      * Sets the cascade motor output to 0
      */
     public void stop() {
-        cascadeFX_m.set(ControlMode.PercentOutput, 0);
-    }
-
-    /**
-     * Sets the cascadeFX encoder to zero position (ticks)
-     */
-    public void resetCascadeFX() {
-        cascadeFX_m.setSelectedSensorPosition(0);
+        cascadeFX_m.set(ControlMode.MotionMagic, 0);
     }
     
     /**
@@ -64,7 +57,7 @@ public class Cascade extends Subsystem610 {
      * @return True when the ticks are greater than our soft limit
      */
     public boolean cascadeTopLimitCheck() {
-        return cascadeFX_m.getSelectedSensorPosition() >= VAL_MAX_TICKS;
+        return cascadeFX_m.getSelectedSensorPosition() >= VAL_CASCADE_MAX_TICKS;
     }
 
     //? Accessors
