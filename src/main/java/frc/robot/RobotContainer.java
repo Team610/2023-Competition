@@ -56,8 +56,9 @@ public class RobotContainer {
    */
   private void configureBindings() {
     operator_s.back().onTrue(new T_Cascade_Home());
-    operator_s.a().whileTrue(new T_Cascade_Out());
-    operator_s.b().whileTrue(new T_Cascade_In());
+    
+    operator_s.x().whileTrue(new T_Cascade_Out());
+    operator_s.y().whileTrue(new T_Cascade_In());
     
     operator_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
     operator_s.leftTrigger(0.5).toggleOnTrue(new T_Intake_Out());
