@@ -32,7 +32,6 @@ public class T_Cascade_Home extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         cascadeInst_m.stop();
-        cascadeInst_m.resetCascadeFX();
         cascadeInst_m.setSafety(false);
     }
 }

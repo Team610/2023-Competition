@@ -45,13 +45,6 @@ public class Cascade extends Subsystem610 {
     public void stop() {
         cascadeFX_m.set(ControlMode.PercentOutput, 0);
     }
-
-    /**
-     * Sets the cascadeFX encoder to zero position (ticks)
-     */
-    public void resetCascadeFX() {
-        cascadeFX_m.setSelectedSensorPosition(0);
-    }
     
     /**
      * @return If the bottom limit switch is pressed

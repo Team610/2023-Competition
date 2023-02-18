@@ -1,33 +1,35 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Cascade;
 
 import static frc.robot.Constants.Cascade.*;
 
-public class T_Cascade_Move extends CommandBase {
+public class T_Cascade_Out extends CommandBase{
     private Cascade cascadeInst_m;
 
-    public T_Cascade_Move() {
+    public T_Cascade_Out(){
         cascadeInst_m = Cascade.getInstance();
         addRequirements(cascadeInst_m);
     }
 
     /**
-     * Move cascade based on operator input
+     * Move cascade out at a fixed speed based on scoring enum
      */
     @Override
     public void execute() {
         if(!cascadeInst_m.getSafety()){
-            double speed = MathUtil.applyDeadband(RobotContainer.operator_s.getLeftY() * VAL_MAX_SPEED_MANUAL, 0.02);
-            cascadeInst_m.spin(speed);
+            cascadeInst_m.spin(VAL_MAX_SPEED_OUT);
         }
     }
 
     @Override
     public boolean isFinished(){
         return false;
+    }
+
+    @Override
+    public void end(boolean interrupted){
+        cascadeInst_m.spin(0);
     }
 }

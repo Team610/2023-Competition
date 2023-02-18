@@ -1,7 +1,5 @@
 package frc.robot.util;
 
-import static frc.robot.Constants.*;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
@@ -9,6 +7,9 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import static frc.robot.Constants.*;
+import static frc.robot.Constants.TronWheel.*;
 
 public class MotorConfig {
     
@@ -71,9 +72,61 @@ public class MotorConfig {
     public static WPI_TalonFX configCascadeMotor(int CAN_ID, boolean inverted, boolean sensorPhase){
         WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
         talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, VAL_CONFIG_TIMEOUT);
+        talon.configClearPositionOnLimitR(true, VAL_CONFIG_TIMEOUT);
+        talon.configForwardSoftLimitEnable(true);
+        talon.configForwardSoftLimitThreshold(Cascade.VAL_MAX_TICKS);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.setInverted(inverted);
         talon.setSensorPhase(sensorPhase);
+        talon.configMotionAcceleration(Cascade.VAL_MAX_ACCEL, VAL_CONFIG_TIMEOUT);
+        talon.configMotionCruiseVelocity(Cascade.VAL_CRUISE_VELO, VAL_CONFIG_TIMEOUT);
+        talon.config_kF(0, Cascade.VAL_KF);
+        talon.config_kP(0, Cascade.VAL_KP);
+        talon.config_kI(0, Cascade.VAL_KI);
+        talon.config_kD(0, Cascade.VAL_KD);
+        return talon;
+    }
+
+    public static WPI_TalonSRX configTronRotateMotor(int CAN_ID) {
+        WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
+        talon.setNeutralMode(NeutralMode.Brake);
+        talon.setInverted(true);
+        talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        talon.configClearPositionOnLimitF(false, VAL_CONFIG_TIMEOUT);
+        talon.configForwardSoftLimitThreshold(VAL_FWD_LIM);
+        talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
+        talon.configClearPositionOnLimitR(true, VAL_CONFIG_TIMEOUT);
+        talon.setSensorPhase(true);
+        talon.configMotionAcceleration(TronWheel.VAL_MAX_ACCEL, VAL_CONFIG_TIMEOUT);
+        talon.configMotionCruiseVelocity(TronWheel.VAL_CRUISE_VELO, VAL_CONFIG_TIMEOUT);
+        talon.config_kF(0, TronWheel.VAL_KF);
+        talon.config_kP(0, TronWheel.VAL_KP);
+        talon.config_kI(0, TronWheel.VAL_KI);
+        talon.config_kD(0, TronWheel.VAL_KD);
+        return talon;
+    }
+
+    public static WPI_TalonSRX configTronIntakeMotor(int CAN_ID) {
+        WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
+        talon.setNeutralMode(NeutralMode.Brake);
+        talon.setInverted(false);
+        talon.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed);
+        talon.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+        talon.configAllowableClosedloopError(0, VAL_CONFIG_TIMEOUT);
+        talon.configClosedLoopPeriod(0, 1);
+        talon.configNominalOutputForward(0.3);
+        talon.configNominalOutputReverse(-0.3);
+        talon.configPeakOutputForward(0.8);
+        talon.configPeakOutputReverse(-0.8);
+        talon.configAllowableClosedloopError(0, 0);
+        talon.config_kP(0, 0.1);
+        talon.config_kI(0, 0.001);
+        talon.config_kD(0, 0);
+        talon.config_kF(0, 0);
+        talon.configPeakCurrentLimit(27);
+        talon.configContinuousCurrentLimit(10);
+        talon.configPeakCurrentDuration(100);
+        talon.enableCurrentLimit(true);
         return talon;
     }
 }
