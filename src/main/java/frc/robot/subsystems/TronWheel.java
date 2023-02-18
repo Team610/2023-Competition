@@ -14,43 +14,25 @@ import frc.robot.util.Subsystem610;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.TronWheel.*;
 
-
-
-
-
-// TODO: add new command that rotates tronwheel to enum state based on cascade length
-
-// public void rotateMagic(double degrees){
-//     rotateSRX_m.set(TalonSRXControlMode.MotionMagic, degrees*VAL_DEGREES_TO_TICKS);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
 public class TronWheel extends Subsystem610 {
-    private static TronWheel tronWHeelInst_s;
+    private static TronWheel tronWheelInst_s;
     private WPI_TalonSRX rotateSRX_m;
     // private GenericEntry rotateManual_m;
+    private boolean isHomed_m;
+    private boolean safety_m;
 
     private TronWheel() {
         super("TronWheel");
+        isHomed_m = false;
+        safety_m = true;
         rotateSRX_m = MotorConfig.configTronRotateMotor(CAN_ROTATE_SRX);
     }
 
     public static TronWheel getInstance() {
-        if (tronWHeelInst_s == null) {
-            tronWHeelInst_s = new TronWheel();
+        if (tronWheelInst_s == null) {
+            tronWheelInst_s = new TronWheel();
         }
-        return tronWHeelInst_s;
+        return tronWheelInst_s;
     }
 
     /**
@@ -59,6 +41,14 @@ public class TronWheel extends Subsystem610 {
      */
     public void rotate(double spin) {
         rotateSRX_m.set(ControlMode.PercentOutput, spin);
+    }
+
+     /**
+     * Uses MotionMagic to spin the motor to a set position
+     * @param ticks The position to spin the motor to
+     */
+    public void rotateMagic(double ticks) {
+        rotateSRX_m.set(ControlMode.MotionMagic, ticks);
     }
 
     /**
@@ -71,15 +61,29 @@ public class TronWheel extends Subsystem610 {
     /**
      * @return If the reverse limit switch is pressed
      */
-    public boolean isRevLimit() {
-        return rotateSRX_m.isRevLimitSwitchClosed() == 1;
+    public boolean tronRevLimit() {
+        return isHomed_m = rotateSRX_m.isRevLimitSwitchClosed() == 1;
     }
 
     /**
      * @return If the forward limit switch is pressed
      */
-    public boolean isFwdLimit() {
+    public boolean tronFwdLimit() {
         return rotateSRX_m.isFwdLimitSwitchClosed() == 1;
+    }
+
+    /**
+     * Safety on means will NOT move
+     * @param safety The value to set safety to
+     */
+    public void setSafety(boolean safety) {
+        safety_m = safety;
+        SmartDashboard.putBoolean("Tron Safety", safety_m);
+        SmartDashboard.setPersistent("Tron Safety");
+    }
+
+    public boolean getSafety() {
+        return safety_m;
     }
 
     public void writeSmartDashboard() {

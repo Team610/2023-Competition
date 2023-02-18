@@ -32,7 +32,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         y = y * y * y;
         x = x * x * x;
 
-        y *= turbo ? 1 : 0.8;
+        y *= turbo ? VAL_TURBO_SPEED : VAL_MAX_SPEED;
         x *= 0.7;
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;

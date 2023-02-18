@@ -93,7 +93,6 @@ public class MotorConfig {
         talon.setInverted(true);
         talon.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         talon.configClearPositionOnLimitF(false, VAL_CONFIG_TIMEOUT);
-        talon.configForwardSoftLimitThreshold(VAL_FWD_LIM);
         talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen);
         talon.configClearPositionOnLimitR(true, VAL_CONFIG_TIMEOUT);
         talon.setSensorPhase(true);

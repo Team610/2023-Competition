@@ -40,4 +40,14 @@ public class ComboButton {
     (shift_s.and(button_m)).onTrue(command);
     return this;
   }
+
+  /**
+   * While the button is held and shift is not, the command will be executed
+   * @param command The command to execute
+   * @return
+   */
+  public ComboButton whilePressed(final Command command){
+    (shift_s.negate().and(button_m)).whileTrue(command);
+    return this;
+  }
 }

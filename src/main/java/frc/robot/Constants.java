@@ -18,6 +18,8 @@ public final class Constants {
         public static final double UNIT_TICKS_PER_REV = 21580;
         public static final double UNIT_DIST_PER_REV = 0.4930;
 
+        public static final double VAL_MAX_SPEED = 0.5;
+        public static final double VAL_TURBO_SPEED = 0.7;
     }
 
     public static class Cascade {
@@ -40,7 +42,22 @@ public final class Constants {
         public static final double VAL_DIST_PER_REV = VAL_DIAM_PULLEY * Math.PI;                    // in inches
         public static final double UNITS_TICKS_TO_INCHES = VAL_DIST_PER_REV / VAL_TICKS_PER_REV;
         public static final double UNITS_INCHES_TO_TICKS =  VAL_TICKS_PER_REV / VAL_DIST_PER_REV;
+        public static final double VAL_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
+        // Preset units are in ticks
+        public static final double VAL_MID_PRESET = CALC_TICKS(34)-5820;
+        public static final double VAL_HIGH_PRESET = CALC_TICKS(46);
+        public static final double VAL_RAMP_PRESET = 15000;
+        public static final double VAL_GROUND_PRESET = 0;
+
+        /**
+         * Converts vertical height to ticks for cascade arm to travel
+         * @param inches Vertical height to input
+         * @return
+         */
+        public static final double CALC_TICKS(double inches) {
+            return ((inches-0.5)/Math.sin(VAL_ANGLE)) * (UNITS_INCHES_TO_TICKS);
+        }
     }
 
     public static class TronWheel {
@@ -48,11 +65,6 @@ public final class Constants {
 
         public static final double VAL_MAX_SPEED = 0.5;
         public static final double VAL_DEGREES_TO_TICKS = 93.75;  // Ticks/degree
-
-        public static final double VAL_ANGLE_GROUND = 0;  //TODO: Update with actual value
-        public static final double VAL_ANGLE_RAMP = 1000;  //TODO: Update with actual value
-        public static final double VAL_ANGLE_TRANSPORT = 2000;  //TODO: Update with actual value
-        public static final double VAL_ANGLE_SCORE = 3000;  //TODO: Update with actual value
 
         public static final double VAL_FWD_LIM = 30000;
         
@@ -64,6 +76,9 @@ public final class Constants {
         public static final double VAL_KI = 0;
         public static final double VAL_KD = 0;
         public static final double VAL_KF = 0.4;
+
+        public static final double VAL_ANGLE_RAMP = 14500;  // ticks
+        public static final double VAL_ANGLE_SCORE = 0;  // ticks
     }
 
     public static class Intake {

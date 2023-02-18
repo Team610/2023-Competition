@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -16,11 +17,13 @@ public class Cascade extends Subsystem610 {
     private WPI_TalonFX cascadeFX_m;
     private boolean isHomed_m;
     private boolean safety_m;
+    private double targetPos_m;
 
     private Cascade() {
         super("Cascade");
         isHomed_m = false;
         safety_m = true;
+        targetPos_m = 0;
         cascadeFX_m = MotorConfig.configCascadeMotor(CAN_CASCADE, false, true);
     }
 
@@ -37,6 +40,13 @@ public class Cascade extends Subsystem610 {
      */
     public void spin(double spin) {
         cascadeFX_m.set(ControlMode.PercentOutput, spin);
+    }
+
+    /**
+     * Uses MotionMagic to spin the motor to a set position
+     */
+    public void spinMagic() {
+        cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
     }
 
     /**
@@ -67,12 +77,20 @@ public class Cascade extends Subsystem610 {
      */
     public void setSafety(boolean safety) {
         safety_m = safety;
-        SmartDashboard.putBoolean("Safety", safety_m);
-        SmartDashboard.setPersistent("Safety");
+        SmartDashboard.putBoolean("Cascade Safety", safety_m);
+        SmartDashboard.setPersistent("Cascade Safety");
     }
 
     public boolean getSafety() {
         return safety_m;
+    }
+
+    public double getTargetPos() {
+        return targetPos_m;
+    }
+
+    public void setTargetPos(double targetPos) {
+        targetPos_m = targetPos;
     }
 
     /**
@@ -95,13 +113,15 @@ public class Cascade extends Subsystem610 {
 
     @Override
     public void periodic() {
-    }
-
-    @Override
-    public void initSendable(SendableBuilder builder) {
+        SmartDashboard.putString("Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
+        SmartDashboard.putNumber("Preset", targetPos_m);
     }
 
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
     }
 }

@@ -15,19 +15,20 @@ public class T_Cascade_Move extends CommandBase {
         addRequirements(cascadeInst_m);
     }
 
-    /**
-     * Move cascade based on operator input
-     */
     @Override
     public void execute() {
         if(!cascadeInst_m.getSafety()){
-            double speed = MathUtil.applyDeadband(RobotContainer.operator_s.getLeftY() * VAL_MAX_SPEED_MANUAL, 0.02);
-            cascadeInst_m.spin(speed);
+            cascadeInst_m.spinMagic();
         }
     }
 
     @Override
     public boolean isFinished(){
         return false;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        cascadeInst_m.stop();
     }
 }

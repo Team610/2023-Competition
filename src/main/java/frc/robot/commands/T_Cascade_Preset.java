@@ -3,36 +3,33 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Cascade;
 
-public class T_Cascade_Home extends CommandBase {
-    private Cascade cascadeInst_m;
+import static frc.robot.Constants.Cascade.*;
 
-    public T_Cascade_Home() {
+public class T_Cascade_Preset extends CommandBase {
+    private Cascade cascadeInst_m;
+    private double target_m;
+    
+    public T_Cascade_Preset(double target) {
         cascadeInst_m = Cascade.getInstance();
+        target_m = target;
         addRequirements(cascadeInst_m);
     }
 
     @Override
     public void initialize() {
-        cascadeInst_m.cascadeBotLimitCheck();
-        cascadeInst_m.spin(-0.1);
     }
 
     @Override
     public void execute() {
+        cascadeInst_m.setTargetPos(target_m);
     }
 
-    /**
-     * Finish when the cascade limit switch is pressed
-     */
     @Override
     public boolean isFinished() {
-        return cascadeInst_m.cascadeBotLimitCheck();
+        return true;
     }
 
     @Override
     public void end(boolean interrupted) {
-        cascadeInst_m.stop();
-        cascadeInst_m.setTargetPos(0);
-        cascadeInst_m.setSafety(false);
     }
 }
