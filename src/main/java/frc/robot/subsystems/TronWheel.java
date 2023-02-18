@@ -39,7 +39,6 @@ import static frc.robot.Constants.TronWheel.*;
 public class TronWheel extends Subsystem610 {
     private static TronWheel tronWHeelInst_s;
     private WPI_TalonSRX rotateSRX_m;
-
     // private GenericEntry rotateManual_m;
 
     private TronWheel() {

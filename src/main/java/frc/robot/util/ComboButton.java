@@ -13,10 +13,10 @@ public class ComboButton {
 
   /**
    * Creates a new ComboButton
-   * @param button the button to be pressed
    * @param shift the button to serve as the shift button
+   * @param button the button to be pressed
    */
-  public ComboButton(Trigger button, Trigger shift) {
+  public ComboButton(Trigger shift, Trigger button) {
     button_m = button;
     shift_s = shift;
   }
