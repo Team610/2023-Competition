@@ -77,14 +77,14 @@ public final class Constants {
     }
 
     public static class StationPID{
-        public static final double VAL_MULTIPLIER = 0.5;
-        public static final double VAL_BACKMULTIPLIER = 1.1;
-        public static final double VAL_TOLERANCE = 3;
-        public static final double VAL_PID_MULTIPLIER = 0.5;
-        public static final double VAL_KP_PID = 1.4449;
-        public static final double VAL_KD_PID = 0.0;
-        public static final double VAL_KI_PID = 0.0;
-        
-
+        public static final double VAL_BAL_TOLERANCE = 3;
+        public static final double VAL_TILT_TOLERANCE = 0;
+        public static final double VAL_TEST_TILT_TOLERANCE = 0.05;
+        public static final double VAL_KP_BAL_PID = 0.01;
+        public static final double VAL_KI_BAL_PID = 0.00;
+        public static final double VAL_KD_BAL_PID = 0.00;
+        public static final double VAL_KP_TILT_PID = 0.1;
+        public static final double VAL_KI_TILT_PID = 0.01;
+        public static final double VAL_KD_TILT_PID = 0.00;
     }
 }

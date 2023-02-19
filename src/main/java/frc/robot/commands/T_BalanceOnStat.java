@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.StationPID.*;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -26,7 +25,8 @@ public class T_BalanceOnStat extends CommandBase {
      */
     public void execute() {
         error_s = drivetrainInst_m.getPitch();
-        percPow_s = -Math.sin(Math.toRadians(error_s)) * VAL_MULTIPLIER;
+        //! delete VAL_MULTIPLIER
+        percPow_s = -Math.sin(Math.toRadians(error_s)); //* VAL_MULTIPLIER;
         // Max drive power is 56.28%
         // Min drive power is 19.08%
         drivetrainInst_m.setLeft(percPow_s);

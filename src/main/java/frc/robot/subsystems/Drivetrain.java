@@ -1,17 +1,16 @@
 package frc.robot.subsystems;
 
 import java.lang.Math;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Iterator;
 
-
-import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.Simulation.*;
 import static frc.robot.Constants.StationPID.*;
 
 
-import edu.wpi.first.math.controller.BangBangController;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
@@ -36,24 +35,21 @@ import com.ctre.phoenix.sensors.WPI_Pigeon2;
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
-    private static double kPPID_s;
-    private static double kDPID_s;
     private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
-    private PIDController pid_m;
-    private BangBangController bang_m;
-    private SimpleMotorFeedforward feedforward_m;
+    private PIDController pidBal_m;
+    private PIDController pidTilt_m;
+
+    private static Deque<Double> dq_s;
+    private static double prevErr;
+    private static double curErr;
     
     TalonFXSimCollection leftBatmanSim_m;
     TalonFXSimCollection rightBatmanSim_m;
     BasePigeonSimCollection pidgeySim_m;
     DifferentialDrivetrainSim driveSim_m;
     Field2d field_m = new Field2d();
-
-    private static double error_s;
-    private static double drivePower_s;
-
 
     private Drivetrain() {
         super("Drivetrain");
@@ -62,12 +58,14 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m = MotorConfig.configDriveMotor(CAN_RIGHT_BATMAN, true, false);
         rightRobin_m = MotorConfig.configDriveFollower(CAN_RIGHT_ROBIN, CAN_RIGHT_BATMAN, true, false);
 
+        dq_s = new ArrayDeque<>();
+
         leftBatmanSim_m = leftBatman_m.getSimCollection();
         rightBatmanSim_m = rightBatman_m.getSimCollection();
 
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY);
         pidgeySim_m = pidgey_m.getSimCollection();
-        feedforward_m = new SimpleMotorFeedforward(VAL_KS, VAL_KV, VAL_KA);
+        //feedforward_m = new SimpleMotorFeedforward(VAL_KS, VAL_KV, VAL_KA);
 
         driveSim_m = new DifferentialDrivetrainSim(
             DCMotor.getFalcon500(2),  //2 Falcon 500s on each side of the drivetrain.
@@ -87,12 +85,14 @@ public class Drivetrain extends Subsystem610 {
         );
         
         field_m = new Field2d();
-        SmartDashboard.putData("Field", field_m);
-        kPPID_s = Math.sin(Math.toRadians(pidgey_m.getPitch()))*0.44;
-        kDPID_s = kPPID_s*0.1;
-
-        pid_m  = new PIDController(kPPID_s, VAL_KI_PID, kDPID_s);
-
+        // kPPID_s = Math.sin(Math.toRadians(pidgey_m.getPitch()))*0.65;
+        //System.out.print(kPPID_s);
+        // SmartDashboard.putNumber("kP", kPPID_s);
+        pidBal_m = new PIDController(VAL_KP_BAL_PID, VAL_KI_BAL_PID, VAL_KD_BAL_PID);
+        pidTilt_m = new PIDController(VAL_KP_TILT_PID, VAL_KI_TILT_PID, VAL_KD_TILT_PID);
+        SmartDashboard.putNumber("P", pidBal_m.getP());
+        SmartDashboard.putNumber("I", pidBal_m.getI());
+        SmartDashboard.putNumber("D", pidBal_m.getD());
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
     }
 
@@ -144,13 +144,6 @@ public class Drivetrain extends Subsystem610 {
         return driveInst_s;
     }
 
-     /**
-     * Calibrate Pigeon 2.0 
-     */
-    public void calibratePidgey(){
-        pidgey_m.calibrate();
-    }
-
     /**
      * Get pitch on gyro
      */
@@ -175,12 +168,11 @@ public class Drivetrain extends Subsystem610 {
     /**
      * Sets all drivetrain motors to coast mode
      */
-    //TODO temp change to Brake
     public void setCoast() {
-        leftBatman_m.setNeutralMode(NeutralMode.Brake);
-        leftRobin_m.setNeutralMode(NeutralMode.Brake);
-        rightBatman_m.setNeutralMode(NeutralMode.Brake);
-        rightRobin_m.setNeutralMode(NeutralMode.Brake);
+        leftBatman_m.setNeutralMode(NeutralMode.Coast);
+        leftRobin_m.setNeutralMode(NeutralMode.Coast);
+        rightBatman_m.setNeutralMode(NeutralMode.Coast);
+        rightRobin_m.setNeutralMode(NeutralMode.Coast);
     }
 
     /**
@@ -289,52 +281,48 @@ public class Drivetrain extends Subsystem610 {
     }
 
     /**
-     * Method to adjust the speed and direction of the motor based on the speed of the charging station (Uses Sin)
-     * TODO check if motor force is fast enough to climb 
-    */
-
-    public void adjustStation(){
-        error_s = pidgey_m.getPitch();
-        drivePower_s = Math.sin(error_s) * VAL_MULTIPLIER;
-        // Max drive power is 56.28%
-        // Min drive power is 19.08%
-        driveInst_s.setLeft(drivePower_s);
-        driveInst_s.setRight(drivePower_s);
-    }
-
-    /**
      * Method to adjust the speed and direction of the motor based on the speed of the charging station (Uses PID)
-     * TODO check logic, especially with signs
     */
 
     public void adjustPIDStation(){
-        pid_m.setTolerance(VAL_TOLERANCE,0);
-        driveInst_s.setLeft(pid_m.calculate(pidgey_m.getPitch(),0));
-        driveInst_s.setRight(pid_m.calculate(pidgey_m.getPitch(),0));
+        SmartDashboard.putNumber("Motor Speed", pidBal_m.calculate(pidgey_m.getPitch(),0));   
+        pidBal_m.setTolerance(VAL_BAL_TOLERANCE,0);
+        driveInst_s.setLeft(pidBal_m.calculate(pidgey_m.getPitch(),0));
+        driveInst_s.setRight(pidBal_m.calculate(pidgey_m.getPitch(),0));
     }
 
     /**
-     * Method to adjust the speed and direction of the motor based on the speed of the charging station (Uses Bang Bang)
-     * ? Best Control method
-     * TODO check logic, especially with signs
-     * TODO look into feedback controller
-     */
-    public void adjustBangStation(){
-        driveInst_s.setLeft(bang_m.calculate(pidgey_m.getPitch(),0)*12.0+0.9* 12.0 + 0.9 * feedforward_m.calculate(0));
-        driveInst_s.setRight(bang_m.calculate(pidgey_m.getPitch(),0)*12.0+0.9* 12.0 + 0.9 * feedforward_m.calculate(0));
-    }
+     * method to drive to charging station and tilted it until optimal degrees
+    */
 
-    /**
-     * method to drive to charging station
-     */
+    public void toTilt(){
+        pidTilt_m.setTolerance(VAL_TILT_TOLERANCE, 0);
 
-    public void driveStation(){
-        while(Math.min(getLeftMeters(), getRightMeters())<1){
-            driveInst_s.setLeft(70);
-            driveInst_s.setRight(70);
+        SmartDashboard.putNumber("Current Pitch", pidgey_m.getPitch());
+        SmartDashboard.putNumber("Error", pidTilt_m.getPositionError());
+        SmartDashboard.putNumber("Motor Velocity", -1*pidTilt_m.calculate(pidgey_m.getPitch(),-11));
+
+        driveInst_s.setLeft(-1*pidTilt_m.calculate(pidgey_m.getPitch(),-11));
+        driveInst_s.setRight(-1*pidTilt_m.calculate(pidgey_m.getPitch(),-11));
+        dq_s.addFirst(pidTilt_m.getPositionError());
+        if(dq_s.size()>=7){
+            dq_s.removeLast();
         }
-        driveInst_s.setLeft(0);
-        driveInst_s.setRight(0);
+    }
+
+    public boolean testTilt(){
+        Iterator<Double> it = dq_s.iterator();
+        curErr = dq_s.removeFirst();
+        
+        dq_s.addFirst(prevErr);
+        while (it.hasNext()) {
+            prevErr = curErr;
+            curErr = it.next();
+            if(Math.abs(curErr-prevErr)>=VAL_TEST_TILT_TOLERANCE){
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

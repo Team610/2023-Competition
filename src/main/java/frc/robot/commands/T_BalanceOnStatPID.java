@@ -1,9 +1,6 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.StationPID.*;
-
 import frc.robot.subsystems.Drivetrain;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
@@ -17,7 +14,8 @@ public class T_BalanceOnStatPID extends CommandBase {
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
 
     @Override
@@ -41,7 +39,6 @@ public class T_BalanceOnStatPID extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        //TODO change balance
         return false;
     }
 }

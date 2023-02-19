@@ -33,7 +33,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver_s.y().whileTrue(new G_Drivetrain_Group());
+    driver_s.a().whileTrue(new G_Drivetrain_Group());
   }
 
   public Command getAutonomousCommand() {

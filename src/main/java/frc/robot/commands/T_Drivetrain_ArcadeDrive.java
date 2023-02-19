@@ -20,7 +20,6 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
     }
     @Override
     public void execute() {
-        SmartDashboard.putNumber("Pitch Value", drivetrainInst_m.getPitch());   
         //left joystick for up/down movement
         double y = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftY(), VAL_DEADBAND);
         //right joystick for left/right movement
@@ -35,6 +34,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         x *= 0.7;
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;
+        SmartDashboard.putNumber("Pitch Value", drivetrainInst_m.getPitch());   
         drivetrainInst_m.setLeft(leftSpeed);
         drivetrainInst_m.setRight(rightSpeed);
     }
