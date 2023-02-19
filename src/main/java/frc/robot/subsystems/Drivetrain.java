@@ -50,6 +50,8 @@ public class Drivetrain extends Subsystem610 {
     BasePigeonSimCollection pidgeySim_m;
     DifferentialDrivetrainSim driveSim_m;
     Field2d field_m = new Field2d();
+    
+    private Pose2d pose2D;
 
     private static double error_s;
     private static double drivePower_s;
@@ -94,6 +96,7 @@ public class Drivetrain extends Subsystem610 {
         bang_m = new BangBangController(VAL_TOLERANCE);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
+        pose2D = odometry_m.update(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters());
     }
 
     @Override
@@ -108,9 +111,13 @@ public class Drivetrain extends Subsystem610 {
         inputs.pitch = getPitch();
         inputs.speed = getWheelSpeeds().leftMetersPerSecond;
         inputs.yaw = getYaw();
+        inputs.error = pid_m.getPositionError();
+
         Logger.getInstance().processInputs("Drivetrain", inputs);
 
         Logger.getInstance().recordOutput("distance traveled", getLeftMeters());
+
+        pose2D = odometry_m.update(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters());
     }
 
     public void simulationPeriodic() {
@@ -323,9 +330,10 @@ public class Drivetrain extends Subsystem610 {
     
     /**PID for height using WPILIB PID controller */
     public void adjustPIDStation(){
-        resetOdometry(new Pose2d());
-        driveInst_s.setLeft(pid_m.calculate(Math.sin(pidgey_m.getPitch())*getLeftMeters(),0.23));
-        driveInst_s.setRight(pid_m.calculate(Math.sin(pidgey_m.getPitch())*getRightMeters(),0.23));
+        double leftInitial = getLeftMeters();
+        double rightInitial = getRightMeters();
+        driveInst_s.setLeft(pid_m.calculate(Math.sin(pidgey_m.getPitch())*(getLeftMeters()-leftInitial),0.3));
+        driveInst_s.setRight(pid_m.calculate(Math.sin(pidgey_m.getPitch())*(getRightMeters()-rightInitial),0.3));
     }
 
     /**
@@ -391,4 +399,5 @@ class DrivetrainIOInputs{
     public double speed = 0;
     public double pitch = 0;
     public double yaw;
+    public double error;
 }
