@@ -3,8 +3,6 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Cascade;
 
-import static frc.robot.Constants.Cascade.*;
-
 public class T_Cascade_Preset extends CommandBase {
     private Cascade cascadeInst_m;
     private double target_m;

@@ -3,6 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Cascade;
 
+import static frc.robot.Constants.Cascade.*;
+
 public class T_Cascade_Home extends CommandBase {
     private Cascade cascadeInst_m;
 
@@ -32,7 +34,7 @@ public class T_Cascade_Home extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         cascadeInst_m.stop();
-        cascadeInst_m.setTargetPos(0);
+        cascadeInst_m.setTargetPos(VAL_GROUND_PRESET);
         cascadeInst_m.setSafety(false);
     }
 }

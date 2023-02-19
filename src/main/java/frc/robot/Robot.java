@@ -15,6 +15,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     robotContainer_m = new RobotContainer();
     RobotContainer.cascadeInst_s.setSafety(true);
+    RobotContainer.tronWheelInst_s.setSafety(true);
   }
 
   @Override
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     RobotContainer.drivetrainInst_s.setCoast();
     RobotContainer.cascadeInst_s.setSafety(true);
+    RobotContainer.tronWheelInst_s.setSafety(true);
   }
 
   @Override
@@ -51,6 +53,8 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     RobotContainer.drivetrainInst_s.setBrake();
     RobotContainer.cascadeInst_s.setSafety(SmartDashboard.getBoolean("Cascade Safety", true));
+    RobotContainer.tronWheelInst_s.setSafety(SmartDashboard.getBoolean("Tron Wheel Safety", true));
+    
   }
 
   @Override

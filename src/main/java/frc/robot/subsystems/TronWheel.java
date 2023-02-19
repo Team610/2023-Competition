@@ -20,11 +20,13 @@ public class TronWheel extends Subsystem610 {
     // private GenericEntry rotateManual_m;
     private boolean isHomed_m;
     private boolean safety_m;
+    private double targetPos_m;
 
     private TronWheel() {
         super("TronWheel");
         isHomed_m = false;
         safety_m = true;
+        targetPos_m = 0;
         rotateSRX_m = MotorConfig.configTronRotateMotor(CAN_ROTATE_SRX);
     }
 
@@ -47,8 +49,8 @@ public class TronWheel extends Subsystem610 {
      * Uses MotionMagic to spin the motor to a set position
      * @param ticks The position to spin the motor to
      */
-    public void rotateMagic(double ticks) {
-        rotateSRX_m.set(ControlMode.MotionMagic, ticks);
+    public void rotateMagic() {
+        rotateSRX_m.set(ControlMode.MotionMagic, targetPos_m);
     }
 
     /**
@@ -85,9 +87,19 @@ public class TronWheel extends Subsystem610 {
     public boolean getSafety() {
         return safety_m;
     }
+    
+    public double getTargetPos() {
+        return targetPos_m;
+    }
+
+    public void setTargetPos(double targetPos) {
+        targetPos_m = targetPos;
+    }
 
     public void writeSmartDashboard() {
-        SmartDashboard.putBoolean("Rotate Mode", getManual());
+        SmartDashboard.putString("Tron Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
+        SmartDashboard.putNumber("Tron Preset", targetPos_m);
+        SmartDashboard.putBoolean("Tron Manual Mode", getManual());
     }
 
     @Override

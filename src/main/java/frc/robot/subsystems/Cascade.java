@@ -6,7 +6,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -113,8 +112,9 @@ public class Cascade extends Subsystem610 {
 
     @Override
     public void periodic() {
-        SmartDashboard.putString("Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
-        SmartDashboard.putNumber("Preset", targetPos_m);
+        SmartDashboard.putString("Cascade Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
+        SmartDashboard.putNumber("Cascade Preset", targetPos_m);
+        SmartDashboard.putBoolean("Cascade Manual Mode", getManual());
     }
 
     @Override

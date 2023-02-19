@@ -3,6 +3,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.TronWheel;
 
+import static frc.robot.Constants.TronWheel.*;
+
 public class T_TronWheel_Home extends CommandBase {
     private TronWheel tronWheelInst_m;
 
@@ -32,6 +34,7 @@ public class T_TronWheel_Home extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         tronWheelInst_m.stopRotate();
+        tronWheelInst_m.setTargetPos(VAL_ANGLE_SCORE);
         tronWheelInst_m.setSafety(false);
     }
 }

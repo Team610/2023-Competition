@@ -47,7 +47,7 @@ public final class Constants {
         // Preset units are in ticks
         public static final double VAL_MID_PRESET = CALC_TICKS(34)-5820;
         public static final double VAL_HIGH_PRESET = CALC_TICKS(46);
-        public static final double VAL_RAMP_PRESET = 15000;
+        public static final double VAL_RAMP_PRESET = 14000;
         public static final double VAL_GROUND_PRESET = 0;
 
         /**
@@ -78,7 +78,9 @@ public final class Constants {
         public static final double VAL_KF = 0.4;
 
         public static final double VAL_ANGLE_RAMP = 14500;  // ticks
-        public static final double VAL_ANGLE_SCORE = 0;  // ticks
+        public static final double VAL_ANGLE_SCORE = 0;
+        public static final double VAL_ANGLE_GROUND = 27500;  // angle to pickup from ground
+        public static final double VAL_ANGLE_TRANSPORT = 10000;
     }
 
     public static class Intake {

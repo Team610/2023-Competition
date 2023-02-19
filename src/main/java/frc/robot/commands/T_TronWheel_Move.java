@@ -5,33 +5,29 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.TronWheel;
 
-import static frc.robot.Constants.*;
 import static frc.robot.Constants.TronWheel.*;
+import static frc.robot.Constants.*;
 
-public class T_TronWheel_Rotate extends CommandBase {
+public class T_TronWheel_Move extends CommandBase {
     private TronWheel tronWheelInst_m;
 
-    public T_TronWheel_Rotate() {
+    public T_TronWheel_Move() {
         tronWheelInst_m = TronWheel.getInstance();
         addRequirements(tronWheelInst_m);
     }
 
     @Override
-    public void initialize() {
-    }
-
-    @Override
     public void execute() {
-        if(tronWheelInst_m.getManual()){
-            double speed = MathUtil.applyDeadband(-RobotContainer.operator_s.getRightY() * VAL_MAX_SPEED, VAL_DEADBAND);
-            tronWheelInst_m.rotate(speed);
+        if(!tronWheelInst_m.getSafety()){
+            if(tronWheelInst_m.getManual()) {
+                double speed = MathUtil.applyDeadband(-RobotContainer.operator_s.getRightY() * VAL_MAX_SPEED, VAL_DEADBAND);
+                tronWheelInst_m.rotate(speed);
+            } else {
+                tronWheelInst_m.rotateMagic();
+            }
         }
-        
     }
 
-    /**
-     * Finish when the cascade limit switch is pressed
-     */
     @Override
     public boolean isFinished() {
         return false;
@@ -39,5 +35,6 @@ public class T_TronWheel_Rotate extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
+        tronWheelInst_m.stopRotate();
     }
 }
