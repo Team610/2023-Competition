@@ -6,10 +6,12 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer_m;
+  private Command autonomousCommand_m;
 
   @Override
   public void robotInit() {
@@ -41,10 +43,16 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     RobotContainer.drivetrainInst_s.setBrake();
+    autonomousCommand_m = robotContainer_m.getAutonomousCommand();
+
+    if (autonomousCommand_m != null) {
+      autonomousCommand_m.schedule();
+    }
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
   public void autonomousExit() {}
@@ -55,6 +63,9 @@ public class Robot extends TimedRobot {
     RobotContainer.cascadeInst_s.setSafety(SmartDashboard.getBoolean("Cascade Safety", true));
     RobotContainer.tronWheelInst_s.setSafety(SmartDashboard.getBoolean("Tron Wheel Safety", true));
     
+    if (autonomousCommand_m != null) {
+      autonomousCommand_m.cancel();
+    }
   }
 
   @Override

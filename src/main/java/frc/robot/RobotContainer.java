@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.commands.T_Cascade_Home;
 import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
+
+import frc.robot.commands.A_Test_Path;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
@@ -21,7 +23,8 @@ import frc.robot.subsystems.TronWheel;
 import frc.robot.util.ComboButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import static frc.robot.Constants.*;
@@ -29,6 +32,7 @@ import static frc.robot.Constants.Cascade.*;
 import static frc.robot.Constants.TronWheel.*;
 
 public class RobotContainer {
+  SendableChooser<Command> autoChooser_m = new SendableChooser<>();
   public static CommandXboxController driver_s;
   public static CommandXboxController operator_s;
 
@@ -38,6 +42,9 @@ public class RobotContainer {
   public static Intake intakeInst_s;
 
   public RobotContainer() {
+    autoChooser_m.setDefaultOption("Test Path", new A_Test_Path());
+    SmartDashboard.putData("Auto Chooser", autoChooser_m);
+
     driver_s = new CommandXboxController(PORT_DRIVER);
     operator_s = new CommandXboxController(PORT_OPERATOR);
 
@@ -91,6 +98,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return autoChooser_m.getSelected();
   }
 }
