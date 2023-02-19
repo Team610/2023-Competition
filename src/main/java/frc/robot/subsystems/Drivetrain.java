@@ -127,6 +127,13 @@ public class Drivetrain extends Subsystem610 {
     }
 
     /**
+     * @return The position of the robot on the field
+     */
+    public Pose2d getPose() {
+        return odometry_m.getPoseMeters();
+    }
+
+    /**
      * @return The number of meters the robot has travelled
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -150,13 +157,6 @@ public class Drivetrain extends Subsystem610 {
     public void resetOdometry(Pose2d pose) {
         resetSensors();
         odometry_m.resetPosition(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters(), pose);
-    }
-
-    /**
-     * @return The position of the robot on the field
-     */
-    public Pose2d getPose() {
-        return odometry_m.getPoseMeters();
     }
 
     @Override

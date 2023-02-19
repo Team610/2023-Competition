@@ -33,11 +33,10 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         x = x * x * x;
 
         y *= turbo ? VAL_TURBO_SPEED : VAL_MAX_SPEED;
-        x *= 0.7;
+        x *= VAL_TURN_SPEED;
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;
         drivetrainInst_m.setLeft(leftSpeed);
         drivetrainInst_m.setRight(rightSpeed);
     }
-
 }

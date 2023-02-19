@@ -25,25 +25,31 @@ public final class Constants {
         public static final double UNIT_METERS_IN_FEET = 0.305;
         public static final double UNIT_TICKS_PER_REV = 29500;
         public static final double UNIT_DIST_PER_REV = 0.47878;
+        public static final double CALC_TICKS_TO_METERS(double ticks) {
+            return (ticks/UNIT_TICKS_PER_REV)*UNIT_DIST_PER_REV;
+        }
+        public static final double CALC_METERS_TO_TICKS(double meters) {
+            return (meters/UNIT_DIST_PER_REV)*UNIT_TICKS_PER_REV;
+        }
         
-        public static final double VAL_KS = 0.067735;
-        public static final double VAL_KV = 3.4185;
-        public static final double VAL_KA = 0.26983;
-        public static final double VAL_KP = 0.075896;
+        public static final double VAL_KS = 0.076361;
+        public static final double VAL_KV = 3.4151;
+        public static final double VAL_KA = 0.40329;
+        public static final double VAL_KP = 0.43731;
         public static final double VAL_KD = 0.0;
-        public static final double VAL_KF = 37;
         public static final double VAL_KI = 0;
 
-        public static final double VAL_TRACK_WIDTH = 0.59492;
+        public static final double VAL_TRACK_WIDTH = 0.5877;
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(VAL_TRACK_WIDTH);
 
         public static final double VAL_WHEEL_DIA = 0.1524;
-        public static final double VAL_MAX_VELO = 2.82;
+        public static final double VAL_MAX_VELO = 1.93;
         public static final double VAL_MAX_ACCEL = VAL_MAX_VELO*0.5;
-        public static final double VAL_MAX_VOLTS = 10; // TODO: change to 12 for later
+        public static final double VAL_MAX_VOLTS = 11; // TODO: change to 12 for later
 
-        public static final double VAL_MAX_SPEED = 0.5;
-        public static final double VAL_TURBO_SPEED = 0.7;
+        public static final double VAL_MAX_SPEED = 0.8;
+        public static final double VAL_TURBO_SPEED = 1.0;
+        public static final double VAL_TURN_SPEED = 0.7;
     }
 
     public static class Cascade {
@@ -61,12 +67,12 @@ public final class Constants {
         public static final double VAL_KD = 15;
         public static final double VAL_KF = 0.3;
 
-        public static final double VAL_TICKS_PER_REV = 20480;
-        public static final double VAL_DIAM_PULLEY = 3.36; // average diameter of pulley, accounting for piling strings
-        public static final double VAL_DIST_PER_REV = VAL_DIAM_PULLEY * Math.PI;                    // in inches
-        public static final double UNITS_TICKS_TO_INCHES = VAL_DIST_PER_REV / VAL_TICKS_PER_REV;
-        public static final double UNITS_INCHES_TO_TICKS =  VAL_TICKS_PER_REV / VAL_DIST_PER_REV;
-        public static final double VAL_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
+        public static final double UNIT_TICKS_PER_REV = 20480;
+        public static final double UNIT_DIAM_PULLEY = 3.36; // average diameter of pulley, accounting for piling strings
+        public static final double UNIT_DIST_PER_REV = UNIT_DIAM_PULLEY * Math.PI;                    // in inches
+        public static final double UNIT_TICKS_TO_INCHES = UNIT_DIST_PER_REV / UNIT_TICKS_PER_REV;
+        public static final double UNIT_INCHES_TO_TICKS =  UNIT_TICKS_PER_REV / UNIT_DIST_PER_REV;
+        public static final double UNIT_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
         // Preset units are in ticks
         public static final double VAL_MID_PRESET = CALC_TICKS(34)-5820;
@@ -80,7 +86,7 @@ public final class Constants {
          * @return
          */
         public static final double CALC_TICKS(double inches) {
-            return ((inches-0.5)/Math.sin(VAL_ANGLE)) * (UNITS_INCHES_TO_TICKS);
+            return ((inches-0.5)/Math.sin(UNIT_ANGLE)) * (UNIT_INCHES_TO_TICKS);
         }
     }
 

@@ -65,35 +65,23 @@ public class RobotContainer {
   private void configureBindings() {
     // ! Driver Controls
     driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
-    driver_s.leftTrigger(0.5).toggleOnTrue(new T_Intake_Out());
-
-    driver_s.rightBumper().toggleOnTrue(
-        Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP),
-            new T_Intake_In()));
-    driver_s.leftBumper().toggleOnTrue(
-        Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
+    driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out());
 
     // ! Operator Controls
     operator_s.back().onTrue(Commands.parallel(new T_TronWheel_Home(), new T_Cascade_Home()));
 
     new ComboButton(operator_s.start(), operator_s.a())
         .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
-        .whenPressed(
-            Commands.sequence(
-                Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)),
-                new T_Intake_Out()));
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.b())
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
-        .whenPressed(
-            Commands.sequence(
-                Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)),
-                new T_Intake_Out()));
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
 
-    operator_s.x().toggleOnTrue(
+    operator_s.x().onTrue(
         Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
-    operator_s.y().toggleOnTrue(
+    operator_s.y().onTrue(
         Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
   }
 

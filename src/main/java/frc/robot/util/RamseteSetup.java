@@ -20,7 +20,8 @@ public final class RamseteSetup {
 
     private static final RamseteController controller_s = new RamseteController(VAL_RAMSETE_B, VAL_RAMSETE_ZETA);
     private static final SimpleMotorFeedforward feedForward_s = new SimpleMotorFeedforward(VAL_KS, VAL_KV, VAL_KA);
-    private static final PIDController PID_s = new PIDController(VAL_KP, 0, VAL_KD);
+    private static final PIDController PID_s = new PIDController(VAL_KP, VAL_KI, VAL_KD);
+    private static RamseteCommand ramseteCmd_m;
 
     /**
      * Creates a new Ramsete path for the robot to follow with the passed in
@@ -53,10 +54,7 @@ public final class RamseteSetup {
      * @return new ramsete command to be scheduled
      */
     public static RamseteCommand initializeRamseteCommand(Trajectory traj) {
-        // Reset odometry to the starting pose of the trajectory.
-        driveInst_m.resetOdometry(traj.getInitialPose());
-
-        return new RamseteCommand(
+        ramseteCmd_m = new RamseteCommand(
                 traj,
                 driveInst_m::getPose,
                 controller_s,
@@ -68,5 +66,10 @@ public final class RamseteSetup {
                 // RamseteCommand passes volts to the callback
                 driveInst_m::tankDriveVolts,
                 driveInst_m);
+
+        // Reset odometry to the starting pose of the trajectory.
+        driveInst_m.resetOdometry(traj.getInitialPose());
+
+        return ramseteCmd_m;
     }
 }

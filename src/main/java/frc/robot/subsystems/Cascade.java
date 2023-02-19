@@ -98,7 +98,7 @@ public class Cascade extends Subsystem610 {
      * @return inches of distance travelled
      */
     public double ticksToIn(double ticks){
-        return ticks * UNITS_TICKS_TO_INCHES;
+        return ticks * UNIT_TICKS_TO_INCHES;
     }
 
     /**
@@ -107,7 +107,7 @@ public class Cascade extends Subsystem610 {
      * @return encoder ticks travelled
      */
     public double inToTicks(double in){
-        return in * UNITS_INCHES_TO_TICKS;
+        return in * UNIT_INCHES_TO_TICKS;
     }
 
     @Override
