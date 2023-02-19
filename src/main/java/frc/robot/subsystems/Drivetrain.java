@@ -309,15 +309,23 @@ public class Drivetrain extends Subsystem610 {
         driveInst_s.setRight(drivePower_s);
     }
 
+    /**PID Balance */
+
+    // public void adjustStationPID(){
+    //     setLeft(pid_m.calculate(pidgey_m.getPitch(),0));
+    //     setRight(pid_m.calculate(pidgey_m.getPitch(),0));
+    // }
+
     /**
      * Method to adjust the speed and direction of the motor based on the speed of the charging station (Uses PID)
      * TODO check logic, especially with signs
     */
-
+    
+    /**PID for height using WPILIB PID controller */
     public void adjustPIDStation(){
-        pid_m.setTolerance(VAL_TOLERANCE,0);
-        driveInst_s.setLeft(pid_m.calculate(pidgey_m.getPitch(),0)*VAL_PID_MULTIPLIER);
-        driveInst_s.setRight(pid_m.calculate(pidgey_m.getPitch(),0)*VAL_PID_MULTIPLIER);
+        resetOdometry(new Pose2d());
+        driveInst_s.setLeft(pid_m.calculate(Math.sin(pidgey_m.getPitch())*getLeftMeters(),0.23));
+        driveInst_s.setRight(pid_m.calculate(Math.sin(pidgey_m.getPitch())*getRightMeters(),0.23));
     }
 
     /**
