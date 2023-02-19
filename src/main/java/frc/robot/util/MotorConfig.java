@@ -9,7 +9,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import static frc.robot.Constants.*;
-import static frc.robot.Constants.TronWheel.*;
 
 public class MotorConfig {
     

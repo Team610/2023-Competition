@@ -2,8 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
-
-import static frc.robot.Constants.*;
 import static frc.robot.Constants.Intake.*;
 
 public class T_Intake_In extends CommandBase {

@@ -56,28 +56,38 @@ public class RobotContainer {
    * Driver/Operator controls
    */
   private void configureBindings() {
-    //! Driver Controls
+    // ! Driver Controls
     driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
     driver_s.leftTrigger(0.5).toggleOnTrue(new T_Intake_Out());
 
-    //! Operator Controls
-    operator_s.back().onTrue(new ParallelCommandGroup(new T_TronWheel_Home(), new T_Cascade_Home()));
-    
+    driver_s.rightBumper().toggleOnTrue(
+        Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP),
+            new T_Intake_In()));
+    driver_s.leftBumper().toggleOnTrue(
+        Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
+
+    // ! Operator Controls
+    operator_s.back().onTrue(Commands.parallel(new T_TronWheel_Home(), new T_Cascade_Home()));
+
     new ComboButton(operator_s.start(), operator_s.a())
-      .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
-      .whenPressed(new ParallelCommandGroup(new T_Cascade_Preset(VAL_MID_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
-    
+        .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
+        .whenPressed(
+            Commands.sequence(
+                Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)),
+                new T_Intake_Out()));
+
     new ComboButton(operator_s.start(), operator_s.b())
-      .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
-      .whenPressed(new ParallelCommandGroup(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
+        .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
+        .whenPressed(
+            Commands.sequence(
+                Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)),
+                new T_Intake_Out()));
 
-    new ComboButton(operator_s.start(), operator_s.x())
-      // .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
-      .whenPressed(new ParallelCommandGroup(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
+    operator_s.x().toggleOnTrue(
+        Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
-    new ComboButton(operator_s.start(), operator_s.y())
-      // .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
-      .whenPressed(new ParallelCommandGroup(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
+    operator_s.y().toggleOnTrue(
+        Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
   }
 
   public Command getAutonomousCommand() {
