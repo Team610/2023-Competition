@@ -4,13 +4,13 @@ import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class T_BalanceOnStat extends CommandBase {
+public class T_Drivetrain_Balance extends CommandBase {
 
     private Drivetrain drivetrainInst_m;
     private static double error_s;
     private static double percPow_s;
 
-    public T_BalanceOnStat() {
+    public T_Drivetrain_Balance() {
         drivetrainInst_m = Drivetrain.getInstance();
         addRequirements(drivetrainInst_m);
     }

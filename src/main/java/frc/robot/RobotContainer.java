@@ -7,7 +7,7 @@ package frc.robot;
 import static frc.robot.Constants.*;
 
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
-import frc.robot.commands.G_Drivetrain_Group;
+import frc.robot.commands.G_Drivetrain_Balance_Group;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -33,7 +33,7 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    driver_s.a().whileTrue(new G_Drivetrain_Group());
+    driver_s.a().whileTrue(new G_Drivetrain_Balance_Group());
   }
 
   public Command getAutonomousCommand() {

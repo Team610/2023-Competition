@@ -4,11 +4,11 @@ import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class T_Get_Tilted extends CommandBase {
+public class T_Drivetrain_Tilt extends CommandBase {
 
     private Drivetrain drivetrainInst_m;
 
-    public T_Get_Tilted() {
+    public T_Drivetrain_Tilt() {
         drivetrainInst_m = Drivetrain.getInstance();
         addRequirements(drivetrainInst_m);
     }

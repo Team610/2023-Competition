@@ -20,7 +20,7 @@ public final class Constants {
         public static final double VAL_KS = 0.063267;
         public static final double VAL_KV = 3.4115;
         public static final double VAL_KA = 0.20518;
-        public static final double VAL_KP = 0.5;
+        public static final double VAL_KP = 1.4449;
         public static final double VAL_KD = 0.0;
         public static final double VAL_KI = 0.0;
         
@@ -83,8 +83,9 @@ public final class Constants {
         public static final double VAL_KP_BAL_PID = 0.01;
         public static final double VAL_KI_BAL_PID = 0.00;
         public static final double VAL_KD_BAL_PID = 0.00;
-        public static final double VAL_KP_TILT_PID = 0.1;
-        public static final double VAL_KI_TILT_PID = 0.01;
+        public static final double VAL_KP_TILT_PID = 0.5;
+        public static final double VAL_KI_TILT_PID = 0.00;
         public static final double VAL_KD_TILT_PID = 0.00;
+        public static final double VAL_PID_TILT_SET = 0.2;
     }
 }
