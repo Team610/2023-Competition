@@ -121,6 +121,7 @@ public class Cascade extends Subsystem610 {
         SmartDashboard.putString("Cascade Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Cascade Preset", targetPos_m);
         SmartDashboard.putBoolean("Cascade Manual Mode", getManual());
+        SmartDashboard.putNumber("cascade percent", cascadeTickPercent());
     }
 
     @Override
