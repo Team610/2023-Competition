@@ -63,4 +63,8 @@ public class Intake extends Subsystem610 {
     public void addToDriveTab(ShuffleboardTab tab) {
          // TODO Auto-generated method stub
     }
+
+    public double getSRXSupplyCurrent() {
+        return intakeSRX_m.getSupplyCurrent();
+    }
 }

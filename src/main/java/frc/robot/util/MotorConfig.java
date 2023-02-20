@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import static frc.robot.Constants.*;
+import static frc.robot.Constants.Intake.*;
 
 public class MotorConfig {
     
@@ -119,7 +120,7 @@ public class MotorConfig {
         talon.configPeakOutputForward(0.8);
         talon.configPeakOutputReverse(-0.8);
         talon.configPeakCurrentLimit(27);
-        talon.configContinuousCurrentLimit(10);
+        talon.configContinuousCurrentLimit(VAL_CONTINUOUS_CURRENT_LIMIT);
         talon.configPeakCurrentDuration(100);
         talon.enableCurrentLimit(true);
         return talon;

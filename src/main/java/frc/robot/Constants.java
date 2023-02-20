@@ -120,5 +120,12 @@ public final class Constants {
         public static final double VAL_IN_PERCENT = 11/12.0;
         public static final double VAL_OUT_PERCENT = -0.4;
         public static final double VAL_HOLD_PERCENT = 0.3;
+
+        public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 10;
+        
+        public static final double VAL_STALL_TIME = 0.5 *1000; //ms
+        public static final int VAL_SAMPLES = (int) VAL_STALL_TIME/20;
+
+
     }
 }
