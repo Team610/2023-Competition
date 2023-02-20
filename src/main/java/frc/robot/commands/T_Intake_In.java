@@ -25,14 +25,13 @@ public class T_Intake_In extends CommandBase {
     @Override
     public void execute() {
         intakeInst_m.intake(VAL_IN_PERCENT);
-        movingAverage_m = filter_m.calculate(intakeInst_m.getSRXSupplyCurrent());
+        movingAverage_m = filter_m.calculate(intakeInst_m.getSRXSupplyCurrent() - VAL_CONTINUOUS_CURRENT_LIMIT);
         SmartDashboard.putNumber("Moving Average", movingAverage_m);
     }
 
     @Override
     public boolean isFinished() {
-        // return Math.abs(movingAverage_m - VAL_CONTINUOUS_CURRENT_LIMIT) < 0.2;
-        return false;
+        return Math.abs(movingAverage_m) < 0.1;
     }
 
     @Override

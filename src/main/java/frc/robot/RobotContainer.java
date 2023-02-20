@@ -85,7 +85,7 @@ public class RobotContainer {
     operator_s.x().onTrue(
         Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
-    operator_s.y().onTrue(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT));
+    operator_s.y().onTrue(Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT),new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
 
     // new ComboButton(operator_s.start(), operator_s.y())
     //     .whenShiftPressed(new G_GroundIntake_Automatic())

@@ -34,8 +34,9 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
 
         y = y * y * y;
         x = x * x * x;
-
+        if(cascadeInt_m.cascadeTickPercent() >= .45){
         y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
+        }else{y *= turbo ? 1 : 0.8;}
         x *= 0.7;
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;
