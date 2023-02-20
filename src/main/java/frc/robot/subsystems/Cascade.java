@@ -113,7 +113,7 @@ public class Cascade extends Subsystem610 {
  * converts ticks of cascade into percent travelled
  */
     public double cascadeTickPercent() {
-        return cascadeFX_m.getSelectedSensorPosition() / VAL_CONCERT_TICKS;
+        return (cascadeFX_m.getSelectedSensorPosition() / VAL_CONCERT_TICKS)/100;
     }
 
     @Override
