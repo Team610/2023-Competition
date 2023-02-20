@@ -87,5 +87,6 @@ public final class Constants {
         public static final double VAL_KI_TILT_PID = 0.00;
         public static final double VAL_KD_TILT_PID = 0.00;
         public static final double VAL_PID_TILT_SET = 0.2;
+        public static final double VAL_MULTIPLER = 0.44;
     }
 }

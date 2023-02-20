@@ -96,7 +96,7 @@ public class Drivetrain extends Subsystem610 {
         //System.out.print(kPPID_s);
         // SmartDashboard.putNumber("kP", kPPID_s);
         pidBal_m = new PIDController(VAL_KP_BAL_PID, VAL_KI_BAL_PID, VAL_KD_BAL_PID);
-        //pidTilt_m = new PIDController(VAL_KP_TILT_PID, VAL_KI_TILT_PID, VAL_KD_TILT_PID);
+        pidTilt_m = new PIDController(VAL_KP_TILT_PID, VAL_KI_TILT_PID, VAL_KD_TILT_PID);
         pidHeight_m = new PIDController(VAL_KP_TILT_PID, VAL_KI_TILT_PID, VAL_KD_TILT_PID);
         SmartDashboard.putNumber("P", pidBal_m.getP());
         SmartDashboard.putNumber("I", pidBal_m.getI());
