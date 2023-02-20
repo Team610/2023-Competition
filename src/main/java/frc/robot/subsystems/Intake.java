@@ -49,8 +49,7 @@ public class Intake extends Subsystem610 {
     }
 
     public void writeSmartDashboard() {
-        SmartDashboard.putNumber("Intake Stator Current", intakeSRX_m.getStatorCurrent());
-        SmartDashboard.putNumber("Intake Supply Current", intakeSRX_m.getSupplyCurrent());
+        SmartDashboard.putString("Intake Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
     }
 
     @Override

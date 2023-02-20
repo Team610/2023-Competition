@@ -31,7 +31,8 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(movingAverage_m - VAL_CONTINUOUS_CURRENT_LIMIT) < 0.2;
+        // return Math.abs(movingAverage_m - VAL_CONTINUOUS_CURRENT_LIMIT) < 0.2;
+        return false;
     }
 
     @Override
