@@ -4,14 +4,14 @@ import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class T_BalanceOnStatPID extends CommandBase {
+public class T_Drivetrain_PID_Balance extends CommandBase {
 
     private Drivetrain drivetrainInst_m;
     private static double leftInit_s;
     private static double rightInit_s;
 
 
-    public T_BalanceOnStatPID(double leftInitial_s, double rightInitial_s) {
+    public T_Drivetrain_PID_Balance(double leftInitial_s, double rightInitial_s) {
         leftInit_s = leftInitial_s;
         rightInit_s = rightInitial_s;
         drivetrainInst_m = Drivetrain.getInstance();

@@ -20,7 +20,7 @@ public final class Constants {
         public static final double VAL_KS = 0.063267;
         public static final double VAL_KV = 3.4115;
         public static final double VAL_KA = 0.20518;
-        public static final double VAL_KP = 1.4449;
+        public static final double VAL_KP = 0.5;
         public static final double VAL_KD = 0.0;
         public static final double VAL_KI = 0.0;
         
