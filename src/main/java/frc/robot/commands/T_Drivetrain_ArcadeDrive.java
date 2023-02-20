@@ -34,8 +34,8 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         y = y * y * y;
         x = x * x * x;
 
-        y *= turbo ? (0.7+(0.3*cascadeInt_m.cascadeTickPercent())) : (0.5+(0.3*cascadeInt_m.cascadeTickPercent()));
-        x *= 0.7;
+        y *= turbo ? (0.3+(0.7*cascadeInt_m.cascadeTickPercent())) : (0.1+(0.7*cascadeInt_m.cascadeTickPercent()));
+        x *= (0.4 + (0.3*cascadeInt_m.cascadeTickPercent()));
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;
         drivetrainInst_m.setLeft(leftSpeed);
