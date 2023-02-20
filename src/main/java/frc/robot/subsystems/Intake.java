@@ -19,7 +19,7 @@ public class Intake extends Subsystem610 {
 
     private Intake() {
         super("Intake");
-        intakeSRX_m = MotorConfig.configTronIntakeMotor(CAN_INTAKE_SRX);
+        intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX);
     }
 
     public static Intake getInstance() {
@@ -42,6 +42,10 @@ public class Intake extends Subsystem610 {
      */
     public void stopIntake() {
         intakeSRX_m.set(ControlMode.PercentOutput, 0);
+    }
+
+    public boolean getHasGamePiece() {
+        return intakeSRX_m.getSensorCollection().isRevLimitSwitchClosed();
     }
 
     public void writeSmartDashboard() {

@@ -4,7 +4,7 @@ import static frc.robot.Constants.TronWheel.*;
 
 public enum TronState {
      
-    GROUND (VAL_ANGLE_GROUND),  // Tron wheel angled to intake from floor
+    // GROUND (VAL_ANGLE_GROUND),  // Tron wheel angled to intake from floor
     RAMP (VAL_ANGLE_RAMP),  // Tron wheel angled to intake from ramp
     TRANSPORT (VAL_ANGLE_TRANSPORT),  // Tron wheel angled to carry game piece
     SCORE (VAL_ANGLE_SCORE);  // Tron wheel angled to score

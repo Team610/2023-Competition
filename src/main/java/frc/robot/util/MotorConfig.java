@@ -107,7 +107,7 @@ public class MotorConfig {
         return talon;
     }
 
-    public static WPI_TalonSRX configTronIntakeMotor(int CAN_ID) {
+    public static WPI_TalonSRX configIntakeMotor(int CAN_ID) {
         WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.setInverted(false);

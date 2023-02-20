@@ -9,7 +9,10 @@ import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
 
 import frc.robot.commands.A_Test_Path;
+import frc.robot.commands.G_GroundIntake_Automatic;
+import frc.robot.commands.G_IntakeTronWheel_Automatic;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
+import frc.robot.commands.T_IntakeTronWheel_GroundIntake;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
 import frc.robot.commands.T_Intake_Out;
@@ -64,7 +67,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    driver_s.rightTrigger(0.5).onTrue(Commands.sequence(new T_Intake_In(), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
+    driver_s.rightTrigger(0.5).onTrue(new G_IntakeTronWheel_Automatic());
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out());
 
     // ! Operator Controls
@@ -81,8 +84,11 @@ public class RobotContainer {
     operator_s.x().onTrue(
         Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
-    operator_s.y().onTrue(
-        Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
+    // operator_s.y().onTrue(new T_IntakeTronWheel_GroundIntake());
+
+    new ComboButton(operator_s.start(), operator_s.y())
+        .whenShiftPressed(new G_GroundIntake_Automatic())
+        .whenPressed(new T_IntakeTronWheel_GroundIntake());
   }
 
   public Command getAutonomousCommand() {
