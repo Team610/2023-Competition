@@ -109,12 +109,19 @@ public class Cascade extends Subsystem610 {
     public double inToTicks(double in){
         return in * UNIT_INCHES_TO_TICKS;
     }
+/*
+ * converts ticks of cascade into percent travelled
+ */
+    public double cascadeTickPercent() {
+        return (cascadeFX_m.getSelectedSensorPosition() / VAL_CONCERT_TICKS)/100;
+    }
 
     @Override
     public void periodic() {
         SmartDashboard.putString("Cascade Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Cascade Preset", targetPos_m);
         SmartDashboard.putBoolean("Cascade Manual Mode", getManual());
+        SmartDashboard.putNumber("cascade percent", cascadeTickPercent());
     }
 
     @Override
