@@ -5,6 +5,9 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
+import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.Logger;
+
 import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.Simulation.*;
 import static frc.robot.Constants.StationPID.*;
@@ -38,8 +41,10 @@ public class Drivetrain extends Subsystem610 {
     private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
+
     private PIDController pidBal_m;
     private PIDController pidTilt_m;
+    private PIDController pidHeight_m;
 
     private static Deque<Double> dq_s;
     private static double prevErr;
@@ -50,6 +55,8 @@ public class Drivetrain extends Subsystem610 {
     BasePigeonSimCollection pidgeySim_m;
     DifferentialDrivetrainSim driveSim_m;
     Field2d field_m = new Field2d();
+
+    DrivetrainIOInputsAutoLogged inputs;
 
     private Drivetrain() {
         super("Drivetrain");
@@ -90,10 +97,13 @@ public class Drivetrain extends Subsystem610 {
         // SmartDashboard.putNumber("kP", kPPID_s);
         pidBal_m = new PIDController(VAL_KP_BAL_PID, VAL_KI_BAL_PID, VAL_KD_BAL_PID);
         pidTilt_m = new PIDController(VAL_KP_TILT_PID, VAL_KI_TILT_PID, VAL_KD_TILT_PID);
+        pidHeight_m = new PIDController(VAL_KP, VAL_KI, VAL_KD);
         SmartDashboard.putNumber("P", pidBal_m.getP());
         SmartDashboard.putNumber("I", pidBal_m.getI());
         SmartDashboard.putNumber("D", pidBal_m.getD());
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
+
+        inputs = new DrivetrainIOInputsAutoLogged();
     }
 
     @Override
@@ -103,6 +113,12 @@ public class Drivetrain extends Subsystem610 {
                       nativeUnitsToDistanceMeters(leftBatman_m.getSelectedSensorPosition()),
                       nativeUnitsToDistanceMeters(rightBatman_m.getSelectedSensorPosition()));
         field_m.setRobotPose(odometry_m.getPoseMeters());
+
+        DrivetrainIOInputs.pitch = getPitch();
+        DrivetrainIOInputs.yaw = getYaw();
+        DrivetrainIOInputs.error = pidHeight_m.getPositionError();
+
+        Logger.getInstance().processInputs("DriveTrainTestJackson", inputs);
 
     }
 
@@ -325,6 +341,14 @@ public class Drivetrain extends Subsystem610 {
         return true;
     }
 
+    /**PID for height using WPILIB PID controller */
+    public void adjustPIDHeightStation(){
+        double leftInitial = getLeftMeters();
+        double rightInitial = getRightMeters();
+        driveInst_s.setLeft(pidHeight_m.calculate(Math.sin(pidgey_m.getPitch())*(getLeftMeters()-leftInitial),0.2));
+        driveInst_s.setRight(pidHeight_m.calculate(Math.sin(pidgey_m.getPitch())*(getRightMeters()-rightInitial),0.2));
+    }
+
     @Override
     public void initSendable(SendableBuilder builder) {
         // TODO Auto-generated method stub
@@ -358,11 +382,11 @@ public class Drivetrain extends Subsystem610 {
     }
 }
 
+@AutoLog
 class DrivetrainIOInputs{
-    public double distanceTraveled = 0;
-    public double speed = 0;
-    public double pitch = 0;
-    public double yaw;
+    public static double pitch;
+    public static double yaw;
+    public static double error;
 }
 
 

@@ -10,7 +10,6 @@ public class G_Drivetrain_Group extends SequentialCommandGroup{
         */
     public G_Drivetrain_Group() {
         addCommands(new T_Get_Tilted());
-        //addCommands(new T_BalanceOnStatPID());
-        //addCommands(new T_Test_Pitch());
+        addCommands(new T_BalanceOnStatPID());
     }
 }

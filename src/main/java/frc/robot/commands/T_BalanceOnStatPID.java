@@ -23,7 +23,7 @@ public class T_BalanceOnStatPID extends CommandBase {
      * Call to get current error and adjust speed accordingly
      */
     public void execute() {
-        drivetrainInst_m.adjustPIDStation();
+        drivetrainInst_m.adjustPIDHeightStation();
     }
 
     /**
