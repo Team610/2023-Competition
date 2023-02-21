@@ -9,10 +9,9 @@ import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
 
 import frc.robot.commands.A_Test_Path;
-import frc.robot.commands.G_GroundIntake_Automatic;
+import frc.robot.commands.G_TronWheel_PresetGround;
 import frc.robot.commands.G_IntakeTronWheel_Automatic;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
-import frc.robot.commands.T_IntakeTronWheel_GroundIntake;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
 import frc.robot.commands.T_Intake_Out;
@@ -67,8 +66,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    // driver_s.rightTrigger(0.5).onTrue(new T_Intake_In());
-    driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
+    driver_s.rightTrigger(0.5).onTrue(new T_Intake_In());
+    // driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out());
 
     // ! Operator Controls
@@ -81,15 +80,14 @@ public class RobotContainer {
     new ComboButton(operator_s.start(), operator_s.b())
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
+        
+    new ComboButton(operator_s.back(), operator_s.x())
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new G_TronWheel_PresetGround()))
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
-    operator_s.x().onTrue(
-        Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
+    operator_s.y().onTrue(
+        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
 
-    operator_s.y().onTrue(Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT),new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
-
-    // new ComboButton(operator_s.start(), operator_s.y())
-    //     .whenShiftPressed(new G_GroundIntake_Automatic())
-    //     .whenPressed(new T_IntakeTronWheel_GroundIntake());
   }
 
   public Command getAutonomousCommand() {

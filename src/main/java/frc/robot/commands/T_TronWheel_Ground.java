@@ -6,11 +6,11 @@ import frc.robot.subsystems.TronWheel;
 
 import static frc.robot.Constants.TronWheel.*;
 
-public class T_IntakeTronWheel_GroundIntake extends CommandBase {
+public class T_TronWheel_Ground extends CommandBase {
     private TronWheel tronWheelInst_m;
     private Intake intakeInst_m;
-
-    public T_IntakeTronWheel_GroundIntake() {
+    
+    public T_TronWheel_Ground() {
         tronWheelInst_m = TronWheel.getInstance();
         intakeInst_m = Intake.getInstance();
         addRequirements(tronWheelInst_m, intakeInst_m);
@@ -22,21 +22,16 @@ public class T_IntakeTronWheel_GroundIntake extends CommandBase {
 
     @Override
     public void execute() {
-        if(!intakeInst_m.getHasGamePiece()) {
-            tronWheelInst_m.setTargetPos(VAL_ANGLE_GROUND_INIT);
-        } else {
-            tronWheelInst_m.setTargetPos(VAL_ANGLE_GROUND_FINAL);
-        }
-
-    }
-
-    @Override
-    public void end(boolean interrupted) {
+        if(intakeInst_m.getHasGamePiece()) tronWheelInst_m.setTargetPos(VAL_ANGLE_GROUND_FINAL);
     }
 
     @Override
     public boolean isFinished() {
-        return tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_FINAL;
+        return intakeInst_m.getHasGamePiece();
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        
     }
 }
-    
