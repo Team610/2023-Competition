@@ -18,18 +18,11 @@ public class Intake extends Subsystem610 {
     private static Intake intakeInst_s;
     private WPI_TalonSRX intakeSRX_m;
     private static LinearFilter singlePoleIIR;
-    private static LinearFilter movingAverage;
-    private static LinearFilter highPass;
-    private static LinearFilter finiteDifference;
 
     private Intake() {
         super("Intake");
         intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX);
         singlePoleIIR = LinearFilter.singlePoleIIR(0.5, 0.02);
-        movingAverage = LinearFilter.movingAverage(50);
-        highPass = LinearFilter.highPass(0.5, 0.02);
-        int[] stencil = {0, -1, -2, -3, -4};
-        finiteDifference = LinearFilter.finiteDifference(1, stencil, 0.02);
     }
 
     public static Intake getInstance() {
@@ -68,9 +61,6 @@ public class Intake extends Subsystem610 {
                 getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Intake Supply Current", getSRXSupplyCurrent());
         SmartDashboard.putNumber("single pole", singlePoleIIR.calculate(getSRXSupplyCurrent()));
-        SmartDashboard.putNumber("highpass", highPass.calculate(getSRXSupplyCurrent()));
-        SmartDashboard.putNumber("movingaverage", movingAverage.calculate(getSRXSupplyCurrent()));
-        SmartDashboard.putNumber("backwardfinitedifference", finiteDifference.calculate(getSRXSupplyCurrent()));
         SmartDashboard.putBoolean("Floor Lim", getHasGamePiece());
     }
 

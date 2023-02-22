@@ -18,8 +18,7 @@ public class T_Intake_In extends CommandBase {
     public T_Intake_In() {
         intakeInst_m = Intake.getInstance();
         tronWheelInst_m = TronWheel.getInstance();
-        // filter_m = LinearFilter.movingAverage(100);
-        filter_m = LinearFilter.singlePoleIIR(1, 0.02);
+        filter_m = LinearFilter.singlePoleIIR(0.5, 0.02);
         addRequirements(intakeInst_m);
     }
 
@@ -39,8 +38,8 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // return filter_m.calculate(intakeInst_m.getSRXSupplyCurrent()) > 10;
-        return false;
+        return filter_m.calculate(intakeInst_m.getSRXSupplyCurrent()) > 12;
+        // return false;
     }
 
     @Override

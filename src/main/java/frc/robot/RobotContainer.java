@@ -66,7 +66,6 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    // driver_s.rightTrigger(0.5).onTrue(new T_Intake_In());
     driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out());
 
