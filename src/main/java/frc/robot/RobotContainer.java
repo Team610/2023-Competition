@@ -66,8 +66,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    driver_s.rightTrigger(0.5).onTrue(new T_Intake_In());
-    // driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
+    // driver_s.rightTrigger(0.5).onTrue(new T_Intake_In());
+    driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out());
 
     // ! Operator Controls
@@ -81,7 +81,7 @@ public class RobotContainer {
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
         
-    new ComboButton(operator_s.back(), operator_s.x())
+    new ComboButton(operator_s.start(), operator_s.x())
         .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new G_TronWheel_PresetGround()))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
