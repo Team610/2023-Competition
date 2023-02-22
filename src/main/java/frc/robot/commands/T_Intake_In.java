@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
@@ -13,7 +14,6 @@ public class T_Intake_In extends CommandBase {
     private Intake intakeInst_m;
     private TronWheel tronWheelInst_m;
     private LinearFilter filter_m;
-    private Trigger trig_m;
 
     public T_Intake_In() {
         intakeInst_m = Intake.getInstance();
@@ -21,7 +21,6 @@ public class T_Intake_In extends CommandBase {
         // filter_m = LinearFilter.movingAverage(100);
         filter_m = LinearFilter.singlePoleIIR(1, 0.02);
         addRequirements(intakeInst_m);
-        trig_m = new Trigger(intakeInst_m::getHasGamePiece);
     }
 
     @Override
@@ -32,7 +31,9 @@ public class T_Intake_In extends CommandBase {
     public void execute() {
         intakeInst_m.intake(VAL_IN_PERCENT);
         if(tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT && tronWheelInst_m.checkClosedLoop()){
-            trig_m.onTrue(new T_TronWheel_Preset(VAL_ANGLE_GROUND_FINAL));
+            if(intakeInst_m.getHasGamePiece()) {
+                CommandScheduler.getInstance().schedule(new T_TronWheel_Preset(VAL_ANGLE_GROUND_FINAL));
+            }
         }
     }
 
