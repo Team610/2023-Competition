@@ -82,12 +82,11 @@ public class RobotContainer {
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
         
     new ComboButton(operator_s.start(), operator_s.x())
-        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new G_TronWheel_PresetGround()))
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
     operator_s.y().onTrue(
         Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
-
   }
 
   public Command getAutonomousCommand() {

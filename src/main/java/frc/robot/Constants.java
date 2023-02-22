@@ -79,7 +79,7 @@ public final class Constants {
         public static final double VAL_MID_PRESET = CALC_TICKS(35);
         public static final double VAL_HIGH_PRESET = CALC_TICKS(46);
         public static final double VAL_RAMP_PRESET = 6500;
-        public static final double VAL_GROUND_PRESET = 0;
+        public static final double VAL_GROUND_PRESET = 1940;
         public static final double VAL_TRANSPORT_PRESET = 10000+CALC_TICKS(2);
 
         /**
@@ -112,7 +112,7 @@ public final class Constants {
         public static final double VAL_ANGLE_RAMP = 14900;  // ticks
         public static final double VAL_ANGLE_SCORE = 1000;
         public static final double VAL_ANGLE_GROUND_INIT = 27500;  // angle to pickup from ground start
-        public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+500;  // angle to pickup from ground finish
+        public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+1500;  // angle to pickup from ground finish
         public static final double VAL_ANGLE_TRANSPORT = 10000;
     }
 

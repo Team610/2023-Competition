@@ -56,7 +56,11 @@ public class Intake extends Subsystem610 {
     }
 
     public boolean getHasGamePiece() {
-        return intakeSRX_m.getSensorCollection().isRevLimitSwitchClosed();
+        return !intakeSRX_m.getSensorCollection().isFwdLimitSwitchClosed();
+    }
+
+    public double getSRXSupplyCurrent() {
+        return intakeSRX_m.getSupplyCurrent();
     }
 
     public void writeSmartDashboard() {
@@ -67,7 +71,7 @@ public class Intake extends Subsystem610 {
         SmartDashboard.putNumber("highpass", highPass.calculate(getSRXSupplyCurrent()));
         SmartDashboard.putNumber("movingaverage", movingAverage.calculate(getSRXSupplyCurrent()));
         SmartDashboard.putNumber("backwardfinitedifference", finiteDifference.calculate(getSRXSupplyCurrent()));
-
+        SmartDashboard.putBoolean("Floor Lim", getHasGamePiece());
     }
 
     @Override
@@ -83,9 +87,5 @@ public class Intake extends Subsystem610 {
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
         // TODO Auto-generated method stub
-    }
-
-    public double getSRXSupplyCurrent() {
-        return intakeSRX_m.getSupplyCurrent();
     }
 }

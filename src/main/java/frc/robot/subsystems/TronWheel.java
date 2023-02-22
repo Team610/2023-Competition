@@ -94,6 +94,10 @@ public class TronWheel extends Subsystem610 {
         targetPos_m = targetPos;
     }
 
+    public boolean checkClosedLoop(){
+        return Math.abs(rotateSRX_m.getClosedLoopError()) < 100;
+    }
+
     public void writeSmartDashboard() {
         SmartDashboard.putString("Tron Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Tron Preset", targetPos_m);

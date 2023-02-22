@@ -111,7 +111,7 @@ public class MotorConfig {
         WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.setInverted(false);
-        talon.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.NormallyClosed);
+        talon.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         talon.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         talon.configAllowableClosedloopError(0, VAL_CONFIG_TIMEOUT);
         talon.configClosedLoopPeriod(0, 1);
