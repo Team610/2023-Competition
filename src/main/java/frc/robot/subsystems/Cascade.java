@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
@@ -45,7 +46,8 @@ public class Cascade extends Subsystem610 {
      * Uses MotionMagic to spin the motor to a set position
      */
     public void spinMagic() {
-        cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
+        // cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
+        cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m, DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
     }
 
     /**
@@ -121,7 +123,7 @@ public class Cascade extends Subsystem610 {
         SmartDashboard.putString("Cascade Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Cascade Preset", targetPos_m);
         SmartDashboard.putBoolean("Cascade Manual Mode", getManual());
-        SmartDashboard.putNumber("cascade percent", cascadeTickPercent());
+      
     }
 
     @Override

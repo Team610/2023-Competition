@@ -67,6 +67,7 @@ public final class Constants {
         public static final double VAL_KI = 0;
         public static final double VAL_KD = 15;
         public static final double VAL_KF = 0.3;
+        public static final double VAL_FEEDFORWARD = 0.14;
 
         public static final double UNIT_TICKS_PER_REV = 20480;
         public static final double UNIT_DIAM_PULLEY = 3.36; // average diameter of pulley, accounting for piling strings
