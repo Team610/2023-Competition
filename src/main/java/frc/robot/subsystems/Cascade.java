@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
@@ -9,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
+import static frc.robot.Constants.*;
 import static frc.robot.Constants.Cascade.*;
 
 public class Cascade extends Subsystem610 {
@@ -44,8 +46,15 @@ public class Cascade extends Subsystem610 {
     /**
      * Uses MotionMagic to spin the motor to a set position
      */
-    public void spinMagic() {
-        cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
+    public void spinMagic(boolean down) {
+        // cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
+        if(down){
+            cascadeFX_m.selectProfileSlot(0, 0);
+            cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m, DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
+        } else {
+            cascadeFX_m.selectProfileSlot(1, 0);
+            cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m, DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
+        }
     }
 
     /**
@@ -90,6 +99,10 @@ public class Cascade extends Subsystem610 {
 
     public void setTargetPos(double targetPos) {
         targetPos_m = targetPos;
+    }
+
+    public double getTicks(){
+        return cascadeFX_m.getSelectedSensorPosition();
     }
 
     /**

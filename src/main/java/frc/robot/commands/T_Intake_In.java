@@ -43,8 +43,8 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return filter_m.calculate(intakeInst_m.getSRXSupplyCurrent()) > 12;
-        // return false;
+        // return filter_m.calculate(intakeInst_m.getSRXSupplyCurrent()) > (VAL_CONTINUOUS_CURRENT_LIMIT+1);
+        return false;
     }
 
     @Override
