@@ -25,6 +25,7 @@ import frc.robot.subsystems.TronWheel;
 import frc.robot.util.ComboButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -52,7 +53,7 @@ public class RobotContainer {
 
     driver_s = new CommandXboxController(PORT_DRIVER);
     operator_s = new CommandXboxController(PORT_OPERATOR);
-    
+
     driverRumble_s = new XboxController(PORT_DRIVER);
     operatorRumble_s = new XboxController(PORT_OPERATOR);
 
@@ -76,7 +77,9 @@ public class RobotContainer {
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out());
 
     // ! Operator Controls
-    operator_s.back().onTrue(Commands.parallel(new T_TronWheel_Home(), new T_Cascade_Home()));
+    operator_s.back()
+        .onTrue(Commands.parallel(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
+            new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming)));
 
     new ComboButton(operator_s.start(), operator_s.a())
         .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
@@ -85,9 +88,10 @@ public class RobotContainer {
     new ComboButton(operator_s.start(), operator_s.b())
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
-        
+
     new ComboButton(operator_s.start(), operator_s.x())
-        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)))
+        .whenShiftPressed(
+            Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
     operator_s.y().onTrue(
