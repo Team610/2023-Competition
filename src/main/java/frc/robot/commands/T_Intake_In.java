@@ -1,14 +1,19 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
 
 import static frc.robot.Constants.Intake.*;
 import static frc.robot.Constants.TronWheel.*;
+import static frc.robot.Constants.Cascade.*;
+
 
 public class T_Intake_In extends CommandBase {
     private Intake intakeInst_m;
@@ -18,8 +23,7 @@ public class T_Intake_In extends CommandBase {
     public T_Intake_In() {
         intakeInst_m = Intake.getInstance();
         tronWheelInst_m = TronWheel.getInstance();
-        // filter_m = LinearFilter.movingAverage(100);
-        filter_m = LinearFilter.singlePoleIIR(1, 0.02);
+        filter_m = LinearFilter.singlePoleIIR(0.5, 0.02);
         addRequirements(intakeInst_m);
     }
 
@@ -39,7 +43,7 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // return filter_m.calculate(intakeInst_m.getSRXSupplyCurrent()) > 10;
+        // return filter_m.calculate(intakeInst_m.getSRXSupplyCurrent()) > (VAL_CONTINUOUS_CURRENT_LIMIT+1);
         return false;
     }
 

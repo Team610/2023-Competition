@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.XboxController;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Cascade.*;
@@ -37,6 +38,8 @@ public class RobotContainer {
   SendableChooser<Command> autoChooser_m = new SendableChooser<>();
   public static CommandXboxController driver_s;
   public static CommandXboxController operator_s;
+  public static XboxController driverRumble_s;
+  public static XboxController operatorRumble_s;
 
   public static Drivetrain drivetrainInst_s;
   public static Cascade cascadeInst_s;
@@ -49,6 +52,9 @@ public class RobotContainer {
 
     driver_s = new CommandXboxController(PORT_DRIVER);
     operator_s = new CommandXboxController(PORT_OPERATOR);
+    
+    driverRumble_s = new XboxController(PORT_DRIVER);
+    operatorRumble_s = new XboxController(PORT_OPERATOR);
 
     drivetrainInst_s = Drivetrain.getInstance();
     drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
@@ -66,7 +72,6 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    // driver_s.rightTrigger(0.5).onTrue(new T_Intake_In());
     driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out());
 

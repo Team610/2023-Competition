@@ -80,10 +80,16 @@ public class MotorConfig {
         talon.setSensorPhase(sensorPhase);
         talon.configMotionAcceleration(Cascade.VAL_MAX_ACCEL, VAL_CONFIG_TIMEOUT);
         talon.configMotionCruiseVelocity(Cascade.VAL_CRUISE_VELO, VAL_CONFIG_TIMEOUT);
-        talon.config_kF(0, Cascade.VAL_KF);
-        talon.config_kP(0, Cascade.VAL_KP);
-        talon.config_kI(0, Cascade.VAL_KI);
-        talon.config_kD(0, Cascade.VAL_KD);
+        talon.config_kF(0, Cascade.VAL_KF_DOWN);
+        talon.config_kP(0, Cascade.VAL_KP_DOWN);
+        talon.config_kI(0, Cascade.VAL_KI_DOWN);
+        talon.config_kD(0, Cascade.VAL_KD_DOWN);
+        talon.configAllowableClosedloopError(0, Cascade.VAL_CLOSEDLOOP_ERR);
+        talon.config_kF(1, Cascade.VAL_KF_UP);
+        talon.config_kP(1, Cascade.VAL_KP_UP);
+        talon.config_kI(1, Cascade.VAL_KI_UP);
+        talon.config_kD(1, Cascade.VAL_KD_UP);
+        talon.configAllowableClosedloopError(1, Cascade.VAL_CLOSEDLOOP_ERR);
         return talon;
     }
 
