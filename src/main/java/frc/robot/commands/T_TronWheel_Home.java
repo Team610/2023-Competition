@@ -16,7 +16,7 @@ public class T_TronWheel_Home extends CommandBase {
     @Override
     public void initialize() {
         tronWheelInst_m.tronRevLimit();
-        tronWheelInst_m.rotate(-0.2);
+        tronWheelInst_m.rotate(-0.3);
     }
 
     @Override
