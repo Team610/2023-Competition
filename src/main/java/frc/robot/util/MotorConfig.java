@@ -4,6 +4,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -78,8 +80,8 @@ public class MotorConfig {
         talon.setNeutralMode(NeutralMode.Brake);
         talon.setInverted(inverted);
         talon.setSensorPhase(sensorPhase);
-        talon.configMotionAcceleration(Cascade.VAL_MAX_ACCEL, VAL_CONFIG_TIMEOUT);
-        talon.configMotionCruiseVelocity(Cascade.VAL_CRUISE_VELO, VAL_CONFIG_TIMEOUT);
+        talon.configMotionAcceleration(Cascade.VAL_MAX_ACCEL_UP, VAL_CONFIG_TIMEOUT);
+        talon.configMotionCruiseVelocity(Cascade.VAL_CRUISE_VELO_UP, VAL_CONFIG_TIMEOUT);
         talon.config_kF(0, Cascade.VAL_KF_DOWN);
         talon.config_kP(0, Cascade.VAL_KP_DOWN);
         talon.config_kI(0, Cascade.VAL_KI_DOWN);
@@ -90,6 +92,7 @@ public class MotorConfig {
         talon.config_kI(1, Cascade.VAL_KI_UP);
         talon.config_kD(1, Cascade.VAL_KD_UP);
         talon.configAllowableClosedloopError(1, Cascade.VAL_CLOSEDLOOP_ERR);
+        talon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(false, 10, 30, 500), VAL_CONFIG_TIMEOUT);
         return talon;
     }
 

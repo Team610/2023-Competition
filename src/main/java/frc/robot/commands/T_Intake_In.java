@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
@@ -29,6 +30,8 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public void initialize() {
+        intakeInst_m.setIntaking(true);
+        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.05);
     }
 
     @Override
@@ -51,5 +54,8 @@ public class T_Intake_In extends CommandBase {
     public void end(boolean interrupted) {
         filter_m.reset();
         intakeInst_m.stopIntake();
+        intakeInst_m.setIntaking(false);
+        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0);
+
     }
 }

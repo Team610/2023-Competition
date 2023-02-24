@@ -59,21 +59,23 @@ public final class Constants {
         public static final double VAL_MAX_SPEED_IN = 0.2;
 
         public static final int VAL_MAX_TICKS = 145000;  // Max ticks for cascade to extend
-        public static final double VAL_CRUISE_VELO = 145000/15;  // Ticks per 100ms
-        public static final double VAL_MAX_ACCEL = VAL_CRUISE_VELO*2;
+        public static final double VAL_CRUISE_VELO_UP = 15000;  // Ticks per 100ms
+        public static final double VAL_MAX_ACCEL_UP = 15000;
+        public static final double VAL_CRUISE_VELO_DOWN = 9666;  // Ticks per 100ms
+        public static final double VAL_MAX_ACCEL_DOWN = 9666;
         public static final int VAL_CONCERT_TICKS = 1450; //Tick to percent conversion factor
         
-        public static final double VAL_KP_DOWN = 0.153;
+        public static final double VAL_KP_DOWN = 0.153;  // Slot 0
         public static final double VAL_KI_DOWN = 0;
         public static final double VAL_KD_DOWN = 15;
         public static final double VAL_KF_DOWN = 0.3;
-        public static final double VAL_KP_UP = 0.153;
+        public static final double VAL_KP_UP = 0.14;  // Slot 1
         public static final double VAL_KI_UP = 0;
-        public static final double VAL_KD_UP = 15;
-        public static final double VAL_KF_UP = 0.3;
+        public static final double VAL_KD_UP = 0;
+        public static final double VAL_KF_UP = 0.08;
 
         public static final double VAL_FEEDFORWARD = 0.08;
-        public static final double VAL_CLOSEDLOOP_ERR = 950;
+        public static final double VAL_CLOSEDLOOP_ERR = 300;
 
         public static final double UNIT_TICKS_PER_REV = 20480;
         public static final double UNIT_DIAM_PULLEY = 3.36; // average diameter of pulley, accounting for piling strings
@@ -83,8 +85,8 @@ public final class Constants {
         public static final double UNIT_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
         // Preset units are in ticks
-        public static final double VAL_MID_PRESET = CALC_TICKS(34);
-        public static final double VAL_HIGH_PRESET = CALC_TICKS(46);
+        public static final double VAL_MID_PRESET = CALC_TICKS(33);
+        public static final double VAL_HIGH_PRESET = CALC_TICKS(45.5);
         public static final double VAL_RAMP_PRESET = 14000;
         public static final double VAL_GROUND_PRESET = 1940;
         public static final double VAL_TRANSPORT_PRESET = 10000+CALC_TICKS(2);
@@ -119,14 +121,14 @@ public final class Constants {
         public static final double VAL_ANGLE_RAMP = 16000;  // ticks
         public static final double VAL_ANGLE_SCORE = 1000;
         public static final double VAL_ANGLE_GROUND_INIT = 27500;  // angle to pickup from ground start
-        public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+1500;  // angle to pickup from ground finish
+        public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+1800;  // angle to pickup from ground finish
         public static final double VAL_ANGLE_TRANSPORT = 10000;
     }
 
     public static class Intake {
         public static final int CAN_INTAKE_SRX = 3;
 
-        public static final double VAL_IN_PERCENT = 10/12.0;
+        public static final double VAL_IN_PERCENT = 11/12.0;
         public static final double VAL_OUT_PERCENT = -0.4;
         public static final double VAL_HOLD_PERCENT = 0.3;
 

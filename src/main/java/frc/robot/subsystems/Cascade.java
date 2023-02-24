@@ -44,17 +44,19 @@ public class Cascade extends Subsystem610 {
     }
 
     /**
-     * Uses MotionMagic to spin the motor to a set position
+     * Spin the cascade motor using Motion Magic based on direction to move
+     * @param down Direction the cascade is moving
      */
     public void spinMagic(boolean down) {
-        // cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
         if(down){
-            cascadeFX_m.selectProfileSlot(0, 0);
-            cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m, DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
+            cascadeFX_m.configMotionAcceleration(VAL_MAX_ACCEL_DOWN, VAL_CONFIG_TIMEOUT);
+            cascadeFX_m.configMotionCruiseVelocity(VAL_CRUISE_VELO_DOWN, VAL_CONFIG_TIMEOUT);
         } else {
-            cascadeFX_m.selectProfileSlot(1, 0);
-            cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m, DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
+            cascadeFX_m.configMotionAcceleration(VAL_MAX_ACCEL_UP, VAL_CONFIG_TIMEOUT);
+            cascadeFX_m.configMotionCruiseVelocity(VAL_CRUISE_VELO_UP, VAL_CONFIG_TIMEOUT);
         }
+        // cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m, DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
+        cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
     }
 
     /**
@@ -134,14 +136,14 @@ public class Cascade extends Subsystem610 {
         SmartDashboard.putString("Cascade Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Cascade Preset", targetPos_m);
         SmartDashboard.putBoolean("Cascade Manual Mode", getManual());
-      
-    }
-
-    @Override
-    public void addToDriveTab(ShuffleboardTab tab) {
+        SmartDashboard.putNumber("Cascade Supply Current", cascadeFX_m.getSupplyCurrent());
     }
 
     @Override
     public void initSendable(SendableBuilder builder) {
+    }
+    
+    @Override
+    public void addToDriveTab(ShuffleboardTab tab) {
     }
 }

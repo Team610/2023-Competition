@@ -18,11 +18,13 @@ public class Intake extends Subsystem610 {
     private static Intake intakeInst_s;
     private WPI_TalonSRX intakeSRX_m;
     private static LinearFilter singlePoleIIR;
+    private boolean intaking_m;
 
     private Intake() {
         super("Intake");
         intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX);
         singlePoleIIR = LinearFilter.singlePoleIIR(0.5, 0.02);
+        intaking_m = false;
     }
 
     public static Intake getInstance() {
@@ -62,6 +64,15 @@ public class Intake extends Subsystem610 {
         SmartDashboard.putNumber("Intake Supply Current", getSRXSupplyCurrent());
         SmartDashboard.putNumber("single pole", singlePoleIIR.calculate(getSRXSupplyCurrent()));
         SmartDashboard.putBoolean("Floor Lim", getHasGamePiece());
+        SmartDashboard.putBoolean("Rollers Running", getIntaking());
+    }
+
+    public boolean getIntaking() {
+        return intaking_m;
+    }
+
+    public void setIntaking(boolean intaking) {
+        intaking_m = intaking;
     }
 
     @Override
