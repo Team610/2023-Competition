@@ -14,11 +14,13 @@ import static frc.robot.Constants.StationPID.*;
 
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.system.plant.DCMotor;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -42,9 +44,8 @@ public class Drivetrain extends Subsystem610 {
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
 
-    private PIDController pidBal_m;
     private PIDController pidTilt_m;
-    private PIDController pidHeight_m;
+    private ProfiledPIDController pidTrapAng_m;
 
     private static Deque<Double> dq_s;
     private static double prevErr;
@@ -95,12 +96,12 @@ public class Drivetrain extends Subsystem610 {
         // kPPID_s = Math.sin(Math.toRadians(pidgey_m.getPitch()))*0.65;
         //System.out.print(kPPID_s);
         // SmartDashboard.putNumber("kP", kPPID_s);
-        pidBal_m = new PIDController(VAL_KP_BAL_PID, VAL_KI_BAL_PID, VAL_KD_BAL_PID);
+        ProfiledPIDController pidTrapAng_m =  new ProfiledPIDController(VAL_KP_ANG_PID, VAL_KI_ANG_PID, VAL_KD_ANG_PID,new TrapezoidProfile.Constraints(5, 10));
         pidTilt_m = new PIDController(VAL_KP_TILT_PID, VAL_KI_TILT_PID, VAL_KD_TILT_PID);
-        pidHeight_m = new PIDController(VAL_KP_TILT_PID, VAL_KI_TILT_PID, VAL_KD_TILT_PID);
-        SmartDashboard.putNumber("P", pidBal_m.getP());
-        SmartDashboard.putNumber("I", pidBal_m.getI());
-        SmartDashboard.putNumber("D", pidBal_m.getD());
+        //pidHeight_m = new PIDController(VAL_KP_HEIGHT_PID, VAL_KI_HEIGHT_PID, VAL_KD_HEIGHT_PID);
+        // SmartDashboard.putNumber("P", pidBal_m.getP());
+        // SmartDashboard.putNumber("I", pidBal_m.getI());
+        // SmartDashboard.putNumber("D", pidBal_m.getD());
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
 
         //inputs = new DrivetrainIOInputsAutoLogged();
@@ -303,8 +304,8 @@ public class Drivetrain extends Subsystem610 {
     public void adjustPIDStation(){
         SmartDashboard.putNumber("Motor Speed", pidBal_m.calculate(pidgey_m.getPitch(),0));   
         pidBal_m.setTolerance(VAL_BAL_TOLERANCE,0);
-        driveInst_s.setLeft(pidBal_m.calculate(pidgey_m.getPitch(),0));
-        driveInst_s.setRight(pidBal_m.calculate(pidgey_m.getPitch(),0));
+        driveInst_s.setLeft(pidTilt_m.calculate(pidgey_m.getPitch(),0));
+        driveInst_s.setRight(pidTilt_m.calculate(pidgey_m.getPitch(),0));
     }
 
     /**
@@ -317,11 +318,11 @@ public class Drivetrain extends Subsystem610 {
         SmartDashboard.putNumber("Current Pitch", pidgey_m.getPitch());
         SmartDashboard.putNumber("Error", pidTilt_m.getPositionError());
         SmartDashboard.putNumber("Motor Velocity", -1*pidTilt_m.calculate(pidgey_m.getPitch(),-11));
-
-        driveInst_s.setLeft(-1*pidTilt_m.calculate(pidgey_m.getPitch(),-11));
-        driveInst_s.setRight(-1*pidTilt_m.calculate(pidgey_m.getPitch(),-11));
-        dq_s.addFirst(pidTilt_m.getPositionError());
-        if(dq_s.size()>=7){
+//TODO change for direction of robot
+        driveInst_s.setLeft(-1*pidBal_m.calculate(pidgey_m.getPitch(),-11));
+        driveInst_s.setRight(-1*pidBal_m.calculate(pidgey_m.getPitch(),-11));
+        dq_s.addFirst(pidBal_m.getPositionError());
+        if(dq_s.size()>=10){
             dq_s.removeLast();
         }
     }
@@ -329,7 +330,6 @@ public class Drivetrain extends Subsystem610 {
     public boolean testTilt(){
         Iterator<Double> it = dq_s.iterator();
         curErr = dq_s.removeFirst();
-        
         dq_s.addFirst(prevErr);
         while (it.hasNext()) {
             prevErr = curErr;
@@ -344,13 +344,13 @@ public class Drivetrain extends Subsystem610 {
     /**PID for height using WPILIB PID controller */
     public void adjustPIDHeightStation(double leftInitial_s, double rightInitial_s){
         //todo adjust setpoint
-        driveInst_s.setLeft(pidHeight_m.calculate(Math.sin(pidgey_m.getPitch())*Math.abs(getLeftMeters()-leftInitial_s),VAL_PID_TILT_SET));
-        driveInst_s.setRight(pidHeight_m.calculate(Math.sin(pidgey_m.getPitch())*Math.abs(getRightMeters()-rightInitial_s),VAL_PID_TILT_SET));
+        setLeft(pidHeight_m.calculate(Math.sin(pidgey_m.getPitch())*Math.abs(getLeftMeters()-leftInitial_s),VAL_PID_TILT_SET));
+        setRight(pidHeight_m.calculate(Math.sin(pidgey_m.getPitch())*Math.abs(getRightMeters()-rightInitial_s),VAL_PID_TILT_SET));
     }
 
     @Override
     public void initSendable(SendableBuilder builder) {
-        // TODO Auto-generated method stub
+        // TODO Auto-generated method stub  
     }
 
     @Override

@@ -35,8 +35,8 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;
         SmartDashboard.putNumber("Pitch Value", drivetrainInst_m.getPitch());   
-        drivetrainInst_m.setLeft(leftSpeed);
-        drivetrainInst_m.setRight(rightSpeed);
+        drivetrainInst_m.setLeft(leftSpeed/2);
+        drivetrainInst_m.setRight(rightSpeed/2);
     }
 
 }
