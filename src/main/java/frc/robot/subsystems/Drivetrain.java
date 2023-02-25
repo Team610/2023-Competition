@@ -302,7 +302,8 @@ public class Drivetrain extends Subsystem610 {
     */
 
     public void adjustPIDStation(){
-        pidTrapAng_m.setTolerance(VAL_BAL_TOLERANCE,VAL_VELO_TOLERANCE);
+        pidTrapAng_m.setTolerance(VAL_BAL_TOLERANCE,VAL_VELO_TOLERANCE);//sets the tolerance to the error tolerance and the velocity tolerance
+        //set both motor to trapezoid PID controller's output
         driveInst_s.setLeft(pidTrapAng_m.calculate(pidgey_m.getPitch(),0));
         driveInst_s.setRight(pidTrapAng_m.calculate(pidgey_m.getPitch(),0));
     }
