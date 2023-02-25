@@ -50,9 +50,11 @@ public class A_Test_Path extends SequentialCommandGroup {
                 //     Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)),
                 //         new T_Intake_Out()
                         // new T_Cascade_Home(),
-                        new InstantCommand(() -> {
-                                driveInst_m.resetOdometry(testTraj_m.getInitialPose());
-                        }),
+
+                        // new InstantCommand(() -> {
+                        //         driveInst_m.resetOdometry(testTraj_m.getInitialPose());
+                        // }),
+                        new A_Reset_Odometry(testTraj_m),
                         RamseteSetup.initializeRamseteCommand(testTraj_m)
                 );
         }

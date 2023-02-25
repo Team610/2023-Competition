@@ -66,7 +66,7 @@ public final class RamseteSetup {
                 // RamseteCommand passes volts to the callback
                 driveInst_m::tankDriveVolts,
                 driveInst_m);
-
+        
         // Reset odometry to the starting pose of the trajectory.
         driveInst_m.resetOdometry(traj.getInitialPose());
 

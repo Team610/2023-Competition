@@ -35,6 +35,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     RobotContainer.drivetrainInst_s.setCoast();
+    RobotContainer.cascadeInst_s.setSafety(SmartDashboard.getBoolean("Cascade Safety", true));
+    RobotContainer.tronWheelInst_s.setSafety(SmartDashboard.getBoolean("Tron Wheel Safety", true));
   }
 
   @Override
@@ -60,9 +62,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {
     RobotContainer.drivetrainInst_s.setBrake();
-    RobotContainer.cascadeInst_s.setSafety(SmartDashboard.getBoolean("Cascade Safety", true));
-    RobotContainer.tronWheelInst_s.setSafety(SmartDashboard.getBoolean("Tron Wheel Safety", true));
-    
+
     if (autonomousCommand_m != null) {
       autonomousCommand_m.cancel();
     }
