@@ -10,9 +10,11 @@ public class A_Cascade_Move extends CommandBase {
     private Cascade cascadeInst_m;
     private boolean down;
     private double preset_m;
+    private int timer_m;
 
-    public A_Cascade_Move(double preset) {
+    public A_Cascade_Move(double preset, int timer) {
         preset_m = preset;
+        timer_m = timer;
         cascadeInst_m = Cascade.getInstance();
         addRequirements(cascadeInst_m);
     }
@@ -34,7 +36,7 @@ public class A_Cascade_Move extends CommandBase {
 
     @Override
     public boolean isFinished(){
-        return cascadeInst_m.getLoopCount() >= 110;
+        return cascadeInst_m.getLoopCount() >= timer_m;
     }
 
     @Override

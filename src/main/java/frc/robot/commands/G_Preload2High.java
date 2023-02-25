@@ -34,7 +34,7 @@ public class G_Preload2High extends SequentialCommandGroup {
          * occurence
          */
         public G_Preload2High() {
-                String testPath = "paths/output/Unnamed.wpilib.json";
+                String testPath = "paths/output/Preload6High.wpilib.json";
                 Path test = Filesystem.getDeployDirectory().toPath().resolve(testPath);
                 driveInst_m = Drivetrain.getInstance();
                 addRequirements(driveInst_m);
@@ -49,12 +49,13 @@ public class G_Preload2High extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET), new A_Intake_In()),
-                        new A_Intake_Out()
-
-                        // Commands.parallel(
-                        //         Commands.sequence(new A_Reset_Odometry(testTraj_m), RamseteSetup.initializeRamseteCommand(testTraj_m)),
-                        //         new A_Intake_Auto())
+                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(25)),
+                        new A_Intake_Out(),
+                        Commands.parallel(
+                                Commands.sequence(new A_Reset_Odometry(testTraj_m), RamseteSetup.initializeRamseteCommand(testTraj_m)),
+                                Commands.sequence(
+                                        Commands.parallel(new A_Cascade_Move(VAL_GROUND_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)),
+                                        new A_Intake_In(500)))
                 );
         }
 }

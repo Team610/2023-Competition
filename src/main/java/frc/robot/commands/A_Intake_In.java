@@ -19,12 +19,12 @@ import static frc.robot.Constants.Cascade.*;
 public class A_Intake_In extends CommandBase {
     private Intake intakeInst_m;
     private TronWheel tronWheelInst_m;
-    private LinearFilter filter_m;
+    private int timer_m;
 
-    public A_Intake_In() {
+    public A_Intake_In(int timer) {
+        timer_m = timer;
         intakeInst_m = Intake.getInstance();
         tronWheelInst_m = TronWheel.getInstance();
-        filter_m = LinearFilter.singlePoleIIR(0.5, 0.02);
         addRequirements(intakeInst_m);
     }
 
@@ -41,19 +41,18 @@ public class A_Intake_In extends CommandBase {
         intakeInst_m.intake(VAL_IN_PERCENT);
         if(tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT && tronWheelInst_m.checkClosedLoop()){
             if(intakeInst_m.getHasGamePiece()) {
-                CommandScheduler.getInstance().schedule(new T_TronWheel_Preset(VAL_ANGLE_GROUND_FINAL));
+                CommandScheduler.getInstance().schedule(new A_TronWheel_Move(VAL_ANGLE_GROUND_FINAL, 25));
             }
         }
     }
 
     @Override
     public boolean isFinished() {
-        return intakeInst_m.getLoopCount() >= 25;
+        return intakeInst_m.getLoopCount() >= timer_m;
     }
 
     @Override
     public void end(boolean interrupted) {
-        filter_m.reset();
         intakeInst_m.stopIntake();
         intakeInst_m.setIntaking(false);
         RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0);
