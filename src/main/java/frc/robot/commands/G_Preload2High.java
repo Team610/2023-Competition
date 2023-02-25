@@ -19,12 +19,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.util.RamseteSetup;
 import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.RobotContainer;
 import frc.robot.commands.T_Cascade_Home;
 
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class A_Test_Path extends SequentialCommandGroup {
+public class G_Preload2High extends SequentialCommandGroup {
         private Drivetrain driveInst_m;
         private Trajectory testTraj_m;
 
@@ -32,11 +33,12 @@ public class A_Test_Path extends SequentialCommandGroup {
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public A_Test_Path() {
+        public G_Preload2High() {
                 String testPath = "paths/output/Unnamed.wpilib.json";
                 Path test = Filesystem.getDeployDirectory().toPath().resolve(testPath);
                 driveInst_m = Drivetrain.getInstance();
                 addRequirements(driveInst_m);
+                RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_PRESET);
 
                 testTraj_m = null;
                 try {
@@ -46,16 +48,13 @@ public class A_Test_Path extends SequentialCommandGroup {
                 }
 
                 addCommands(
-                //     Commands.parallel(RamseteSetup.initializeRamseteCommand(testTraj), new T_TronWheel_Home(), new T_Cascade_Home()),
-                //     Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)),
-                //         new T_Intake_Out()
-                        // new T_Cascade_Home(),
+                        new A_Disable_Safeties(),
+                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET), new A_Intake_In()),
+                        new A_Intake_Out()
 
-                        // new InstantCommand(() -> {
-                        //         driveInst_m.resetOdometry(testTraj_m.getInitialPose());
-                        // }),
-                        new A_Reset_Odometry(testTraj_m),
-                        RamseteSetup.initializeRamseteCommand(testTraj_m)
+                        // Commands.parallel(
+                        //         Commands.sequence(new A_Reset_Odometry(testTraj_m), RamseteSetup.initializeRamseteCommand(testTraj_m)),
+                        //         new A_Intake_Auto())
                 );
         }
 }

@@ -16,6 +16,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     robotContainer_m = new RobotContainer();
+    RobotContainer.drivetrainInst_s.resetSensors();
     RobotContainer.cascadeInst_s.setSafety(true);
     RobotContainer.tronWheelInst_s.setSafety(true);
   }

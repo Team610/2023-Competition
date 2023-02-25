@@ -107,6 +107,10 @@ public class Cascade extends Subsystem610 {
         return cascadeFX_m.getSelectedSensorPosition();
     }
 
+    public void setTicks(double ticks) {
+        cascadeFX_m.setSelectedSensorPosition(ticks);
+    }
+
     /**
      * converts ticks of cascade encoder to inches travelled
      * @param ticks: encoder ticks of distance travelled

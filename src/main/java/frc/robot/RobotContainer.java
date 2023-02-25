@@ -8,7 +8,7 @@ import frc.robot.commands.T_Cascade_Home;
 import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
 
-import frc.robot.commands.A_Test_Path;
+import frc.robot.commands.G_Preload2High;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
@@ -46,15 +46,6 @@ public class RobotContainer {
   public static Intake intakeInst_s;
 
   public RobotContainer() {
-    autoChooser_m.setDefaultOption("Test Path", new A_Test_Path());
-    SmartDashboard.putData("Auto Chooser", autoChooser_m);
-
-    driver_s = new CommandXboxController(PORT_DRIVER);
-    operator_s = new CommandXboxController(PORT_OPERATOR);
-
-    driverRumble_s = new XboxController(PORT_DRIVER);
-    operatorRumble_s = new XboxController(PORT_OPERATOR);
-
     drivetrainInst_s = Drivetrain.getInstance();
     drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
     cascadeInst_s = Cascade.getInstance();
@@ -62,6 +53,15 @@ public class RobotContainer {
     tronWheelInst_s = TronWheel.getInstance();
     tronWheelInst_s.setDefaultCommand(new T_TronWheel_Move());
     intakeInst_s = Intake.getInstance();
+
+    autoChooser_m.setDefaultOption("Test Path", new G_Preload2High());
+    SmartDashboard.putData("Auto Chooser", autoChooser_m);
+
+    driver_s = new CommandXboxController(PORT_DRIVER);
+    operator_s = new CommandXboxController(PORT_OPERATOR);
+
+    driverRumble_s = new XboxController(PORT_DRIVER);
+    operatorRumble_s = new XboxController(PORT_OPERATOR);
 
     configureBindings();
   }
