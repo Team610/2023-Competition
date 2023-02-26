@@ -90,6 +90,7 @@ public final class Constants {
         public static final double VAL_RAMP_PRESET = 14000;
         public static final double VAL_GROUND_PRESET = 1940;
         public static final double VAL_TRANSPORT_PRESET = 11000;
+        public static final double VAL_LINEUP_PRESET = 50000;
 
         /**
          * Converts vertical height to ticks for cascade arm to travel
@@ -97,7 +98,7 @@ public final class Constants {
          * @return
          */
         public static final double CALC_TICKS(double inches) {
-            return ((inches-3.5)/Math.sin(UNIT_ANGLE)) * (UNIT_INCHES_TO_TICKS);
+            return ((inches-1)/Math.sin(UNIT_ANGLE)) * (UNIT_INCHES_TO_TICKS);
         }
     }
 
@@ -119,7 +120,7 @@ public final class Constants {
         public static final double VAL_KF = 0.4;
 
         public static final double VAL_ANGLE_RAMP = 16000;  // ticks
-        public static final double VAL_ANGLE_SCORE = 1000;
+        public static final double VAL_ANGLE_SCORE = 0;
         public static final double VAL_ANGLE_GROUND_INIT = 27500;  // angle to pickup from ground start
         public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+1800;  // angle to pickup from ground finish
         public static final double VAL_ANGLE_TRANSPORT = 10000;

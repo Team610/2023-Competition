@@ -94,6 +94,8 @@ public class RobotContainer {
 
     operator_s.y().onTrue(
         Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
+      
+    operator_s.rightBumper().onTrue(new T_Cascade_Preset(VAL_LINEUP_PRESET));
   }
 
   public Command getAutonomousCommand() {

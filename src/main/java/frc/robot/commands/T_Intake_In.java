@@ -31,7 +31,7 @@ public class T_Intake_In extends CommandBase {
     @Override
     public void initialize() {
         intakeInst_m.setIntaking(true);
-        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.05);
+        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.03);
     }
 
     @Override
