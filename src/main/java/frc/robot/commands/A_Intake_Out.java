@@ -22,7 +22,7 @@ public class A_Intake_Out extends CommandBase {
     @Override
     public void execute() {
         intakeInst_m.incrementLoopCount();
-        intakeInst_m.intake(VAL_OUT_PERCENT);
+        intakeInst_m.intake(VAL_OUT_NORMAL);
     }
 
     /**

@@ -119,7 +119,7 @@ public class MotorConfig {
     public static WPI_TalonSRX configIntakeMotor(int CAN_ID) {
         WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
         talon.setNeutralMode(NeutralMode.Brake);
-        talon.setInverted(false);
+        talon.setInverted(true);
         talon.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         talon.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
         talon.configAllowableClosedloopError(0, VAL_CONFIG_TIMEOUT);

@@ -8,8 +8,10 @@ import static frc.robot.Constants.Intake.*;
 
 public class T_Intake_Out extends CommandBase {
     private Intake intakeInst_m;
+    private double speed_m;
 
-    public T_Intake_Out() {
+    public T_Intake_Out(double speed) {
+        speed_m = speed;
         intakeInst_m = Intake.getInstance();
         addRequirements(intakeInst_m);
     }
@@ -20,7 +22,7 @@ public class T_Intake_Out extends CommandBase {
 
     @Override
     public void execute() {
-        intakeInst_m.intake(VAL_OUT_PERCENT);
+        intakeInst_m.intake(speed_m);
     }
 
     /**

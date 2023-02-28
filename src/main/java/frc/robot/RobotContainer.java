@@ -32,6 +32,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Cascade.*;
 import static frc.robot.Constants.TronWheel.*;
+import static frc.robot.Constants.Intake.*;
 
 public class RobotContainer {
   SendableChooser<Command> autoChooser_m = new SendableChooser<>();
@@ -72,7 +73,8 @@ public class RobotContainer {
   private void configureBindings() {
     // ! Driver Controls
     driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
-    driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out());
+    driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
+    driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
 
     // ! Operator Controls
     operator_s.back()

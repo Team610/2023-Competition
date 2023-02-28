@@ -24,14 +24,14 @@ public class T_Intake_In extends CommandBase {
     public T_Intake_In() {
         intakeInst_m = Intake.getInstance();
         tronWheelInst_m = TronWheel.getInstance();
-        filter_m = LinearFilter.singlePoleIIR(0.5, 0.02);
+        filter_m = LinearFilter.singlePoleIIR(0.5, 0.01);
         addRequirements(intakeInst_m);
     }
 
     @Override
     public void initialize() {
         intakeInst_m.setIntaking(true);
-        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.03);
+        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
     }
 
     @Override

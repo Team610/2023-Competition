@@ -89,7 +89,7 @@ public final class Constants {
         public static final double VAL_HIGH_PRESET = CALC_TICKS(46);
         public static final double VAL_RAMP_PRESET = 14000;
         public static final double VAL_GROUND_PRESET = 1940;
-        public static final double VAL_TRANSPORT_PRESET = 11000;
+        public static final double VAL_TRANSPORT_PRESET = 14000;
         public static final double VAL_LINEUP_PRESET = 50000;
 
         /**
@@ -98,7 +98,7 @@ public final class Constants {
          * @return
          */
         public static final double CALC_TICKS(double inches) {
-            return ((inches-1)/Math.sin(UNIT_ANGLE)) * (UNIT_INCHES_TO_TICKS);
+            return ((inches-2)/Math.sin(UNIT_ANGLE)) * (UNIT_INCHES_TO_TICKS);
         }
     }
 
@@ -129,8 +129,9 @@ public final class Constants {
     public static class Intake {
         public static final int CAN_INTAKE_SRX = 3;
 
-        public static final double VAL_IN_PERCENT = 11/12.0;
-        public static final double VAL_OUT_PERCENT = -0.4;
+        public static final double VAL_IN_PERCENT = 10/12.0;
+        public static final double VAL_OUT_NORMAL = -0.3;
+        public static final double VAL_OUT_TURBO = -0.5;
         public static final double VAL_HOLD_PERCENT = 0.3;
 
         public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 10;
