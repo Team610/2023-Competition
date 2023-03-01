@@ -30,12 +30,17 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public void initialize() {
-        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
     }
 
     @Override
     public void execute() {
-        if(intakeInst_m.getIntaking()) intakeInst_m.intake(VAL_IN_PERCENT);
+        if(intakeInst_m.getIntaking()) {
+            RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
+            intakeInst_m.intake(VAL_IN_PERCENT);
+        } else {
+            RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0);
+            intakeInst_m.stopIntake();
+        }
         if(tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT && tronWheelInst_m.checkClosedLoop()){
             if(intakeInst_m.getHasGamePiece()) {
                 CommandScheduler.getInstance().schedule(new T_TronWheel_Preset(VAL_ANGLE_GROUND_FINAL));
@@ -47,14 +52,5 @@ public class T_Intake_In extends CommandBase {
     public boolean isFinished() {
         // return filter_m.calculate(intakeInst_m.getSRXSupplyCurrent()) > (VAL_CONTINUOUS_CURRENT_LIMIT+1);
         return false;
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-        filter_m.reset();
-        intakeInst_m.stopIntake();
-        intakeInst_m.setIntaking(false);
-        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0);
-
     }
 }
