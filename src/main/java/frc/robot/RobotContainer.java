@@ -104,9 +104,12 @@ public class RobotContainer {
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
     operator_s.y().onTrue(
-        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
-      
-    operator_s.rightBumper().onTrue(new T_Cascade_Preset(VAL_LINEUP_PRESET));
+        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET),
+          Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
+
+    operator_s.rightBumper().onTrue(
+        Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
+            Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
   }
