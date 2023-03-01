@@ -9,11 +9,9 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
@@ -69,7 +67,6 @@ public class Drivetrain extends Subsystem610 {
      * Sets all drivetrain motors to brake mode
      */
     public void setBrake() {
-
         leftBatman_m.setNeutralMode(NeutralMode.Brake);
         leftRobin_m.setNeutralMode(NeutralMode.Brake);
         rightBatman_m.setNeutralMode(NeutralMode.Brake);
@@ -80,45 +77,14 @@ public class Drivetrain extends Subsystem610 {
      * Sets the left batman to a desired output percentage
      * @param output Desired left side output as a percentage
      */
-    public void setLeft(double output) {
-        leftBatman_m.set(ControlMode.PercentOutput, output);
-    }
-
-    /**
-     * Sets the right batman to a desired output percentage
-     * 
-     * @param output Desired right side output as a percentage
-     */
-    public void setRight(double output) {
-        rightBatman_m.set(ControlMode.PercentOutput, output);
-    }
-
-    /**
-     * Sets the left batman to a desired output percentage, overloaded
-     * with desired control mode
-     * 
-     * @param mode   Mode of output metric
-     * @param output Desired output in percentage
-     */
-    public void setLeft(ControlMode mode, double output) {
-        leftBatman_m.set(mode, output);
-    }
-
-    /**
-     * Sets the right batman to a desired output percentage, overloaded
-     * with desired control mode
-     * 
-     * @param mode Mode of output metric
-     * @param output Desired output in percentage
-     */
-    public void setRight(ControlMode mode, double output) {
-        rightBatman_m.set(mode, output);
-    }
-
     public void setProLeft(DutyCycleOut output){
         leftBatman.setControl(output);
     }
 
+    /**
+     * Sets the right batman to a desired output percentage
+     * @param output Desired right side output as a percentage
+     */
     public void setProRight(DutyCycleOut output){
         rightBatman.setControl(output);
     }
@@ -129,15 +95,16 @@ public class Drivetrain extends Subsystem610 {
      * @param rightVolts the desired voltage for the right motor
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        setLeft(leftVolts / 12.0);
-        setRight(rightVolts / 12.0);
+        DutyCycleOut left = new DutyCycleOut(leftVolts / 12.0);
+        DutyCycleOut right = new DutyCycleOut(rightVolts / 12.0);
+        setProLeft(left);
+        setProRight(right);
     }
 
     /**
      * @return The number of meters the left batman has travelled
      */
     public double getLeftMeters() {
-        // return leftBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
         leftBatman.getPosition().refresh();
         return leftBatman.getPosition().getValue();
     }
@@ -146,7 +113,6 @@ public class Drivetrain extends Subsystem610 {
      * @return The number of meters the right batman has travelled
      */
     public double getRightMeters() {
-        // return rightBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
         rightBatman.getPosition().refresh();
         return rightBatman.getPosition().getValue();
     }
@@ -163,16 +129,14 @@ public class Drivetrain extends Subsystem610 {
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(
-                leftBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10,
-                rightBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10);
+            leftBatman.getRotorVelocity().getValue() / UNIT_DIST_PER_REV,
+            rightBatman.getRotorVelocity().getValue() / UNIT_DIST_PER_REV);
     }
 
     /**
      * Resets the drivetrain motor sensors to a value of 0
      */
     public void resetSensors() {
-        leftBatman_m.setSelectedSensorPosition(0);
-        rightBatman_m.setSelectedSensorPosition(0);
         leftBatman.setRotorPosition(0);
         rightBatman.setRotorPosition(0);
     }
