@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 
 import static frc.robot.Constants.*;
@@ -45,6 +46,7 @@ public class RobotContainer {
   public static Cascade cascadeInst_s;
   public static TronWheel tronWheelInst_s;
   public static Intake intakeInst_s;
+  public static PowerDistribution pdb_s;
 
   public RobotContainer() {
     drivetrainInst_s = Drivetrain.getInstance();
@@ -54,6 +56,7 @@ public class RobotContainer {
     tronWheelInst_s = TronWheel.getInstance();
     tronWheelInst_s.setDefaultCommand(new T_TronWheel_Move());
     intakeInst_s = Intake.getInstance();
+    pdb_s = new PowerDistribution();
 
     autoChooser_m.setDefaultOption("Test Path", new G_Preload2High());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
@@ -98,6 +101,7 @@ public class RobotContainer {
         Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
       
     operator_s.rightBumper().onTrue(new T_Cascade_Preset(VAL_LINEUP_PRESET));
+    operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
   }
 
   public Command getAutonomousCommand() {
