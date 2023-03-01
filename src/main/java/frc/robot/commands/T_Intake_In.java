@@ -30,13 +30,12 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public void initialize() {
-        intakeInst_m.setIntaking(true);
         RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
     }
 
     @Override
     public void execute() {
-        intakeInst_m.intake(VAL_IN_PERCENT);
+        if(intakeInst_m.getIntaking()) intakeInst_m.intake(VAL_IN_PERCENT);
         if(tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT && tronWheelInst_m.checkClosedLoop()){
             if(intakeInst_m.getHasGamePiece()) {
                 CommandScheduler.getInstance().schedule(new T_TronWheel_Preset(VAL_ANGLE_GROUND_FINAL));

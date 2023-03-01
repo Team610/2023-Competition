@@ -48,6 +48,8 @@ public class RobotContainer {
   public static Intake intakeInst_s;
   public static PowerDistribution pdb_s;
 
+  private static boolean rollerRunning_s;
+
   public RobotContainer() {
     drivetrainInst_s = Drivetrain.getInstance();
     drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
@@ -56,7 +58,10 @@ public class RobotContainer {
     tronWheelInst_s = TronWheel.getInstance();
     tronWheelInst_s.setDefaultCommand(new T_TronWheel_Move());
     intakeInst_s = Intake.getInstance();
+    intakeInst_s.setDefaultCommand(new T_Intake_In());
     pdb_s = new PowerDistribution();
+
+    rollerRunning_s = false;
 
     autoChooser_m.setDefaultOption("Test Path", new G_Preload2High());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
@@ -75,7 +80,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
+    // driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
+    driver_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
 
@@ -102,6 +108,7 @@ public class RobotContainer {
       
     operator_s.rightBumper().onTrue(new T_Cascade_Preset(VAL_LINEUP_PRESET));
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
+    operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
   }
 
   public Command getAutonomousCommand() {
