@@ -77,7 +77,7 @@ public class MotorConfig {
     public static TalonFX configDrivePro(int CAN_ID, boolean left) {
         TalonFX talon = new TalonFX(CAN_ID, CAN_BUS_NAME);
         MotorOutputConfigs config = new MotorOutputConfigs();
-        config.Inverted = left ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
+        config.Inverted = left ? InvertedValue.CounterClockwise_Positive : InvertedValue.Clockwise_Positive;
         config.NeutralMode = NeutralModeValue.Brake;
         talon.setSafetyEnabled(false);
         talon.getConfigurator().apply(config);

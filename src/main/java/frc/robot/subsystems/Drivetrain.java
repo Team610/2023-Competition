@@ -21,25 +21,18 @@ import com.ctre.phoenixpro.hardware.TalonFX;
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
-    private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
+    private TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
 
-    private TalonFX leftBatman, leftRobin, rightBatman, rightRobin;
-
     private Drivetrain() {
         super("Drivetrain");
-        leftBatman_m = MotorConfig.configDriveMotor(CAN_LEFT_BATMAN, false, false);
-        leftRobin_m = MotorConfig.configDriveFollower(CAN_LEFT_ROBIN, CAN_LEFT_BATMAN, false, false);
-        rightBatman_m = MotorConfig.configDriveMotor(CAN_RIGHT_BATMAN, true, false);
-        rightRobin_m = MotorConfig.configDriveFollower(CAN_RIGHT_ROBIN, CAN_RIGHT_BATMAN, true, false);
-
-        leftBatman = MotorConfig.configDrivePro(CAN_LEFT_BATMAN, true);
-        leftRobin = MotorConfig.configDrivePro(CAN_LEFT_ROBIN, true);
-        leftRobin.setControl(new Follower(leftBatman.getDeviceID(), false));
-        rightBatman = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
-        rightRobin = MotorConfig.configDrivePro(CAN_RIGHT_ROBIN, false);
-        rightRobin.setControl(new Follower(rightBatman.getDeviceID(), false));
+        leftBatman_m = MotorConfig.configDrivePro(CAN_LEFT_BATMAN, true);
+        leftRobin_m = MotorConfig.configDrivePro(CAN_LEFT_ROBIN, true);
+        leftRobin_m.setControl(new Follower(leftBatman_m.getDeviceID(), false));
+        rightBatman_m = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
+        rightRobin_m = MotorConfig.configDrivePro(CAN_RIGHT_ROBIN, false);
+        rightRobin_m.setControl(new Follower(rightBatman_m.getDeviceID(), false));
 
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
@@ -57,20 +50,20 @@ public class Drivetrain extends Subsystem610 {
      * Sets all drivetrain motors to coast mode
      */
     public void setCoast() {
-        leftBatman_m.setNeutralMode(NeutralMode.Coast);
-        leftRobin_m.setNeutralMode(NeutralMode.Coast);
-        rightBatman_m.setNeutralMode(NeutralMode.Coast);
-        rightRobin_m.setNeutralMode(NeutralMode.Coast);
+        // leftBatman_m.setNeutralMode(NeutralMode.Coast);
+        // leftRobin_m.setNeutralMode(NeutralMode.Coast);
+        // rightBatman_m.setNeutralMode(NeutralMode.Coast);
+        // rightRobin_m.setNeutralMode(NeutralMode.Coast);
     }
 
     /**
      * Sets all drivetrain motors to brake mode
      */
     public void setBrake() {
-        leftBatman_m.setNeutralMode(NeutralMode.Brake);
-        leftRobin_m.setNeutralMode(NeutralMode.Brake);
-        rightBatman_m.setNeutralMode(NeutralMode.Brake);
-        rightRobin_m.setNeutralMode(NeutralMode.Brake);
+        // leftBatman_m.setNeutralMode(NeutralMode.Brake);
+        // leftRobin_m.setNeutralMode(NeutralMode.Brake);
+        // rightBatman_m.setNeutralMode(NeutralMode.Brake);
+        // rightRobin_m.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
@@ -78,7 +71,7 @@ public class Drivetrain extends Subsystem610 {
      * @param output Desired left side output as a percentage
      */
     public void setProLeft(DutyCycleOut output){
-        leftBatman.setControl(output);
+        leftBatman_m.setControl(output);
     }
 
     /**
@@ -86,7 +79,7 @@ public class Drivetrain extends Subsystem610 {
      * @param output Desired right side output as a percentage
      */
     public void setProRight(DutyCycleOut output){
-        rightBatman.setControl(output);
+        rightBatman_m.setControl(output);
     }
 
     /**
@@ -105,16 +98,16 @@ public class Drivetrain extends Subsystem610 {
      * @return The number of meters the left batman has travelled
      */
     public double getLeftMeters() {
-        leftBatman.getPosition().refresh();
-        return leftBatman.getPosition().getValue();
+        leftBatman_m.getPosition().refresh();
+        return leftBatman_m.getPosition().getValue();
     }
 
     /**
      * @return The number of meters the right batman has travelled
      */
     public double getRightMeters() {
-        rightBatman.getPosition().refresh();
-        return rightBatman.getPosition().getValue();
+        rightBatman_m.getPosition().refresh();
+        return rightBatman_m.getPosition().getValue();
     }
 
     /**
@@ -129,16 +122,16 @@ public class Drivetrain extends Subsystem610 {
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(
-            leftBatman.getRotorVelocity().getValue() / UNIT_DIST_PER_REV,
-            rightBatman.getRotorVelocity().getValue() / UNIT_DIST_PER_REV);
+            leftBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV,
+            rightBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV);
     }
 
     /**
      * Resets the drivetrain motor sensors to a value of 0
      */
     public void resetSensors() {
-        leftBatman.setRotorPosition(0);
-        rightBatman.setRotorPosition(0);
+        leftBatman_m.setRotorPosition(0);
+        rightBatman_m.setRotorPosition(0);
     }
 
     /**
