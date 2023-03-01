@@ -7,8 +7,13 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
+import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenixpro.configs.MotorOutputConfigs;
+import com.ctre.phoenixpro.hardware.TalonFX;
+import com.ctre.phoenixpro.signals.InvertedValue;
+import com.ctre.phoenixpro.signals.NeutralModeValue;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Intake.*;
@@ -68,6 +73,16 @@ public class MotorConfig {
     public static WPI_TalonFX configDriveFollower(int CAN_ID, int remoteId, boolean inverted, boolean sensorPhase) {
         WPI_TalonFX talon = MotorConfig.configDriveMotor(CAN_ID, inverted, sensorPhase);
         talon.set(ControlMode.Follower, remoteId);
+        return talon;
+    }
+
+    public static TalonFX configDrivePro(int CAN_ID, boolean left) {
+        TalonFX talon = new TalonFX(CAN_ID, CAN_BUS_NAME);
+        MotorOutputConfigs config = new MotorOutputConfigs();
+        config.Inverted = left ? InvertedValue.Clockwise_Positive : InvertedValue.CounterClockwise_Positive;
+        config.NeutralMode = NeutralModeValue.Brake;
+        talon.setSafetyEnabled(false);
+        talon.getConfigurator().apply(config);
         return talon;
     }
 

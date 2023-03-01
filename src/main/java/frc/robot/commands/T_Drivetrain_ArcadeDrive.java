@@ -2,6 +2,9 @@ package frc.robot.commands;
 
 
 import static frc.robot.Constants.*;
+
+import com.ctre.phoenixpro.controls.DutyCycleOut;
+
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Cascade;
 import frc.robot.subsystems.Drivetrain;
@@ -16,10 +19,14 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
     private Drivetrain drivetrainInst_m;
     private Cascade cascadeInt_m;
 
+    private DutyCycleOut leftOut, rightOut;
+
     public T_Drivetrain_ArcadeDrive() {
         drivetrainInst_m = Drivetrain.getInstance();
         cascadeInt_m = Cascade.getInstance();
         addRequirements(drivetrainInst_m);
+
+        leftOut = rightOut = new DutyCycleOut(0);
     }
 
 
@@ -36,11 +43,13 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         x = x * x * x;
         if(cascadeInt_m.cascadeTickPercent() >= .45){
         y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
-        }else{y *= turbo ? 1 : 0.8;}
+        } else {
+            y *= turbo ? 1 : 0.8;
+        }
         x *= 0.7;
-        double leftSpeed = -y + x;
-        double rightSpeed = -y - x;
-        drivetrainInst_m.setLeft(leftSpeed);
-        drivetrainInst_m.setRight(rightSpeed);
+        leftOut.Output = -y + x;
+        rightOut.Output = -y - x;
+        drivetrainInst_m.setProLeft(leftOut);
+        drivetrainInst_m.setProRight(rightOut);
     }
 }

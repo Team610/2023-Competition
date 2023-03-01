@@ -17,6 +17,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.ctre.phoenixpro.controls.DutyCycleOut;
+import com.ctre.phoenixpro.controls.Follower;
+import com.ctre.phoenixpro.hardware.TalonFX;
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
@@ -24,12 +27,21 @@ public class Drivetrain extends Subsystem610 {
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
 
+    private TalonFX leftBatman, leftRobin, rightBatman, rightRobin;
+
     private Drivetrain() {
         super("Drivetrain");
         leftBatman_m = MotorConfig.configDriveMotor(CAN_LEFT_BATMAN, false, false);
         leftRobin_m = MotorConfig.configDriveFollower(CAN_LEFT_ROBIN, CAN_LEFT_BATMAN, false, false);
         rightBatman_m = MotorConfig.configDriveMotor(CAN_RIGHT_BATMAN, true, false);
         rightRobin_m = MotorConfig.configDriveFollower(CAN_RIGHT_ROBIN, CAN_RIGHT_BATMAN, true, false);
+
+        leftBatman = MotorConfig.configDrivePro(CAN_LEFT_BATMAN, true);
+        leftRobin = MotorConfig.configDrivePro(CAN_LEFT_ROBIN, true);
+        leftRobin.setControl(new Follower(leftBatman.getDeviceID(), false));
+        rightBatman = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
+        rightRobin = MotorConfig.configDrivePro(CAN_RIGHT_ROBIN, false);
+        rightRobin.setControl(new Follower(rightBatman.getDeviceID(), false));
 
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
@@ -103,6 +115,14 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m.set(mode, output);
     }
 
+    public void setProLeft(DutyCycleOut output){
+        leftBatman.setControl(output);
+    }
+
+    public void setProRight(DutyCycleOut output){
+        rightBatman.setControl(output);
+    }
+
     /**
      * Sets the robot to drive based on a voltage number, uses setLeft and setRight methods to do it
      * @param leftVolts the desired voltage for the left motor
@@ -117,14 +137,18 @@ public class Drivetrain extends Subsystem610 {
      * @return The number of meters the left batman has travelled
      */
     public double getLeftMeters() {
-        return leftBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
+        // return leftBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
+        leftBatman.getPosition().refresh();
+        return leftBatman.getPosition().getValue();
     }
 
     /**
      * @return The number of meters the right batman has travelled
      */
     public double getRightMeters() {
-        return rightBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
+        // return rightBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
+        rightBatman.getPosition().refresh();
+        return rightBatman.getPosition().getValue();
     }
 
     /**
@@ -149,6 +173,8 @@ public class Drivetrain extends Subsystem610 {
     public void resetSensors() {
         leftBatman_m.setSelectedSensorPosition(0);
         rightBatman_m.setSelectedSensorPosition(0);
+        leftBatman.setRotorPosition(0);
+        rightBatman.setRotorPosition(0);
     }
 
     /**
