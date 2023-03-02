@@ -18,6 +18,7 @@ public class T_Intake_Out extends CommandBase {
 
     @Override
     public void initialize() {
+        intakeInst_m.setIntaking(false);
     }
 
     @Override

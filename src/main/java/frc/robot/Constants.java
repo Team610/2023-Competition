@@ -130,7 +130,7 @@ public final class Constants {
     public static class Intake {
         public static final int CAN_INTAKE_SRX = 3;
 
-        public static final double VAL_IN_PERCENT = 10/12.0;
+        public static final double VAL_IN_PERCENT = 9.5/12.0;
         public static final double VAL_OUT_NORMAL = -0.3;
         public static final double VAL_OUT_TURBO = -0.5;
         public static final double VAL_HOLD_PERCENT = 0.3;

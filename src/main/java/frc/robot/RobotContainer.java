@@ -23,7 +23,6 @@ import frc.robot.subsystems.TronWheel;
 import frc.robot.util.ComboButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -57,6 +56,7 @@ public class RobotContainer {
     tronWheelInst_s = TronWheel.getInstance();
     tronWheelInst_s.setDefaultCommand(new T_TronWheel_Move());
     intakeInst_s = Intake.getInstance();
+    intakeInst_s.setDefaultCommand(new T_Intake_In());
     pdb_s = new PowerDistribution();
 
     autoChooser_m.setDefaultOption("Test Path", new G_Preload2High());
@@ -76,7 +76,8 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
+    // driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
+    driver_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
 
@@ -99,10 +100,14 @@ public class RobotContainer {
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
 
     operator_s.y().onTrue(
-        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
-      
-    operator_s.rightBumper().onTrue(new T_Cascade_Preset(VAL_LINEUP_PRESET));
+        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET),
+          Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
+
+    operator_s.rightBumper().onTrue(
+        Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
+            Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
+    operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
   }
 
   public Command getAutonomousCommand() {
