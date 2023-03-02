@@ -9,29 +9,43 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import frc.robot.util.MotorConfig;
+// import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.ctre.phoenixpro.configs.MotorOutputConfigs;
 import com.ctre.phoenixpro.controls.DutyCycleOut;
 import com.ctre.phoenixpro.controls.Follower;
 import com.ctre.phoenixpro.hardware.TalonFX;
+import com.ctre.phoenixpro.signals.InvertedValue;
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
-    private TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
+
+    public final TalonFX leftBatman_m = new TalonFX(CAN_LEFT_BATMAN, "Vulture");
+    public final TalonFX rightBatman_m = new TalonFX(CAN_RIGHT_BATMAN, "Vulture");
+    public final TalonFX leftRobin_m = new TalonFX(CAN_LEFT_ROBIN, "Vulture");
+    public final TalonFX rightRobin_m = new TalonFX(CAN_RIGHT_ROBIN, "Vulture");
+
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
 
     private Drivetrain() {
         super("Drivetrain");
-        leftBatman_m = MotorConfig.configDrivePro(CAN_LEFT_BATMAN, true);
-        leftRobin_m = MotorConfig.configFollowPro(CAN_LEFT_ROBIN, leftBatman_m);
-        rightBatman_m = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
-        rightRobin_m = MotorConfig.configFollowPro(CAN_RIGHT_ROBIN, rightRobin_m);
-        
+        var currentConfigs = new MotorOutputConfigs();
+
+        // The left motor is CCW+
+        currentConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
+        leftBatman_m.getConfigurator().apply(currentConfigs);
+
+        // The right motor is CW+
+        currentConfigs.Inverted = InvertedValue.Clockwise_Positive;
+        rightBatman_m.getConfigurator().apply(currentConfigs);
+
+        // Ensure our followers are following their respective leader
+        leftRobin_m.setControl(new Follower(leftBatman_m.getDeviceID(), false));
+        rightRobin_m.setControl(new Follower(rightBatman_m.getDeviceID(), false));
+
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
@@ -66,23 +80,27 @@ public class Drivetrain extends Subsystem610 {
 
     /**
      * Sets the left batman to a desired output percentage
+     * 
      * @param output Desired left side output as a percentage
      */
-    public void setProLeft(DutyCycleOut output){
+    public void setProLeft(DutyCycleOut output) {
         leftBatman_m.setControl(output);
     }
 
     /**
      * Sets the right batman to a desired output percentage
+     * 
      * @param output Desired right side output as a percentage
      */
-    public void setProRight(DutyCycleOut output){
+    public void setProRight(DutyCycleOut output) {
         rightBatman_m.setControl(output);
     }
 
     /**
-     * Sets the robot to drive based on a voltage number, uses setLeft and setRight methods to do it
-     * @param leftVolts the desired voltage for the left motor
+     * Sets the robot to drive based on a voltage number, uses setLeft and setRight
+     * methods to do it
+     * 
+     * @param leftVolts  the desired voltage for the left motor
      * @param rightVolts the desired voltage for the right motor
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
@@ -120,8 +138,8 @@ public class Drivetrain extends Subsystem610 {
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(
-            leftBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV,
-            rightBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV);
+                leftBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV,
+                rightBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV);
     }
 
     /**
@@ -134,6 +152,7 @@ public class Drivetrain extends Subsystem610 {
 
     /**
      * Resets the odometry of the robot
+     * 
      * @param pose The pose to reset the odometry to
      */
     public void resetOdometry(Pose2d pose) {
