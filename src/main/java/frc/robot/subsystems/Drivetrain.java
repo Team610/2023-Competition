@@ -28,12 +28,10 @@ public class Drivetrain extends Subsystem610 {
     private Drivetrain() {
         super("Drivetrain");
         leftBatman_m = MotorConfig.configDrivePro(CAN_LEFT_BATMAN, true);
-        leftRobin_m = MotorConfig.configDrivePro(CAN_LEFT_ROBIN, true);
-        leftRobin_m.setControl(new Follower(leftBatman_m.getDeviceID(), false));
+        leftRobin_m = MotorConfig.configFollowPro(CAN_LEFT_ROBIN, leftBatman_m);
         rightBatman_m = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
-        rightRobin_m = MotorConfig.configDrivePro(CAN_RIGHT_ROBIN, false);
-        rightRobin_m.setControl(new Follower(rightBatman_m.getDeviceID(), false));
-
+        rightRobin_m = MotorConfig.configFollowPro(CAN_RIGHT_ROBIN, rightRobin_m);
+        
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());

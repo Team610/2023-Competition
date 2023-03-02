@@ -19,14 +19,16 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
     private Drivetrain drivetrainInst_m;
     private Cascade cascadeInt_m;
 
-    private DutyCycleOut leftOut, rightOut;
+    private DutyCycleOut leftOut;
+    private DutyCycleOut rightOut;
 
     public T_Drivetrain_ArcadeDrive() {
         drivetrainInst_m = Drivetrain.getInstance();
         cascadeInt_m = Cascade.getInstance();
         addRequirements(drivetrainInst_m);
 
-        leftOut = rightOut = new DutyCycleOut(0);
+        leftOut = new DutyCycleOut(0, true, false);
+        rightOut = new DutyCycleOut(0, true, false);
     }
 
     @Override
