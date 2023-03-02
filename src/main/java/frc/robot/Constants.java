@@ -141,7 +141,5 @@ public final class Constants {
         
         public static final double VAL_STALL_TIME = 0.5 *1000; //ms
         public static final int VAL_SAMPLES = (int) VAL_STALL_TIME/20;
-
-
     }
 }

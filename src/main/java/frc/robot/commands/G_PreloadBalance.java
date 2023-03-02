@@ -57,6 +57,17 @@ public class G_PreloadBalance extends SequentialCommandGroup {
                                         Commands.parallel(new A_Cascade_Move(VAL_TRANSPORT_PRESET, 110), 
                                             new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110)))
                         )
+
+
+
+
+                //         new A_Disable_Safeties(),
+                //         Commands.parallel(
+                //                 // Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m)),
+                //                 new A_Cascade_Move(VAL_GROUND_PRESET, 110),
+                //                 new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110),
+                //                 new A_Intake_In(500)
+                //         )
                 );
         }
 }

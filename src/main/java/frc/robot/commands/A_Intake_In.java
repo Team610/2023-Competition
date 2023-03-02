@@ -20,11 +20,13 @@ public class A_Intake_In extends CommandBase {
     private Intake intakeInst_m;
     private TronWheel tronWheelInst_m;
     private int timer_m;
+    private Trigger trigger_m;
 
     public A_Intake_In(int timer) {
         timer_m = timer;
         intakeInst_m = Intake.getInstance();
         tronWheelInst_m = TronWheel.getInstance();
+        trigger_m = new Trigger(() -> intakeInst_m.getHasGamePiece());
         addRequirements(intakeInst_m);
     }
 
@@ -32,18 +34,15 @@ public class A_Intake_In extends CommandBase {
     public void initialize() {
         intakeInst_m.resetLoopCount();
         intakeInst_m.setIntaking(true);
-        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.05);
+        RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
     }
 
     @Override
     public void execute() {
         intakeInst_m.incrementLoopCount();
         intakeInst_m.intake(VAL_IN_PERCENT);
-        if(tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT && tronWheelInst_m.checkClosedLoop()){
-            if(intakeInst_m.getHasGamePiece()) {
-                CommandScheduler.getInstance().schedule(new A_TronWheel_Move(VAL_ANGLE_GROUND_FINAL, 25));
-            }
-        }
+        trigger_m.and(() -> tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT)
+            .onTrue(new A_TronWheel_Move(VAL_ANGLE_GROUND_FINAL, 25));
     }
 
     @Override
