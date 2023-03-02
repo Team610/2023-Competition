@@ -7,8 +7,10 @@ package frc.robot;
 import frc.robot.commands.T_Cascade_Home;
 import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
-
+import frc.robot.commands.G_LeftGrid;
 import frc.robot.commands.G_Preload2High;
+import frc.robot.commands.G_PreloadBalance;
+import frc.robot.commands.G_RightGrid1Half;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
@@ -64,6 +66,9 @@ public class RobotContainer {
     rollerRunning_s = false;
 
     autoChooser_m.setDefaultOption("Test Path", new G_Preload2High());
+    autoChooser_m.addOption("Preload Balance", new G_PreloadBalance());
+    autoChooser_m.addOption("Left Grid", new G_LeftGrid());
+    autoChooser_m.addOption("RightGrid1Half", new G_RightGrid1Half());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
 
     driver_s = new CommandXboxController(PORT_DRIVER);
