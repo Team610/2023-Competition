@@ -121,7 +121,7 @@ public final class Constants {
         public static final double VAL_KF = 0.4;
 
         // public static final double VAL_ANGLE_RAMP = 14000;  // ticks
-        public static final double VAL_ANGLE_RAMP = 12000;  // ticks
+        public static final double VAL_ANGLE_RAMP = 14000;  // ticks
         public static final double VAL_ANGLE_SCORE = 0;
         public static final double VAL_ANGLE_GROUND_INIT = 28300; // angle to pickup from ground start
         public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+3000;  // angle to pickup from ground finish
