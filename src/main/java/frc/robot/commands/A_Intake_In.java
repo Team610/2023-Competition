@@ -41,8 +41,8 @@ public class A_Intake_In extends CommandBase {
     public void execute() {
         intakeInst_m.incrementLoopCount();
         intakeInst_m.intake(VAL_IN_PERCENT);
-        trigger_m.and(() -> tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT)
-            .onTrue(new A_TronWheel_Move(VAL_ANGLE_GROUND_FINAL, 25));
+        // trigger_m.and(() -> tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT)
+        //     .onTrue(new A_TronWheel_Move(VAL_ANGLE_GROUND_FINAL, 25));
     }
 
     @Override

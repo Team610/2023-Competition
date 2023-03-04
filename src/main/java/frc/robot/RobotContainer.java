@@ -7,10 +7,12 @@ package frc.robot;
 import frc.robot.commands.T_Cascade_Home;
 import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
-import frc.robot.commands.G_LeftGrid;
+import frc.robot.commands.G_BlueLeftGrid;
 import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
-import frc.robot.commands.G_RightGrid1Half;
+import frc.robot.commands.G_PreloadLeave;
+import frc.robot.commands.G_RedLeftGrid1Half;
+import frc.robot.commands.G_BlueRightGrid1Half;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
@@ -70,9 +72,11 @@ public class RobotContainer {
     rollerRunning_s = false;
 
     autoChooser_m.setDefaultOption("Preload Balance", new G_PreloadBalance());
-    autoChooser_m.addOption("Left Grid", new G_LeftGrid());
-    autoChooser_m.addOption("RightGrid1Half", new G_RightGrid1Half());
     autoChooser_m.addOption("Preload", new G_Preload());
+    autoChooser_m.addOption("Leave Comm, Bal", new G_PreloadLeave());
+    autoChooser_m.addOption("Blue Left Grid 2 Bal", new G_BlueLeftGrid());
+    autoChooser_m.addOption("Blue RightGrid 1.5 Bal", new G_BlueRightGrid1Half());
+    autoChooser_m.addOption("Red LeftGrid 1.5 Bal", new G_RedLeftGrid1Half());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
 
     driver_s = new CommandXboxController(PORT_DRIVER);

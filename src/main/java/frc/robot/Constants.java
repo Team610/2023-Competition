@@ -85,8 +85,8 @@ public final class Constants {
         public static final double UNIT_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
         // Preset units are in ticks
-        public static final double VAL_MID_PRESET = CALC_TICKS(34);
-        public static final double VAL_HIGH_PRESET = CALC_TICKS(47.5);
+        public static final double VAL_MID_PRESET = 102000;
+        public static final double VAL_HIGH_PRESET = 142000;
         // public static final double VAL_RAMP_PRESET = 6700;
         public static final double VAL_RAMP_PRESET = 8060;
         public static final double VAL_GROUND_PRESET = 1940;
@@ -124,7 +124,7 @@ public final class Constants {
         // public static final double VAL_ANGLE_RAMP = 14000;  // ticks
         public static final double VAL_ANGLE_RAMP = 14000;  // ticks
         public static final double VAL_ANGLE_SCORE = 0;
-        public static final double VAL_ANGLE_GROUND_INIT = 28300; // angle to pickup from ground start
+        public static final double VAL_ANGLE_GROUND_INIT = 29112; // angle to pickup from ground start
         public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+3000;  // angle to pickup from ground finish
         public static final double VAL_ANGLE_TRANSPORT = 10000;
         public static final double VAL_ANGLE_HYBRID = 18000;

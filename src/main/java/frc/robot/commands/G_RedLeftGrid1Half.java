@@ -25,30 +25,27 @@ import frc.robot.commands.T_Cascade_Home;
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class G_LeftGrid extends SequentialCommandGroup {
+public class G_RedLeftGrid1Half extends SequentialCommandGroup {
         private Drivetrain driveInst_m;
-        private Trajectory preload_m, pickup_m, balance_m;
+        private Trajectory preload_m, pickup_m;
 
         /**
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public G_LeftGrid() {
-                String preloadHigh = "paths/output/LeftPreloadLeft.wpilib.json";
+        public G_RedLeftGrid1Half() {
+                String preloadHigh = "paths/output/RedLeftPreloadLeft.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
-                String pickupHigh = "paths/output/LeftPickupRight.wpilib.json";
+                String pickupHigh = "paths/output/RedLeftPickupBalance.wpilib.json";
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
-                String balanceS = "paths/output/CurveRightBalance.wpilib.json";
-                Path balance = Filesystem.getDeployDirectory().toPath().resolve(balanceS);
                 driveInst_m = Drivetrain.getInstance();
                 addRequirements(driveInst_m);
-                RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_PRESET);
+                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
 
                 preload_m = pickup_m = null;
                 try {
                         preload_m = TrajectoryUtil.fromPathweaverJson(preload);
                         pickup_m = TrajectoryUtil.fromPathweaverJson(pickup);
-                        balance_m = TrajectoryUtil.fromPathweaverJson(balance);
                 } catch (IOException e) {
                         e.printStackTrace();
                 }
@@ -59,17 +56,10 @@ public class G_LeftGrid extends SequentialCommandGroup {
                         new A_Intake_Out(),
                         Commands.parallel(
                                 Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
-                                        new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
+                                    new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
                                 Commands.sequence(
                                         Commands.parallel(new A_Cascade_Move(VAL_GROUND_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)),
                                         new A_Intake_In(500))
-                        ),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(50)),
-                        new A_Intake_Out(),
-                        Commands.parallel(
-                            Commands.sequence(new A_Reset_Odometry(balance_m), RamseteSetup.initializeRamseteCommand(balance_m)),
-                            Commands.sequence(
-                                Commands.parallel(new A_Cascade_Move(VAL_GROUND_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)))
                         )
                 );
         }

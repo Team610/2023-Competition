@@ -43,7 +43,7 @@ public class T_Intake_In extends CommandBase {
         }
         if(tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT && tronWheelInst_m.checkClosedLoop()){
             if(intakeInst_m.getHasGamePiece()) {
-                CommandScheduler.getInstance().schedule(new T_TronWheel_Preset(VAL_ANGLE_GROUND_FINAL));
+                // CommandScheduler.getInstance().schedule(new T_TronWheel_Preset(VAL_ANGLE_GROUND_FINAL));
             }
         }
     }
