@@ -47,8 +47,8 @@ public final class Constants {
         public static final double VAL_MAX_ACCEL = VAL_MAX_VELO*0.5;
         public static final double VAL_MAX_VOLTS = 11; // TODO: change to 12 for later
 
-        public static final double VAL_MAX_SPEED = 0.8;
-        public static final double VAL_TURBO_SPEED = 1.0;
+        public static final double VAL_MAX_SPEED = 0.4;
+        public static final double VAL_TURBO_SPEED = 0.6;
         public static final double VAL_TURN_SPEED = 0.7;
     }
 
@@ -86,9 +86,9 @@ public final class Constants {
 
         // Preset units are in ticks
         public static final double VAL_MID_PRESET = CALC_TICKS(34);
-        public static final double VAL_HIGH_PRESET = CALC_TICKS(46);
+        public static final double VAL_HIGH_PRESET = CALC_TICKS(47.5);
         // public static final double VAL_RAMP_PRESET = 6700;
-        public static final double VAL_RAMP_PRESET = 10000;
+        public static final double VAL_RAMP_PRESET = 8060;
         public static final double VAL_GROUND_PRESET = 1940;
         public static final double VAL_TRANSPORT_PRESET = 14000;
         public static final double VAL_LINEUP_PRESET = 50000;

@@ -19,6 +19,7 @@ public class Robot extends TimedRobot {
     RobotContainer.drivetrainInst_s.resetSensors();
     RobotContainer.cascadeInst_s.setSafety(true);
     RobotContainer.tronWheelInst_s.setSafety(true);
+    RobotContainer.pdb_s.setSwitchableChannel(false);
   }
 
   @Override

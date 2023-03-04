@@ -21,6 +21,7 @@ import frc.robot.commands.T_TronWheel_Preset;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
+import frc.robot.subsystems.Vision;
 import frc.robot.util.ComboButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -47,6 +48,8 @@ public class RobotContainer {
   public static Cascade cascadeInst_s;
   public static TronWheel tronWheelInst_s;
   public static Intake intakeInst_s;
+  public static Vision s_visionInst;
+
   public static PowerDistribution pdb_s;
 
   private static boolean rollerRunning_s;
@@ -60,6 +63,7 @@ public class RobotContainer {
     tronWheelInst_s.setDefaultCommand(new T_TronWheel_Move());
     intakeInst_s = Intake.getInstance();
     intakeInst_s.setDefaultCommand(new T_Intake_In());
+    s_visionInst = Vision.getInstance();
     pdb_s = new PowerDistribution();
 
     rollerRunning_s = false;
@@ -87,6 +91,7 @@ public class RobotContainer {
     driver_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
+    driver_s.x().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET), new T_TronWheel_Preset(VAL_ANGLE_HYBRID)));
 
     // ! Operator Controls
     operator_s.back()
