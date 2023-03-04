@@ -36,7 +36,7 @@ public class G_Preload extends SequentialCommandGroup {
     public G_Preload() {
         driveInst_m = Drivetrain.getInstance();
         addRequirements(driveInst_m);
-        RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_PRESET);
+        RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
 
         addCommands(
                 new A_Disable_Safeties(),

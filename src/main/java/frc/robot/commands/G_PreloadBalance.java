@@ -38,7 +38,7 @@ public class G_PreloadBalance extends SequentialCommandGroup {
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 driveInst_m = Drivetrain.getInstance();
                 addRequirements(driveInst_m);
-                RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_PRESET);
+                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
 
                 preload_m = null;
                 try {

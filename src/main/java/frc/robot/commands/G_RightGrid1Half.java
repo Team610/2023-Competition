@@ -40,7 +40,7 @@ public class G_RightGrid1Half extends SequentialCommandGroup {
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 driveInst_m = Drivetrain.getInstance();
                 addRequirements(driveInst_m);
-                RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_PRESET);
+                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
 
                 preload_m = pickup_m = null;
                 try {
