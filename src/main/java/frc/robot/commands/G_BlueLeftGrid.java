@@ -56,6 +56,7 @@ public class G_BlueLeftGrid extends SequentialCommandGroup {
                 addCommands(
                         new A_Disable_Safeties(),
                         Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(50)),
+                        new WaitCommand(0.5),
                         new A_Intake_Out(),
                         Commands.parallel(
                                 Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),

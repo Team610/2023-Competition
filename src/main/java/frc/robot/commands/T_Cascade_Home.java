@@ -16,7 +16,7 @@ public class T_Cascade_Home extends CommandBase {
     @Override
     public void initialize() {
         cascadeInst_m.cascadeBotLimitCheck();
-        cascadeInst_m.spin(-0.1);
+        cascadeInst_m.spin(-0.2);
     }
 
     @Override

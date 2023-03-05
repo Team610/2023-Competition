@@ -94,7 +94,7 @@ public final class Constants {
         public static final double VAL_GROUND_PRESET = 1940;
         public static final double VAL_TRANSPORT_PRESET = 14000;
         public static final double VAL_LINEUP_PRESET = 50000;
-        public static final double VAL_AUTO_PRESET = 10000;
+        public static final double VAL_AUTO_PRESET = 12180;
 
         /**
          * Converts vertical height to ticks for cascade arm to travel

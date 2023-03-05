@@ -41,6 +41,7 @@ public class G_Preload extends SequentialCommandGroup {
         addCommands(
                 new A_Disable_Safeties(),
                 Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(50)),
+                new WaitCommand(0.5),
                 new A_Intake_Out(),
                 Commands.parallel(new A_Cascade_Move(VAL_TRANSPORT_PRESET, 110),
                         new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110))

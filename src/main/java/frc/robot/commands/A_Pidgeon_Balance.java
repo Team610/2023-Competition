@@ -32,12 +32,15 @@ public class A_Pidgeon_Balance extends CommandBase {
         } else if (curAng_s > VAL_PIDGEY_RANGE){
             driveInst_m.setLeft(-0.1);
             driveInst_m.setRight(-0.1);
+        } else {
+            driveInst_m.setLeft(0);
+            driveInst_m.setRight(0);
         }
     }
 
     @Override
     public boolean isFinished(){
-        return Math.abs(curAng_s) < VAL_PIDGEY_RANGE ? true : false;
+        return false;
     }
 
     @Override
