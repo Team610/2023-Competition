@@ -60,7 +60,8 @@ public class G_BlueRightGrid1Half extends SequentialCommandGroup {
                                 Commands.sequence(
                                         Commands.parallel(new A_Cascade_Move(VAL_GROUND_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)),
                                         new A_Intake_In(500))
-                        )
+                        ),
+                        new A_Pidgeon_Balance()
                 );
         }
 }

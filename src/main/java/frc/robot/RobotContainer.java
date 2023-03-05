@@ -38,6 +38,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Cascade.*;
 import static frc.robot.Constants.TronWheel.*;
+import static frc.robot.Constants.Drivetrain.*;
+
+import com.ctre.phoenix.sensors.WPI_Pigeon2;
+
 import static frc.robot.Constants.Intake.*;
 
 public class RobotContainer {
@@ -53,6 +57,7 @@ public class RobotContainer {
   public static Intake intakeInst_s;
   public static Vision s_visionInst;
 
+  public static WPI_Pigeon2 pidgey_s;
   public static PowerDistribution pdb_s;
 
   private static boolean rollerRunning_s;
@@ -68,6 +73,7 @@ public class RobotContainer {
     intakeInst_s.setDefaultCommand(new T_Intake_In());
     s_visionInst = Vision.getInstance();
     pdb_s = new PowerDistribution();
+    pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
     rollerRunning_s = false;
 

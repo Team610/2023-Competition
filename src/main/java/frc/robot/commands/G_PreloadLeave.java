@@ -61,7 +61,8 @@ public class G_PreloadLeave extends SequentialCommandGroup {
                                 Commands.sequence(
                                         Commands.parallel(new A_Cascade_Move(VAL_TRANSPORT_PRESET, 110), 
                                             new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110)))
-                        )
+                        ),
+                        new A_Pidgeon_Balance()
                 );
         }
 }

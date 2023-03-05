@@ -70,7 +70,8 @@ public class G_BlueLeftGrid extends SequentialCommandGroup {
                             Commands.sequence(new A_Reset_Odometry(balance_m), RamseteSetup.initializeRamseteCommand(balance_m)),
                             Commands.sequence(
                                 Commands.parallel(new A_Cascade_Move(VAL_GROUND_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)))
-                        )
+                        ),
+                        new A_Pidgeon_Balance()
                 );
         }
 }

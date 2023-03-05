@@ -17,6 +17,8 @@ public final class Constants {
         public static final int CAN_RIGHT_ROBIN = 2;
         public static final int CAN_PIDGEY = 1;
 
+        public static final double VAL_PIDGEY_RANGE = 2.0;
+
         // units are in meters for Ramsete
         public static final double VAL_RAMSETE_B = 1;
         public static final double VAL_RAMSETE_ZETA = 0.7;
