@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +20,8 @@ public class TronWheel extends Subsystem610 {
     private boolean isHomed_m;
     private boolean safety_m;
     private double targetPos_m;
+
+    private GenericEntry dtTronManual_m;
 
     private TronWheel() {
         super("TronWheel");
@@ -104,10 +107,14 @@ public class TronWheel extends Subsystem610 {
         SmartDashboard.putBoolean("Tron Manual Mode", getManual());
     }
 
+    public void updateDriveTab() {
+        dtTronManual_m.setBoolean(getManual());
+    }
+
     @Override
     public void periodic() {
         writeSmartDashboard();
-        // rotateManual_m.setBoolean(getManual());
+        updateDriveTab();
     }
 
     @Override
@@ -117,9 +124,9 @@ public class TronWheel extends Subsystem610 {
 
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
-        // rotateManual_m = tab.add("Rotate M", getManual())
-        //     .withPosition(10, 0)
-        //     .withSize(1, 1)
-        //     .getEntry();
+        dtTronManual_m = tab.add("Tron Manual", getManual())
+            .withPosition(0, 6)
+            .withSize(1, 1)
+            .getEntry();
     }
 }

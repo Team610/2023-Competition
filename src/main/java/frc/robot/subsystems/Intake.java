@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.networktables.BooleanPublisher;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -19,6 +20,8 @@ public class Intake extends Subsystem610 {
     private WPI_TalonSRX intakeSRX_m;
     private static LinearFilter singlePoleIIR;
     private boolean intaking_m;
+
+    private GenericEntry dtRollers_m;
 
     private Intake() {
         super("Intake");
@@ -58,6 +61,14 @@ public class Intake extends Subsystem610 {
         return intakeSRX_m.getSupplyCurrent();
     }
 
+    public boolean getIntaking() {
+        return intaking_m;
+    }
+    
+    public void setIntaking(boolean intaking) {
+        intaking_m = intaking;
+    }
+    
     public void writeSmartDashboard() {
         SmartDashboard.putString("Intake Command",
                 getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
@@ -67,17 +78,14 @@ public class Intake extends Subsystem610 {
         SmartDashboard.putBoolean("Rollers Running", getIntaking());
     }
 
-    public boolean getIntaking() {
-        return intaking_m;
-    }
-
-    public void setIntaking(boolean intaking) {
-        intaking_m = intaking;
+    public void updateDriveTab(){
+        dtRollers_m.setBoolean(getIntaking());
     }
 
     @Override
     public void periodic() {
         writeSmartDashboard();
+        updateDriveTab();
     }
 
     @Override
@@ -87,6 +95,9 @@ public class Intake extends Subsystem610 {
 
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
-        // TODO Auto-generated method stub
+        dtRollers_m = tab.add("Rollers", getIntaking())
+            .withPosition(0, 5)
+            .withSize(1, 1)
+            .getEntry();
     }
 }

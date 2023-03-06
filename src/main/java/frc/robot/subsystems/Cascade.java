@@ -1,9 +1,9 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +19,8 @@ public class Cascade extends Subsystem610 {
     private boolean isHomed_m;
     private boolean safety_m;
     private double targetPos_m;
+
+    private GenericEntry dtCascadeManual_m;
 
     private Cascade() {
         super("Cascade");
@@ -135,8 +137,13 @@ public class Cascade extends Subsystem610 {
         return (cascadeFX_m.getSelectedSensorPosition() / VAL_CONVERT_TICKS)/100;
     }
 
+    public void updateDriveTab() {
+        dtCascadeManual_m.setBoolean(getManual());
+    }
+
     @Override
     public void periodic() {
+        updateDriveTab();
         SmartDashboard.putString("Cascade Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Cascade Preset", targetPos_m);
         SmartDashboard.putBoolean("Cascade Manual Mode", getManual());
@@ -149,5 +156,9 @@ public class Cascade extends Subsystem610 {
     
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
+        dtCascadeManual_m = tab.add("Cascade Manual", getManual())
+            .withPosition(1, 6)
+            .withSize(1, 1)
+            .getEntry();
     }
 }
