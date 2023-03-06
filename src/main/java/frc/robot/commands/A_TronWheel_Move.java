@@ -1,11 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.TronWheel;
-
-import static frc.robot.Constants.TronWheel.*;
-import static frc.robot.Constants.*;
 
 public class A_TronWheel_Move extends CommandBase {
     private TronWheel tronWheelInst_m;

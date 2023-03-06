@@ -5,18 +5,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
 public class A_Reset_Odometry extends CommandBase{
-    private Drivetrain m_driveInst;
-    private Trajectory m_traj;
+    private Drivetrain drivetrainInst_m;
+    private Trajectory traj_m;
 
     public A_Reset_Odometry(Trajectory traj) {
-        m_driveInst = Drivetrain.getInstance();
-        m_traj = traj;
-        addRequirements(m_driveInst);
+        drivetrainInst_m = Drivetrain.getInstance();
+        traj_m = traj;
+        addRequirements(drivetrainInst_m);
     }
 
     @Override
     public void execute() {
-        m_driveInst.resetOdometry(m_traj.getInitialPose());
+        drivetrainInst_m.resetOdometry(traj_m.getInitialPose());
     }
 
     @Override

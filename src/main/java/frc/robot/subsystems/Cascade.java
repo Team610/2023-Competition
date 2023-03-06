@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
@@ -16,13 +15,11 @@ import static frc.robot.Constants.Cascade.*;
 public class Cascade extends Subsystem610 {
     private static Cascade cascadeInst_s;
     private WPI_TalonFX cascadeFX_m;
-    private boolean isHomed_m;
     private boolean safety_m;
     private double targetPos_m;
 
     private Cascade() {
         super("Cascade");
-        isHomed_m = false;
         safety_m = true;
         targetPos_m = 0;
         cascadeFX_m = MotorConfig.configCascadeMotor(CAN_CASCADE, false, true);
@@ -70,7 +67,7 @@ public class Cascade extends Subsystem610 {
      * @return If the bottom limit switch is pressed
      */
     public boolean cascadeBotLimitCheck() {
-        return isHomed_m = cascadeFX_m.isRevLimitSwitchClosed() == 1;
+        return cascadeFX_m.isRevLimitSwitchClosed() == 1;
     }
 
     /**

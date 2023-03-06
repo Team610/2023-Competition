@@ -9,20 +9,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
-import static frc.robot.Constants.*;
 import static frc.robot.Constants.TronWheel.*;
 
 public class TronWheel extends Subsystem610 {
     private static TronWheel tronWheelInst_s;
     private WPI_TalonSRX rotateSRX_m;
     // private GenericEntry rotateManual_m;
-    private boolean isHomed_m;
     private boolean safety_m;
     private double targetPos_m;
 
     private TronWheel() {
         super("TronWheel");
-        isHomed_m = false;
         safety_m = true;
         targetPos_m = 0;
         rotateSRX_m = MotorConfig.configTronRotateMotor(CAN_ROTATE_SRX);
@@ -62,7 +59,7 @@ public class TronWheel extends Subsystem610 {
      * @return If the reverse limit switch is pressed
      */
     public boolean tronRevLimit() {
-        return isHomed_m = rotateSRX_m.isRevLimitSwitchClosed() == 1;
+        return rotateSRX_m.isRevLimitSwitchClosed() == 1;
     }
 
     /**

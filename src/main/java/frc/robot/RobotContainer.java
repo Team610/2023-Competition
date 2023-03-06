@@ -59,9 +59,6 @@ public class RobotContainer {
 
   public static WPI_Pigeon2 pidgey_s;
   public static PowerDistribution pdb_s;
-
-  private static boolean rollerRunning_s;
-
   public RobotContainer() {
     drivetrainInst_s = Drivetrain.getInstance();
     drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
@@ -74,9 +71,7 @@ public class RobotContainer {
     s_visionInst = Vision.getInstance();
     pdb_s = new PowerDistribution();
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
-
-    rollerRunning_s = false;
-
+    
     autoChooser_m.setDefaultOption("Preload Balance", new G_PreloadBalance());
     autoChooser_m.addOption("Preload", new G_Preload());
     autoChooser_m.addOption("Leave Comm, Bal", new G_PreloadLeave());

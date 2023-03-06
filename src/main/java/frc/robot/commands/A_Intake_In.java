@@ -1,32 +1,20 @@
 package frc.robot.commands;
 
-import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.TronWheel;
 
 import static frc.robot.Constants.Intake.*;
-import static frc.robot.Constants.TronWheel.*;
-import static frc.robot.Constants.Cascade.*;
 
 
 public class A_Intake_In extends CommandBase {
     private Intake intakeInst_m;
-    private TronWheel tronWheelInst_m;
     private int timer_m;
-    private Trigger trigger_m;
 
     public A_Intake_In(int timer) {
         timer_m = timer;
         intakeInst_m = Intake.getInstance();
-        tronWheelInst_m = TronWheel.getInstance();
-        trigger_m = new Trigger(() -> intakeInst_m.getHasGamePiece());
         addRequirements(intakeInst_m);
     }
 

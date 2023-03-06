@@ -4,18 +4,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
-import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 
-import com.ctre.phoenix.sensors.WPI_Pigeon2;
-
 public class A_Pidgeon_Balance extends CommandBase {
-    private Drivetrain driveInst_m;
+    private Drivetrain drivetrainInst_m;
     private static double curAng_s;
 
     public A_Pidgeon_Balance() {
-        driveInst_m = Drivetrain.getInstance();
-        addRequirements(driveInst_m);
+        drivetrainInst_m = Drivetrain.getInstance();
+        addRequirements(drivetrainInst_m);
     }
 
     @Override
@@ -27,14 +24,14 @@ public class A_Pidgeon_Balance extends CommandBase {
     public void execute() {
         curAng_s = RobotContainer.pidgey_s.getPitch();
         if(curAng_s < -VAL_PIDGEY_RANGE){
-            driveInst_m.setLeft(0.1);
-            driveInst_m.setRight(0.1);
+            drivetrainInst_m.setLeft(0.1);
+            drivetrainInst_m.setRight(0.1);
         } else if (curAng_s > VAL_PIDGEY_RANGE){
-            driveInst_m.setLeft(-0.1);
-            driveInst_m.setRight(-0.1);
+            drivetrainInst_m.setLeft(-0.1);
+            drivetrainInst_m.setRight(-0.1);
         } else {
-            driveInst_m.setLeft(0);
-            driveInst_m.setRight(0);
+            drivetrainInst_m.setLeft(0);
+            drivetrainInst_m.setRight(0);
         }
     }
 

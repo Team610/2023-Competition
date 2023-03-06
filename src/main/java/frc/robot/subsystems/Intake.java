@@ -4,14 +4,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.filter.LinearFilter;
-import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
-import static frc.robot.Constants.*;
 import static frc.robot.Constants.Intake.*;
 
 public class Intake extends Subsystem610 {
