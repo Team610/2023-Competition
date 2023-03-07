@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 
 import static frc.robot.Constants.*;
+import static frc.robot.Constants.Drivetrain.*;
 
 import com.ctre.phoenixpro.controls.DutyCycleOut;
 
@@ -38,16 +39,17 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         //right joystick for left/right movement
         double x = MathUtil.applyDeadband(RobotContainer.driver_s.getRightX(), VAL_DEADBAND);
         //left bumper for turbo mode when held
-        // boolean turbo = RobotContainer.driver_s.leftBumper().getAsBoolean();
+        boolean turbo = RobotContainer.driver_s.leftBumper().getAsBoolean();
 
         y = y * y * y;
         x = x * x * x;
-        // if(cascadeInt_m.cascadeTickPercent() >= .45){
-        //     y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
-        // } else {
-        //     y *= turbo ? 1 : 0.8;
-        // }
-        y *=0.8;
+        
+        if(cascadeInt_m.cascadeTickPercent() >= .45){
+            y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
+        } else {
+            y *= turbo ? VAL_TURBO_SPEED : VAL_MAX_SPEED;
+        }
+
         x *= 0.7;
         leftOut_m.Output = y + x;
         rightOut_m.Output = y - x;

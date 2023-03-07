@@ -36,20 +36,8 @@ public class Drivetrain extends Subsystem610 {
 
         leftBatman_m = MotorConfig.configDrivePro(CAN_LEFT_BATMAN, true);
         rightBatman_m = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
-        // var currentConfigs = new MotorOutputConfigs();
-
-        // // The left motor is CCW+
-        // currentConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
-        // leftBatman_m.getConfigurator().apply(currentConfigs);
-
-        // // The right motor is CW+
-        // currentConfigs.Inverted = InvertedValue.Clockwise_Positive;
-        // rightBatman_m.getConfigurator().apply(currentConfigs);
-
-        // Ensure our followers are following their respective leader
         leftRobin_m = MotorConfig.configFollowPro(CAN_LEFT_ROBIN, leftBatman_m);
         rightRobin_m = MotorConfig.configFollowPro(CAN_RIGHT_ROBIN, rightBatman_m);
-        // rightRobin_m.setControl(new Follower(rightBatman_m.getDeviceID(), false));
 
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
