@@ -55,10 +55,11 @@ public class RobotContainer {
   public static Cascade cascadeInst_s;
   public static TronWheel tronWheelInst_s;
   public static Intake intakeInst_s;
-  public static Vision s_visionInst;
+  public static Vision visionInst_s;
 
   public static WPI_Pigeon2 pidgey_s;
   public static PowerDistribution pdb_s;
+
   public RobotContainer() {
     drivetrainInst_s = Drivetrain.getInstance();
     drivetrainInst_s.setDefaultCommand(new T_Drivetrain_ArcadeDrive());
@@ -68,14 +69,14 @@ public class RobotContainer {
     tronWheelInst_s.setDefaultCommand(new T_TronWheel_Move());
     intakeInst_s = Intake.getInstance();
     intakeInst_s.setDefaultCommand(new T_Intake_In());
-    s_visionInst = Vision.getInstance();
+    visionInst_s = Vision.getInstance();
     pdb_s = new PowerDistribution();
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
     
     autoChooser_m.setDefaultOption("Preload Balance", new G_PreloadBalance());
     autoChooser_m.addOption("Preload", new G_Preload());
     autoChooser_m.addOption("Leave Comm, Bal", new G_PreloadLeave());
-    autoChooser_m.addOption("Blue Left Grid 2 Bal", new G_BlueLeftGrid());
+    autoChooser_m.addOption("Blue LeftGrid 2 Bal", new G_BlueLeftGrid());
     autoChooser_m.addOption("Blue RightGrid 1.5 Bal", new G_BlueRightGrid1Half());
     autoChooser_m.addOption("Red LeftGrid 1.5 Bal", new G_RedLeftGrid1Half());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);

@@ -10,25 +10,34 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.util.MotorConfig;
+// import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
+import com.ctre.phoenixpro.configs.MotorOutputConfigs;
+import com.ctre.phoenixpro.controls.DutyCycleOut;
+import com.ctre.phoenixpro.controls.Follower;
+import com.ctre.phoenixpro.hardware.TalonFX;
+import com.ctre.phoenixpro.signals.InvertedValue;
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
-    private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
+
+    public TalonFX leftBatman_m;
+    public TalonFX rightBatman_m;
+    public TalonFX leftRobin_m;
+    public TalonFX rightRobin_m;
+
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
 
     private Drivetrain() {
         super("Drivetrain");
-        leftBatman_m = MotorConfig.configDriveMotor(CAN_LEFT_BATMAN, false, false);
-        leftRobin_m = MotorConfig.configDriveFollower(CAN_LEFT_ROBIN, CAN_LEFT_BATMAN, false, false);
-        rightBatman_m = MotorConfig.configDriveMotor(CAN_RIGHT_BATMAN, true, false);
-        rightRobin_m = MotorConfig.configDriveFollower(CAN_RIGHT_ROBIN, CAN_RIGHT_BATMAN, true, false);
+
+        leftBatman_m = MotorConfig.configDrivePro(CAN_LEFT_BATMAN, true);
+        rightBatman_m = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
+        leftRobin_m = MotorConfig.configFollowPro(CAN_LEFT_ROBIN, leftBatman_m);
+        rightRobin_m = MotorConfig.configFollowPro(CAN_RIGHT_ROBIN, rightBatman_m);
 
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
@@ -46,29 +55,29 @@ public class Drivetrain extends Subsystem610 {
      * Sets all drivetrain motors to coast mode
      */
     public void setCoast() {
-        leftBatman_m.setNeutralMode(NeutralMode.Coast);
-        leftRobin_m.setNeutralMode(NeutralMode.Coast);
-        rightBatman_m.setNeutralMode(NeutralMode.Coast);
-        rightRobin_m.setNeutralMode(NeutralMode.Coast);
+        // leftBatman_m.setNeutralMode(NeutralMode.Coast);
+        // leftRobin_m.setNeutralMode(NeutralMode.Coast);
+        // rightBatman_m.setNeutralMode(NeutralMode.Coast);
+        // rightRobin_m.setNeutralMode(NeutralMode.Coast);
     }
 
     /**
      * Sets all drivetrain motors to brake mode
      */
     public void setBrake() {
-
-        leftBatman_m.setNeutralMode(NeutralMode.Brake);
-        leftRobin_m.setNeutralMode(NeutralMode.Brake);
-        rightBatman_m.setNeutralMode(NeutralMode.Brake);
-        rightRobin_m.setNeutralMode(NeutralMode.Brake);
+        // leftBatman_m.setNeutralMode(NeutralMode.Brake);
+        // leftRobin_m.setNeutralMode(NeutralMode.Brake);
+        // rightBatman_m.setNeutralMode(NeutralMode.Brake);
+        // rightRobin_m.setNeutralMode(NeutralMode.Brake);
     }
 
     /**
      * Sets the left batman to a desired output percentage
+     * 
      * @param output Desired left side output as a percentage
      */
-    public void setLeft(double output) {
-        leftBatman_m.set(ControlMode.PercentOutput, output);
+    public void setProLeft(DutyCycleOut output) {
+        leftBatman_m.setControl(output);
     }
 
     /**
@@ -76,54 +85,38 @@ public class Drivetrain extends Subsystem610 {
      * 
      * @param output Desired right side output as a percentage
      */
-    public void setRight(double output) {
-        rightBatman_m.set(ControlMode.PercentOutput, output);
+    public void setProRight(DutyCycleOut output) {
+        rightBatman_m.setControl(output);
     }
 
     /**
-     * Sets the left batman to a desired output percentage, overloaded
-     * with desired control mode
+     * Sets the robot to drive based on a voltage number, uses setLeft and setRight
+     * methods to do it
      * 
-     * @param mode   Mode of output metric
-     * @param output Desired output in percentage
-     */
-    public void setLeft(ControlMode mode, double output) {
-        leftBatman_m.set(mode, output);
-    }
-
-    /**
-     * Sets the right batman to a desired output percentage, overloaded
-     * with desired control mode
-     * 
-     * @param mode Mode of output metric
-     * @param output Desired output in percentage
-     */
-    public void setRight(ControlMode mode, double output) {
-        rightBatman_m.set(mode, output);
-    }
-
-    /**
-     * Sets the robot to drive based on a voltage number, uses setLeft and setRight methods to do it
-     * @param leftVolts the desired voltage for the left motor
+     * @param leftVolts  the desired voltage for the left motor
      * @param rightVolts the desired voltage for the right motor
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        setLeft(leftVolts / 12.0);
-        setRight(rightVolts / 12.0);
+        DutyCycleOut left = new DutyCycleOut(leftVolts / 12.0);
+        DutyCycleOut right = new DutyCycleOut(rightVolts / 12.0);
+        setProLeft(left);
+        setProRight(right);
     }
 
     /**
      * @return The number of meters the left batman has travelled
      */
     public double getLeftMeters() {
-        return leftBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
+        leftBatman_m.getPosition().refresh();
+        return leftBatman_m.getPosition().getValue();
     }
 
     /**
      * @return The number of meters the right batman has travelled
      */
     public double getRightMeters() {
-        return rightBatman_m.getSelectedSensorPosition() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV;
+        rightBatman_m.getPosition().refresh();
+        return rightBatman_m.getPosition().getValue();
     }
 
     /**
@@ -138,20 +131,21 @@ public class Drivetrain extends Subsystem610 {
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(
-                leftBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10,
-                rightBatman_m.getSelectedSensorVelocity() / UNIT_TICKS_PER_REV * UNIT_DIST_PER_REV * 10);
+                leftBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV,
+                rightBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV);
     }
 
     /**
      * Resets the drivetrain motor sensors to a value of 0
      */
     public void resetSensors() {
-        leftBatman_m.setSelectedSensorPosition(0);
-        rightBatman_m.setSelectedSensorPosition(0);
+        leftBatman_m.setRotorPosition(0);
+        rightBatman_m.setRotorPosition(0);
     }
 
     /**
      * Resets the odometry of the robot
+     * 
      * @param pose The pose to reset the odometry to
      */
     public void resetOdometry(Pose2d pose) {

@@ -8,6 +8,14 @@ import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenixpro.configs.MotorOutputConfigs;
+import com.ctre.phoenixpro.controls.DutyCycleOut;
+import com.ctre.phoenixpro.controls.Follower;
+import com.ctre.phoenixpro.hardware.TalonFX;
+import com.ctre.phoenixpro.signals.InvertedValue;
+import com.ctre.phoenixpro.signals.NeutralModeValue;
+
+import edu.wpi.first.wpilibj.DutyCycle;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Intake.*;
@@ -67,6 +75,21 @@ public class MotorConfig {
     public static WPI_TalonFX configDriveFollower(int CAN_ID, int remoteId, boolean inverted, boolean sensorPhase) {
         WPI_TalonFX talon = MotorConfig.configDriveMotor(CAN_ID, inverted, sensorPhase);
         talon.set(ControlMode.Follower, remoteId);
+        return talon;
+    }
+
+    public static TalonFX configDrivePro(int CAN_ID, boolean left) {
+       TalonFX talon = new TalonFX(CAN_ID, CAN_BUS_NAME);
+       var currentConfigs = new MotorOutputConfigs();
+       currentConfigs.Inverted = left ? InvertedValue.CounterClockwise_Positive : InvertedValue.Clockwise_Positive;
+       talon.getConfigurator().apply(currentConfigs);
+       return talon;
+        
+    }
+
+    public static TalonFX configFollowPro(int CAN_ID, TalonFX leader) {
+        TalonFX talon = new TalonFX(CAN_ID, CAN_BUS_NAME);
+        talon.setControl(new Follower(leader.getDeviceID(), false));
         return talon;
     }
 
