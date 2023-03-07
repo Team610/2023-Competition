@@ -9,6 +9,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import frc.robot.util.MotorConfig;
 // import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -22,29 +23,33 @@ import com.ctre.phoenixpro.signals.InvertedValue;
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
 
-    public final TalonFX leftBatman_m = new TalonFX(CAN_LEFT_BATMAN, "Vulture");
-    public final TalonFX rightBatman_m = new TalonFX(CAN_RIGHT_BATMAN, "Vulture");
-    public final TalonFX leftRobin_m = new TalonFX(CAN_LEFT_ROBIN, "Vulture");
-    public final TalonFX rightRobin_m = new TalonFX(CAN_RIGHT_ROBIN, "Vulture");
+    public TalonFX leftBatman_m;
+    public TalonFX rightBatman_m;
+    public TalonFX leftRobin_m;
+    public TalonFX rightRobin_m;
 
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
 
     private Drivetrain() {
         super("Drivetrain");
-        var currentConfigs = new MotorOutputConfigs();
 
-        // The left motor is CCW+
-        currentConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
-        leftBatman_m.getConfigurator().apply(currentConfigs);
+        leftBatman_m = MotorConfig.configDrivePro(CAN_LEFT_BATMAN, true);
+        rightBatman_m = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
+        // var currentConfigs = new MotorOutputConfigs();
 
-        // The right motor is CW+
-        currentConfigs.Inverted = InvertedValue.Clockwise_Positive;
-        rightBatman_m.getConfigurator().apply(currentConfigs);
+        // // The left motor is CCW+
+        // currentConfigs.Inverted = InvertedValue.CounterClockwise_Positive;
+        // leftBatman_m.getConfigurator().apply(currentConfigs);
+
+        // // The right motor is CW+
+        // currentConfigs.Inverted = InvertedValue.Clockwise_Positive;
+        // rightBatman_m.getConfigurator().apply(currentConfigs);
 
         // Ensure our followers are following their respective leader
-        leftRobin_m.setControl(new Follower(leftBatman_m.getDeviceID(), false));
-        rightRobin_m.setControl(new Follower(rightBatman_m.getDeviceID(), false));
+        leftRobin_m = MotorConfig.configFollowPro(CAN_LEFT_ROBIN, leftBatman_m);
+        rightRobin_m = MotorConfig.configFollowPro(CAN_RIGHT_ROBIN, rightBatman_m);
+        // rightRobin_m.setControl(new Follower(rightBatman_m.getDeviceID(), false));
 
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
