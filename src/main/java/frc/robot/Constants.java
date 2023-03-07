@@ -27,6 +27,7 @@ public final class Constants {
         public static final double UNIT_METERS_IN_FEET = 0.305;
         public static final double UNIT_TICKS_PER_REV = 29500;
         public static final double UNIT_DIST_PER_REV = 0.47878;
+        
         public static final double CALC_TICKS_TO_METERS(double ticks) {
             return (ticks/UNIT_TICKS_PER_REV)*UNIT_DIST_PER_REV;
         }
@@ -123,7 +124,7 @@ public final class Constants {
         public static final double VAL_KD = 0;
         public static final double VAL_KF = 0.4;
 
-        // public static final double VAL_ANGLE_RAMP = 14000;  // ticks
+
         public static final double VAL_ANGLE_RAMP = 14000;  // ticks
         public static final double VAL_ANGLE_SCORE = 0;
         public static final double VAL_ANGLE_GROUND_INIT = 29112; // angle to pickup from ground start

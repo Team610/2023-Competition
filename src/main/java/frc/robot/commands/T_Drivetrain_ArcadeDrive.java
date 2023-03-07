@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 
 import static frc.robot.Constants.*;
+import static frc.robot.Constants.Drivetrain.*;
+
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Cascade;
 import frc.robot.subsystems.Drivetrain;
@@ -36,7 +38,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         x = x * x * x;
         if(cascadeInt_m.cascadeTickPercent() >= .45){
         y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
-        }else{y *= turbo ? 1 : 0.8;}
+        }else{y *= turbo ? VAL_TURBO_SPEED : VAL_MAX_SPEED;}
         x *= 0.7;
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;

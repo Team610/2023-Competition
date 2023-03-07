@@ -16,7 +16,7 @@ import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
 public class G_BlueLeftGrid extends SequentialCommandGroup {
-        private Drivetrain driveInst_m;
+        private Drivetrain drivetrainInst_m;
         private Trajectory preload_m, pickup_m, balance_m;
 
         /**
@@ -30,8 +30,8 @@ public class G_BlueLeftGrid extends SequentialCommandGroup {
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 String balanceS = "paths/output/BlueCurveRightBalance.wpilib.json";
                 Path balance = Filesystem.getDeployDirectory().toPath().resolve(balanceS);
-                driveInst_m = Drivetrain.getInstance();
-                addRequirements(driveInst_m);
+                drivetrainInst_m = Drivetrain.getInstance();
+                addRequirements(drivetrainInst_m);
                 RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_PRESET);
 
                 preload_m = pickup_m = null;
