@@ -5,11 +5,13 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Subsystem610;
 
 public class Vision extends Subsystem610{
     private static Vision visionInst_s;
     private int ledMode_m;
+    private int tv_m;
     private NetworkTable networkTable_m;
 
     public static Vision getInstance() {
@@ -33,10 +35,39 @@ public class Vision extends Subsystem610{
         return ledMode_m;
     }
 
+    /**
+     * Fetch the horizontal offset from crosshair to target (tx)
+     * @return tx
+     */
+    public double calcTx(){ 
+        // ternary operator to return the horizontal angle if a valid target is detected
+        return networkTable_m.getEntry("tx").getDouble(0.0);
+    }
+
+    /**
+     * Fetch the vertical offset from crosshair to target (ty)
+     * @return ty
+     */
+    public double calcTy(){
+        return tv_m == 0 ? 0 : networkTable_m.getEntry("ty").getDouble(0.0);
+    }
+
+    /**
+     * @return The distance from the Limelight to the target
+     */
+    public double calcDistance(){
+        return tv_m == 0 ? 0 : 209.0 / Math.tan(Math.toRadians(21 + calcTy()));
+    }
+
+    public void writeDashboard(){
+        SmartDashboard.putNumber("tx", Math.round(calcTx() * 1e5) / 1e5);
+        SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
+    }
+
     @Override
     public void periodic() {
-        // m_tv = (int) m_networkTable.getEntry("tv").getDouble(0.0);
-        // writeDashboard();
+        tv_m = (int) networkTable_m.getEntry("tv").getDouble(0.0);
+        writeDashboard();
     }
     
     @Override
