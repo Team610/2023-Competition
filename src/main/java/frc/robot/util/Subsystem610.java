@@ -10,6 +10,7 @@ public abstract class Subsystem610 implements Subsystem, Sendable {
     //! Class Members
     private int loopCounter_m;
     private boolean isManual_m;
+    
     /**
      * Register the given subsystem on the command scheduler using the name provided
      * @param subsytemName Name to use to register the subsystem

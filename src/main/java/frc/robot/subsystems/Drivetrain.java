@@ -56,7 +56,6 @@ public class Drivetrain extends Subsystem610 {
      * Sets all drivetrain motors to brake mode
      */
     public void setBrake() {
-
         leftBatman_m.setNeutralMode(NeutralMode.Brake);
         leftRobin_m.setNeutralMode(NeutralMode.Brake);
         rightBatman_m.setNeutralMode(NeutralMode.Brake);
@@ -127,6 +126,13 @@ public class Drivetrain extends Subsystem610 {
     }
 
     /**
+     * @return The position of the robot on the field
+     */
+    public Pose2d getPose() {
+        return odometry_m.getPoseMeters();
+    }
+
+    /**
      * @return The number of meters the robot has travelled
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -148,15 +154,7 @@ public class Drivetrain extends Subsystem610 {
      * @param pose The pose to reset the odometry to
      */
     public void resetOdometry(Pose2d pose) {
-        resetSensors();
         odometry_m.resetPosition(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters(), pose);
-    }
-
-    /**
-     * @return The position of the robot on the field
-     */
-    public Pose2d getPose() {
-        return odometry_m.getPoseMeters();
     }
 
     @Override

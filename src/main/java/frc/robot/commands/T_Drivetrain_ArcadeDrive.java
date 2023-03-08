@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.Drivetrain.*;
+
+import static frc.robot.Constants.*;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Cascade;
 import frc.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.math.MathUtil;
@@ -12,9 +14,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
  */
 public class T_Drivetrain_ArcadeDrive extends CommandBase {
     private Drivetrain drivetrainInst_m;
+    private Cascade cascadeInt_m;
 
     public T_Drivetrain_ArcadeDrive() {
         drivetrainInst_m = Drivetrain.getInstance();
+        cascadeInt_m = Cascade.getInstance();
         addRequirements(drivetrainInst_m);
     }
 
@@ -30,13 +34,13 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
 
         y = y * y * y;
         x = x * x * x;
-
-        y *= turbo ? 1 : 0.8;
+        if(cascadeInt_m.cascadeTickPercent() >= .45){
+        y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
+        }else{y *= turbo ? 1 : 0.8;}
         x *= 0.7;
         double leftSpeed = -y + x;
         double rightSpeed = -y - x;
         drivetrainInst_m.setLeft(leftSpeed);
         drivetrainInst_m.setRight(rightSpeed);
     }
-
 }
