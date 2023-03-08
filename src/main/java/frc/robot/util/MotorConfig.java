@@ -9,13 +9,9 @@ import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenixpro.configs.MotorOutputConfigs;
-import com.ctre.phoenixpro.controls.DutyCycleOut;
 import com.ctre.phoenixpro.controls.Follower;
 import com.ctre.phoenixpro.hardware.TalonFX;
 import com.ctre.phoenixpro.signals.InvertedValue;
-import com.ctre.phoenixpro.signals.NeutralModeValue;
-
-import edu.wpi.first.wpilibj.DutyCycle;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Intake.*;

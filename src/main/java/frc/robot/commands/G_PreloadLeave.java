@@ -17,7 +17,7 @@ import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
 public class G_PreloadLeave extends SequentialCommandGroup {
-        private Drivetrain driveInst_m;
+        private Drivetrain drivetrainInst_m;
         private Trajectory preload_m, balance_m;
 
         /**
@@ -29,8 +29,8 @@ public class G_PreloadLeave extends SequentialCommandGroup {
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 String balance = "paths/output/BalanceOut.wpilib.json";
                 Path balancePath = Filesystem.getDeployDirectory().toPath().resolve(balance);
-                driveInst_m = Drivetrain.getInstance();
-                addRequirements(driveInst_m);
+                drivetrainInst_m = Drivetrain.getInstance();
+                addRequirements(drivetrainInst_m);
                 RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
 
                 preload_m = null;

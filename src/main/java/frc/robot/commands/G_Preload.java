@@ -10,15 +10,15 @@ import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
 public class G_Preload extends SequentialCommandGroup {
-    private Drivetrain driveInst_m;
+    private Drivetrain drivetrainInst_m;
 
     /**
      * Add all the commands you would like to happen in auto to this, in order of
      * occurence
      */
     public G_Preload() {
-        driveInst_m = Drivetrain.getInstance();
-        addRequirements(driveInst_m);
+        drivetrainInst_m = Drivetrain.getInstance();
+        addRequirements(drivetrainInst_m);
         RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
 
         addCommands(
