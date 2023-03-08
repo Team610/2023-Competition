@@ -7,8 +7,6 @@ import frc.robot.subsystems.Drivetrain;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 
-import com.ctre.phoenix.sensors.WPI_Pigeon2;
-
 public class A_Pidgeon_Balance extends CommandBase {
     private Drivetrain driveInst_m;
     private static double curAng_s;

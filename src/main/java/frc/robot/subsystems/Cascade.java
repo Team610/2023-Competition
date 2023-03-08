@@ -25,8 +25,8 @@ public class Cascade extends Subsystem610 {
         cascadeFX_m = MotorConfig.configCascadeMotor(CAN_CASCADE, false, true);
     }
 
-    public static Cascade getInstance(){
-        if(cascadeInst_s == null){
+    public static Cascade getInstance() {
+        if (cascadeInst_s == null) {
             cascadeInst_s = new Cascade();
         }
         return cascadeInst_s;
@@ -34,6 +34,7 @@ public class Cascade extends Subsystem610 {
 
     /**
      * Spins the Cascade motor, in terms of percentage.
+     * 
      * @param spin The desired speed percentage
      */
     public void spin(double spin) {
@@ -42,17 +43,19 @@ public class Cascade extends Subsystem610 {
 
     /**
      * Spin the cascade motor using Motion Magic based on direction to move
+     * 
      * @param down Direction the cascade is moving
      */
     public void spinMagic(boolean down) {
-        if(down){
+        if (down) {
             cascadeFX_m.configMotionAcceleration(VAL_MAX_ACCEL_DOWN, VAL_CONFIG_TIMEOUT);
             cascadeFX_m.configMotionCruiseVelocity(VAL_CRUISE_VELO_DOWN, VAL_CONFIG_TIMEOUT);
         } else {
             cascadeFX_m.configMotionAcceleration(VAL_MAX_ACCEL_UP, VAL_CONFIG_TIMEOUT);
             cascadeFX_m.configMotionCruiseVelocity(VAL_CRUISE_VELO_UP, VAL_CONFIG_TIMEOUT);
         }
-        // cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m, DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
+        // cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m,
+        // DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
         cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
     }
 
@@ -62,7 +65,7 @@ public class Cascade extends Subsystem610 {
     public void stop() {
         cascadeFX_m.set(ControlMode.PercentOutput, 0);
     }
-    
+
     /**
      * @return If the bottom limit switch is pressed
      */
@@ -77,9 +80,10 @@ public class Cascade extends Subsystem610 {
         return cascadeFX_m.getSelectedSensorPosition() >= VAL_MAX_TICKS;
     }
 
-    //? Accessors
+    // ? Accessors
     /**
      * Safety on means will NOT move
+     * 
      * @param safety The value to set safety to
      */
     public void setSafety(boolean safety) {
@@ -88,62 +92,88 @@ public class Cascade extends Subsystem610 {
         SmartDashboard.setPersistent("Cascade Safety");
     }
 
+    /**
+     * @return The safety state of the cascade
+     */
     public boolean getSafety() {
         return safety_m;
     }
 
+    /**
+     * @return The target position the cascade is moving to
+     */
     public double getTargetPos() {
         return targetPos_m;
     }
 
+    /**
+     * Setting the target position for the cascade to move to
+     * 
+     * @param targetPos The target position in ticks
+     */
     public void setTargetPos(double targetPos) {
         targetPos_m = targetPos;
     }
 
-    public double getTicks(){
+    /**
+     * @return The current tick count of the cascade TalonFX
+     */
+    public double getTicks() {
         return cascadeFX_m.getSelectedSensorPosition();
     }
 
+    /**
+     * Setting the tick count of the cascade TalonFX
+     * 
+     * @param ticks The tick count to set it to
+     */
     public void setTicks(double ticks) {
         cascadeFX_m.setSelectedSensorPosition(ticks);
     }
 
     /**
      * converts ticks of cascade encoder to inches travelled
+     * 
      * @param ticks: encoder ticks of distance travelled
      * @return inches of distance travelled
      */
-    public double ticksToIn(double ticks){
+    public double ticksToIn(double ticks) {
         return ticks * UNIT_TICKS_TO_INCHES;
     }
 
     /**
      * converts inches of cascade travel to encoder ticks
+     * 
      * @param in: inches of cascade travelled
      * @return encoder ticks travelled
      */
-    public double inToTicks(double in){
+    public double inToTicks(double in) {
         return in * UNIT_INCHES_TO_TICKS;
     }
-/*
- * converts ticks of cascade into percent travelled
- */
+
+    /*
+     * converts ticks of cascade into percent travelled
+     */
     public double cascadeTickPercent() {
-        return (cascadeFX_m.getSelectedSensorPosition() / VAL_CONVERT_TICKS)/100;
+        return (cascadeFX_m.getSelectedSensorPosition() / VAL_CONVERT_TICKS) / 100;
     }
 
-    @Override
-    public void periodic() {
-        SmartDashboard.putString("Cascade Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
+    private void writeSmartDashboard() {
+        SmartDashboard.putString("Cascade Command",
+                getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Cascade Preset", targetPos_m);
         SmartDashboard.putBoolean("Cascade Manual Mode", getManual());
         SmartDashboard.putNumber("Cascade Supply Current", cascadeFX_m.getSupplyCurrent());
+    }
+    @Override
+    public void periodic() {
+        writeSmartDashboard();
     }
 
     @Override
     public void initSendable(SendableBuilder builder) {
     }
-    
+
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
     }

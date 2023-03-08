@@ -24,7 +24,6 @@ import frc.robot.commands.T_TronWheel_Preset;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
-import frc.robot.subsystems.Vision;
 import frc.robot.util.ComboButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -55,7 +54,6 @@ public class RobotContainer {
   public static Cascade cascadeInst_s;
   public static TronWheel tronWheelInst_s;
   public static Intake intakeInst_s;
-  public static Vision visionInst_s;
 
   public static WPI_Pigeon2 pidgey_s;
   public static PowerDistribution pdb_s;
@@ -69,7 +67,6 @@ public class RobotContainer {
     tronWheelInst_s.setDefaultCommand(new T_TronWheel_Move());
     intakeInst_s = Intake.getInstance();
     intakeInst_s.setDefaultCommand(new T_Intake_In());
-    visionInst_s = Vision.getInstance();
     pdb_s = new PowerDistribution();
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
     

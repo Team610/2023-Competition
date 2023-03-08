@@ -48,12 +48,45 @@ public class Intake extends Subsystem610 {
         intakeSRX_m.set(ControlMode.PercentOutput, 0);
     }
 
+    /**
+     * @return Whether or not there is a game piece in the bumper cutout (if the
+     *         break beam is triggered)
+     */
     public boolean getHasGamePiece() {
         return !intakeSRX_m.getSensorCollection().isFwdLimitSwitchClosed();
     }
 
+    /**
+     * @return The supply current of the intake motor
+     */
     public double getSRXSupplyCurrent() {
         return intakeSRX_m.getSupplyCurrent();
+    }
+
+    /**
+     * Sets current output of intake motor to param
+     * 
+     * @param current The desired current
+     */
+    public void setSRXSupplyCurrent(double current) {
+        intakeSRX_m.set(ControlMode.Current, current);
+    }
+
+    /**
+     * Used for the default command T_Intake_In. This boolean being true will cause the intaking to intake in
+     * @return The state of the intaking boolean, true = intaking in
+     */
+    public boolean getIntaking() {
+        return intaking_m;
+    }
+
+    /**
+     * Sets the intaking boolean, which is what causes the intake to intake in
+     * Primarily used in RobotContainer where the triggers change this boolean value
+     * @param intaking The state to set it to
+     */
+    public void setIntaking(boolean intaking) {
+        intaking_m = intaking;
     }
 
     public void writeSmartDashboard() {
@@ -63,14 +96,6 @@ public class Intake extends Subsystem610 {
         SmartDashboard.putNumber("single pole", singlePoleIIR.calculate(getSRXSupplyCurrent()));
         SmartDashboard.putBoolean("Floor Lim", getHasGamePiece());
         SmartDashboard.putBoolean("Rollers Running", getIntaking());
-    }
-
-    public boolean getIntaking() {
-        return intaking_m;
-    }
-
-    public void setIntaking(boolean intaking) {
-        intaking_m = intaking;
     }
 
     @Override

@@ -9,8 +9,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.RobotContainer;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -58,7 +56,6 @@ public class Drivetrain extends Subsystem610 {
      * Sets all drivetrain motors to brake mode
      */
     public void setBrake() {
-
         leftBatman_m.setNeutralMode(NeutralMode.Brake);
         leftRobin_m.setNeutralMode(NeutralMode.Brake);
         rightBatman_m.setNeutralMode(NeutralMode.Brake);

@@ -25,9 +25,6 @@ public class A_Intake_Out extends CommandBase {
         intakeInst_m.intake(VAL_OUT_NORMAL);
     }
 
-    /**
-     * Finish when the cascade limit switch is pressed
-     */
     @Override
     public boolean isFinished() {
         return intakeInst_m.getLoopCount() >= 25;

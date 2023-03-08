@@ -78,18 +78,31 @@ public class TronWheel extends Subsystem610 {
         SmartDashboard.setPersistent("Tron Safety");
     }
 
+    /**
+     * @return Whether or not the safety is still on
+     */
     public boolean getSafety() {
         return safety_m;
     }
     
+    /**
+     * @return The target position the Tron Wheel is moving to
+     */
     public double getTargetPos() {
         return targetPos_m;
     }
 
+    /**
+     * @param targetPos The target for the Tron Wheel to move to
+     */
     public void setTargetPos(double targetPos) {
         targetPos_m = targetPos;
     }
 
+    /**
+     * A helper method to see if the Tron Wheel is approximately at the position it's set to go to
+     * @return true if it is more or less at the target position (within 100 ticks)
+     */
     public boolean checkClosedLoop(){
         return Math.abs(rotateSRX_m.getClosedLoopError()) < 100;
     }
@@ -103,7 +116,6 @@ public class TronWheel extends Subsystem610 {
     @Override
     public void periodic() {
         writeSmartDashboard();
-        // rotateManual_m.setBoolean(getManual());
     }
 
     @Override
