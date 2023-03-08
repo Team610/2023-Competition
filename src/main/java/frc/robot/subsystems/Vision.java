@@ -13,6 +13,8 @@ public class Vision extends Subsystem610{
     private int ledMode_m;
     private int tv_m;
     private NetworkTable networkTable_m;
+    private double pipeLine = 1;
+	
 
     public static Vision getInstance() {
         if (visionInst_s == null)
@@ -41,7 +43,7 @@ public class Vision extends Subsystem610{
      */
     public double calcTx(){ 
         // ternary operator to return the horizontal angle if a valid target is detected
-        return networkTable_m.getEntry("tx").getDouble(0.0);
+        return networkTable_m.getEntry("tx").getDouble(pipeLine);
     }
 
     /**
@@ -49,7 +51,7 @@ public class Vision extends Subsystem610{
      * @return ty
      */
     public double calcTy(){
-        return tv_m == 0 ? 0 : networkTable_m.getEntry("ty").getDouble(0.0);
+        return tv_m == 0 ? 0 : networkTable_m.getEntry("ty").getDouble(pipeLine);
     }
 
     /**
@@ -59,6 +61,13 @@ public class Vision extends Subsystem610{
         return tv_m == 0 ? 0 : 209.0 / Math.tan(Math.toRadians(21 + calcTy()));
     }
 
+    public void setPipeLine(double pipeLine) {
+        this.pipeLine = pipeLine;
+    }
+    public double getPipeLine() {
+        return pipeLine;
+    }
+
     public void writeDashboard(){
         SmartDashboard.putNumber("tx", Math.round(calcTx() * 1e5) / 1e5);
         SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
@@ -66,7 +75,7 @@ public class Vision extends Subsystem610{
 
     @Override
     public void periodic() {
-        tv_m = (int) networkTable_m.getEntry("tv").getDouble(0.0);
+        tv_m = (int) networkTable_m.getEntry("tv").getDouble(pipeLine);
         writeDashboard();
     }
     
