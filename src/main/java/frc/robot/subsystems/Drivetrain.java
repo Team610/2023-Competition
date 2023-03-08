@@ -14,11 +14,10 @@ import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
-import com.ctre.phoenixpro.configs.MotorOutputConfigs;
+import com.ctre.phoenixpro.controls.CoastOut;
 import com.ctre.phoenixpro.controls.DutyCycleOut;
-import com.ctre.phoenixpro.controls.Follower;
+import com.ctre.phoenixpro.controls.StaticBrake;
 import com.ctre.phoenixpro.hardware.TalonFX;
-import com.ctre.phoenixpro.signals.InvertedValue;
 
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
@@ -55,20 +54,20 @@ public class Drivetrain extends Subsystem610 {
      * Sets all drivetrain motors to coast mode
      */
     public void setCoast() {
-        // leftBatman_m.setNeutralMode(NeutralMode.Coast);
-        // leftRobin_m.setNeutralMode(NeutralMode.Coast);
-        // rightBatman_m.setNeutralMode(NeutralMode.Coast);
-        // rightRobin_m.setNeutralMode(NeutralMode.Coast);
+        leftBatman_m.setControl(new CoastOut());
+        leftRobin_m.setControl(new CoastOut());
+        rightBatman_m.setControl(new CoastOut());
+        rightRobin_m.setControl(new CoastOut());
     }
 
     /**
      * Sets all drivetrain motors to brake mode
      */
     public void setBrake() {
-        // leftBatman_m.setNeutralMode(NeutralMode.Brake);
-        // leftRobin_m.setNeutralMode(NeutralMode.Brake);
-        // rightBatman_m.setNeutralMode(NeutralMode.Brake);
-        // rightRobin_m.setNeutralMode(NeutralMode.Brake);
+        leftBatman_m.setControl(new StaticBrake());
+        leftRobin_m.setControl(new StaticBrake());
+        rightBatman_m.setControl(new StaticBrake());
+        rightRobin_m.setControl(new StaticBrake());
     }
 
     /**
