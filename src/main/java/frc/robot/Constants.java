@@ -146,4 +146,11 @@ public final class Constants {
         public static final double VAL_STALL_TIME = 0.5 *1000; //ms
         public static final int VAL_SAMPLES = (int) VAL_STALL_TIME/20;
     }
+
+    public static class Vision {
+        public static final double VAL_KP = 0.01;
+        public static final double VAL_KI = 0;
+        public static final double VAL_KD = 0;
+
+    }
 }
