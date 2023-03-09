@@ -1,15 +1,21 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.Subsystem610;
 
 public class Vision extends Subsystem610{
     private static Vision visionInst_s;
+
     private int ledMode_m;
     private int tv_m;
     private NetworkTable networkTable_m;
@@ -23,13 +29,20 @@ public class Vision extends Subsystem610{
     private Vision() {
         super("Limelight");
         
-        ledMode_m = 1;
+        ledMode_m = 0;
 
-        new HttpCamera("limelight", "http://10.6.10.12:5800/stream.mjpg");
-        
+        ShuffleboardTab visionTab = Shuffleboard.getTab("test");
+
+        visionTab.add("Limelight", new HttpCamera("limelight", "http://10.6.10.12:5800/stream.mjpg"))
+            .withWidget(BuiltInWidgets.kCameraStream)
+            .withPosition(0, 0)
+            .withSize(4, 4);
+
+
+        //make sure the pipeline team number is set to 610
         networkTable_m = NetworkTableInstance.getDefault().getTable("limelight");
         networkTable_m.getEntry("ledMode").setNumber(ledMode_m);
-    }
+        }
 
     public int getLedMode() {
         return ledMode_m;
@@ -60,13 +73,20 @@ public class Vision extends Subsystem610{
     }
 
     public void writeDashboard(){
+        
+        SmartDashboard.putNumber("pipeline", (double) networkTable_m.getEntry("pipeline").getNumber(1));
         SmartDashboard.putNumber("tx", Math.round(calcTx() * 1e5) / 1e5);
         SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
+        SmartDashboard.putNumber("tv2", tv_m);
+        SmartDashboard.putData(visionInst_s);
+        SmartDashboard.putNumber("led1", ledMode_m);
+        SmartDashboard.putNumber("led2", networkTable_m.getEntry("ledMode").getDouble(0));
     }
 
     @Override
     public void periodic() {
         tv_m = (int) networkTable_m.getEntry("tv").getDouble(0.0);
+        
         writeDashboard();
     }
     
