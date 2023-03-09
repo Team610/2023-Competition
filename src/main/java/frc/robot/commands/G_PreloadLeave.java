@@ -42,19 +42,25 @@ public class G_PreloadLeave extends SequentialCommandGroup {
                 }
 
                 addCommands(
-                        new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(50)),
+                        // new A_Disable_Safeties(),
+                        // Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(50)),
+                        // new WaitCommand(0.5),
+                        // new A_Intake_Out(),
+                        // Commands.parallel(
+                        //         Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
+                        //             new WaitCommand(0.5),
+                        //             new A_Reset_Odometry(balance_m), RamseteSetup.initializeRamseteCommand(balance_m)),
+                        //         Commands.sequence(
+                        //                 Commands.parallel(new A_Cascade_Move(VAL_TRANSPORT_PRESET, 110), 
+                        //                     new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110)))
+                        // ),
+                        // new A_Pidgeon_Balance()
+
+                        new A_Reset_Odometry(preload_m),
+                        RamseteSetup.initializeRamseteCommand(preload_m),
                         new WaitCommand(0.5),
-                        new A_Intake_Out(),
-                        Commands.parallel(
-                                Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
-                                    new WaitCommand(0.5),
-                                    new A_Reset_Odometry(balance_m), RamseteSetup.initializeRamseteCommand(balance_m)),
-                                Commands.sequence(
-                                        Commands.parallel(new A_Cascade_Move(VAL_TRANSPORT_PRESET, 110), 
-                                            new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110)))
-                        ),
-                        new A_Pidgeon_Balance()
+                        new A_Reset_Odometry(balance_m),
+                        RamseteSetup.initializeRamseteCommand(balance_m)
                 );
         }
 }

@@ -24,14 +24,14 @@ public class A_Pidgeon_Balance extends CommandBase {
     public void execute() {
         curAng_s = RobotContainer.pidgey_s.getPitch();
         if(curAng_s < -VAL_PIDGEY_RANGE){
-            drivetrainInst_m.leftBatman_m.set(0.1);
-            drivetrainInst_m.rightBatman_m.set(0.1);
+            // drivetrainInst_m.leftBatman_m.set(0.1);
+            // drivetrainInst_m.rightBatman_m.set(0.1);
         } else if (curAng_s > VAL_PIDGEY_RANGE){
-            drivetrainInst_m.leftBatman_m.set(-0.1);
-            drivetrainInst_m.rightBatman_m.set(-0.1);
+            // drivetrainInst_m.leftBatman_m.set(-0.1);
+            // drivetrainInst_m.rightBatman_m.set(-0.1);
         } else {
-            drivetrainInst_m.leftBatman_m.set(0);
-            drivetrainInst_m.rightBatman_m.set(0);
+            // drivetrainInst_m.leftBatman_m.set(0);
+            // drivetrainInst_m.rightBatman_m.set(0);
         }
     }
 

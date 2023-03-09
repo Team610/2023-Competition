@@ -10,7 +10,6 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.util.MotorConfig;
-// import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
@@ -22,10 +21,12 @@ import com.ctre.phoenixpro.hardware.TalonFX;
 public class Drivetrain extends Subsystem610 {
     private static Drivetrain driveInst_s;
 
-    public TalonFX leftBatman_m;
-    public TalonFX rightBatman_m;
-    public TalonFX leftRobin_m;
-    public TalonFX rightRobin_m;
+    private TalonFX leftBatman_m;
+    private TalonFX rightBatman_m;
+    private TalonFX leftRobin_m;
+    private TalonFX rightRobin_m;
+
+    private DutyCycleOut leftDutyCycle_m, rightDutyCycle_m;
 
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
@@ -37,6 +38,9 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m = MotorConfig.configDrivePro(CAN_RIGHT_BATMAN, false);
         leftRobin_m = MotorConfig.configFollowPro(CAN_LEFT_ROBIN, leftBatman_m);
         rightRobin_m = MotorConfig.configFollowPro(CAN_RIGHT_ROBIN, rightBatman_m);
+
+        leftDutyCycle_m = new DutyCycleOut(0, true, false);
+        rightDutyCycle_m = new DutyCycleOut(0, true, false);
 
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
@@ -75,8 +79,9 @@ public class Drivetrain extends Subsystem610 {
      * 
      * @param output Desired left side output as a percentage
      */
-    public void setProLeft(DutyCycleOut output) {
-        leftBatman_m.setControl(output);
+    public void setProLeft(double speed) {
+        leftDutyCycle_m.Output = speed;
+        leftBatman_m.setControl(leftDutyCycle_m);
     }
 
     /**
@@ -84,8 +89,9 @@ public class Drivetrain extends Subsystem610 {
      * 
      * @param output Desired right side output as a percentage
      */
-    public void setProRight(DutyCycleOut output) {
-        rightBatman_m.setControl(output);
+    public void setProRight(double speed) {
+        rightDutyCycle_m.Output = speed;
+        rightBatman_m.setControl(rightDutyCycle_m);
     }
 
     /**
@@ -96,10 +102,8 @@ public class Drivetrain extends Subsystem610 {
      * @param rightVolts the desired voltage for the right motor
      */
     public void tankDriveVolts(double leftVolts, double rightVolts) {
-        DutyCycleOut left = new DutyCycleOut(leftVolts / 12.0);
-        DutyCycleOut right = new DutyCycleOut(rightVolts / 12.0);
-        setProLeft(left);
-        setProRight(right);
+        setProLeft(leftVolts / 12.0);
+        setProRight(rightVolts / 12.0);
     }
 
     /**
@@ -107,15 +111,15 @@ public class Drivetrain extends Subsystem610 {
      */
     public double getLeftMeters() {
         leftBatman_m.getPosition().refresh();
-        return leftBatman_m.getPosition().getValue();
+        return leftBatman_m.getPosition().getValue() / VAL_GEAR_RATIO * VAL_WHEEL_DIA * Math.PI;
     }
 
     /**
      * @return The number of meters the right batman has travelled
      */
     public double getRightMeters() {
-        rightBatman_m.getPosition().refresh();
-        return rightBatman_m.getPosition().getValue();
+        rightBatman_m.getRotorPosition().refresh();
+        return rightBatman_m.getRotorPosition().getValue() / VAL_GEAR_RATIO * VAL_WHEEL_DIA * Math.PI;
     }
 
     /**
@@ -130,8 +134,8 @@ public class Drivetrain extends Subsystem610 {
      */
     public DifferentialDriveWheelSpeeds getWheelSpeeds() {
         return new DifferentialDriveWheelSpeeds(
-                leftBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV,
-                rightBatman_m.getRotorVelocity().getValue() / UNIT_DIST_PER_REV);
+                leftBatman_m.getRotorVelocity().getValue() / VAL_GEAR_RATIO * VAL_WHEEL_DIA * Math.PI,
+                rightBatman_m.getRotorVelocity().getValue() / VAL_GEAR_RATIO * VAL_WHEEL_DIA * Math.PI);
     }
 
     /**
@@ -165,5 +169,4 @@ public class Drivetrain extends Subsystem610 {
     public void addToDriveTab(ShuffleboardTab tab) {
         // TODO Auto-generated method stub
     }
-
 }

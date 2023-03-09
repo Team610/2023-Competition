@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.util.Units;
 
 public final class Constants {
     // Common
@@ -26,8 +27,8 @@ public final class Constants {
         public static final double UNIT_FEET_IN_METERS = 3.280;
         public static final double UNIT_METERS_IN_FEET = 0.305;
         public static final double UNIT_TICKS_PER_REV = 29500;
-        public static final double UNIT_DIST_PER_REV = 0.47878;
-        
+        public static final double UNIT_DIST_PER_REV = 0.4712;
+
         public static final double CALC_TICKS_TO_METERS(double ticks) {
             return (ticks/UNIT_TICKS_PER_REV)*UNIT_DIST_PER_REV;
         }
@@ -35,17 +36,18 @@ public final class Constants {
             return (meters/UNIT_DIST_PER_REV)*UNIT_TICKS_PER_REV;
         }
         
-        public static final double VAL_KS = 0.076361;
-        public static final double VAL_KV = 3.4151;
-        public static final double VAL_KA = 0.40329;
-        public static final double VAL_KP = 0.43731;
+        public static final double VAL_KS = 0.18132; // 0.076361;
+        public static final double VAL_KV = 3.7155; // 3.4151;
+        public static final double VAL_KA = 0.116; // 0.40329;
+        public static final double VAL_KP = 2.3773; // 0.43731;
         public static final double VAL_KD = 0.0;
         public static final double VAL_KI = 0;
 
-        public static final double VAL_TRACK_WIDTH = 0.5877;
+        public static final double VAL_TRACK_WIDTH = 0.59478;
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(VAL_TRACK_WIDTH);
 
-        public static final double VAL_WHEEL_DIA = 0.1524;
+        public static final double VAL_GEAR_RATIO = 14.88;  // Motor rotations per wheel rotation
+        public static final double VAL_WHEEL_DIA = Units.inchesToMeters(6);
         public static final double VAL_MAX_VELO = 1.93;
         public static final double VAL_MAX_ACCEL = VAL_MAX_VELO*0.5;
         public static final double VAL_MAX_VOLTS = 11; // TODO: change to 12 for later

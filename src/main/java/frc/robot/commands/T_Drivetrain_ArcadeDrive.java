@@ -20,16 +20,13 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
     private Drivetrain drivetrainInst_m;
     private Cascade cascadeInt_m;
 
-    private DutyCycleOut leftOut_m;
-    private DutyCycleOut rightOut_m;
+    private double leftSpeed_m, rightSpeed_m;
 
     public T_Drivetrain_ArcadeDrive() {
         drivetrainInst_m = Drivetrain.getInstance();
         cascadeInt_m = Cascade.getInstance();
+        leftSpeed_m = rightSpeed_m = 0;
         addRequirements(drivetrainInst_m);
-
-        leftOut_m = new DutyCycleOut(0, true, false);
-        rightOut_m = new DutyCycleOut(0, true, false);
     }
 
     @Override
@@ -51,9 +48,10 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         }
 
         x *= 0.7;
-        leftOut_m.Output = y + x;
-        rightOut_m.Output = y - x;
-        drivetrainInst_m.leftBatman_m.setControl(leftOut_m);
-        drivetrainInst_m.rightBatman_m.setControl(rightOut_m);
+        leftSpeed_m = y + x;
+        rightSpeed_m = y - x;
+
+        drivetrainInst_m.setProLeft(leftSpeed_m);
+        drivetrainInst_m.setProRight(rightSpeed_m);
     }
 }
