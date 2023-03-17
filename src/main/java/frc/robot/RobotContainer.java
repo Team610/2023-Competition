@@ -21,6 +21,7 @@ import frc.robot.commands.T_Subsystem_Manual;
 import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.commands.T_TronWheel_Move;
 import frc.robot.commands.T_TronWheel_Preset;
+import frc.robot.states.CascadeState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
@@ -95,7 +96,7 @@ public class RobotContainer {
     driver_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
-    driver_s.x().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET), new T_TronWheel_Preset(VAL_ANGLE_HYBRID)));
+    driver_s.x().onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(VAL_ANGLE_HYBRID)));
 
     // ! Operator Controls
     operator_s.back()
@@ -104,22 +105,22 @@ public class RobotContainer {
 
     new ComboButton(operator_s.start(), operator_s.a())
         .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.MID), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.b())
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.HIGH), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.x())
-        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)))
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.RAMP), new T_TronWheel_Preset(VAL_ANGLE_RAMP)))
         .whenPressed(
-            Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)));
+            Commands.parallel(new T_Cascade_Preset(CascadeState.GROUND), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)));
 
     operator_s.y().onTrue(
-        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
+        Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
 
     operator_s.rightBumper().onTrue(
-        Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
+        Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP),
             Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
