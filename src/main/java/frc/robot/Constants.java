@@ -146,4 +146,13 @@ public final class Constants {
         public static final double VAL_STALL_TIME = 0.5 *1000; //ms
         public static final int VAL_SAMPLES = (int) VAL_STALL_TIME/20;
     }
+
+    public static class PigeonBalance{
+        public static final double VAL_KP_BAL_PID = 0.07;
+        public static final double VAL_KI_BAL_PID = 0.00;
+        public static final double VAL_KD_BAL_PID = 0.00;
+        public static final double VAL_BAL_TOLERANCE = 0.5;
+        public static final double VAL_VELO_TOLERANCE = 0;
+        public static final double VAL_BAL_SETPOINT = 0;
+    }
 }
