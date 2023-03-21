@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
-import static frc.robot.Constants.*;
-import static frc.robot.Constants.Drivetrain.*;
 import static frc.robot.Constants.PigeonBalance.*;
 
 public class A_Pidgeon_Balance extends CommandBase {

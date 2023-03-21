@@ -22,7 +22,6 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         addRequirements(drivetrainInst_m);
     }
 
-
     @Override
     public void execute() {
         //left joystick for up/down movement
