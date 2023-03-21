@@ -89,7 +89,7 @@ public final class Constants {
 
         // Preset units are in ticks
         public static final double VAL_MID_PRESET = 110000;
-        public static final double VAL_HIGH_PRESET = 142000;
+        public static final double VAL_HIGH_PRESET = 145000;
         // public static final double VAL_RAMP_PRESET = 6700;
         public static final double VAL_RAMP_PRESET = 8060;
         public static final double VAL_GROUND_PRESET = 1940*3; // 1940;
