@@ -92,7 +92,7 @@ public final class Constants {
         public static final double VAL_HIGH_PRESET = 145000;
         // public static final double VAL_RAMP_PRESET = 6700;
         public static final double VAL_RAMP_PRESET = 8060;
-        public static final double VAL_GROUND_PRESET = 1940*3; // 1940;
+        public static final double VAL_GROUND_PRESET = 5500; // 5820;
         public static final double VAL_TRANSPORT_PRESET = 14000;
         public static final double VAL_LINEUP_PRESET = 50000;
         public static final double VAL_AUTO_PRESET = 12180;
@@ -127,7 +127,7 @@ public final class Constants {
 
         public static final double VAL_ANGLE_RAMP = 14000;  // ticks
         public static final double VAL_ANGLE_SCORE = 0;
-        public static final double VAL_ANGLE_GROUND_INIT = 28017; // 29112; // angle to pickup from ground start
+        public static final double VAL_ANGLE_GROUND_INIT = 28500; //28500;   // angle to pickup from ground start
         public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+3000;  // angle to pickup from ground finish
         public static final double VAL_ANGLE_TRANSPORT = 10000;
         public static final double VAL_ANGLE_HYBRID = 18000;
@@ -149,11 +149,15 @@ public final class Constants {
     }
 
     public static class Vision {
-        public static final double VAL_KP = 0.01;
-        public static final double VAL_KI = 0;
-        public static final double VAL_KD = 0.001;
+        public static final double VAL_ANGLE_KP = 0.02;
+        public static final double VAL_ANGLE_KI = 0;
+        public static final double VAL_ANGLE_KD = 0;
+        public static final double VAL_DRIVE_KP = 0.005;
+        public static final double VAL_DRIVE_KI = 0;
+        public static final double VAL_DRIVE_KD = 0.0005;
         public static final double VAL_LEFT_ANGLE_OFSET = 2;
         public static final double VAL_RIGHT_ANGLE_OFSET = 2;
+
 
     }
 

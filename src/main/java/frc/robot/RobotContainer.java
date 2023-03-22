@@ -23,6 +23,7 @@ import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.commands.T_TronWheel_Move;
 import frc.robot.commands.T_TronWheel_Preset;
 import frc.robot.commands.T_Vision_Aim;
+import frc.robot.commands.T_Vision_Drive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
@@ -72,7 +73,6 @@ public class RobotContainer {
     intakeInst_s = Intake.getInstance();
     intakeInst_s.setDefaultCommand(new T_Intake_In());
     visionInst_s = Vision.getInstance();
-    visionInst_s.setDefaultCommand(new T_Vision_Aim());
     pdb_s = new PowerDistribution();
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
     
@@ -121,15 +121,19 @@ public class RobotContainer {
       .whenPressed(
           Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)));
 
+    operator_s.y().onTrue(
+        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
+
+    
+    //cone positions
     new ComboButton(operator_s.start(), operator_s.leftBumper())
       .whenShiftPressed(new T_Cone_Position(1));
     new ComboButton(operator_s.start(), operator_s.rightBumper())
       .whenShiftPressed(new T_Cone_Position(2));
 
-    operator_s.y().onTrue(
-        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
+    driver_s.a().toggleOnTrue(new T_Vision_Aim());
+    // driver_s.b().whileTrue(new T_Vision_Drive());
 
-    driver_s.a().whileTrue(new T_Vision_Aim());
 
     operator_s.rightBumper().onTrue(
         Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
