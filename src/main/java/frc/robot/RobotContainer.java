@@ -24,6 +24,7 @@ import frc.robot.commands.T_TronWheel_Move;
 import frc.robot.commands.T_TronWheel_Preset;
 import frc.robot.commands.T_Vision_Aim;
 import frc.robot.commands.T_Vision_Drive;
+import frc.robot.commands.T_Vision_Light;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
@@ -131,8 +132,9 @@ public class RobotContainer {
     new ComboButton(operator_s.start(), operator_s.rightBumper())
       .whenShiftPressed(new T_Cone_Position(2));
 
-    driver_s.a().toggleOnTrue(new T_Vision_Aim());
+    driver_s.a().toggleOnTrue(new T_Vision_Light());
     // driver_s.b().whileTrue(new T_Vision_Drive());
+    // driver_s.b().whileTrue(new T_Vision_Aim());
 
 
     operator_s.rightBumper().onTrue(
