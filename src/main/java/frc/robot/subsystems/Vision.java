@@ -148,8 +148,8 @@ public class Vision extends Subsystem610{
         SmartDashboard.putBoolean("Aimed", isAimed_m);
         SmartDashboard.putNumber("Cone Poisition", conePosition_m);
         SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
-        SmartDashboard.putNumber("PID LEFT ANGLE", -pid_m.calculate(calcTx(), angleSetPoint_m)*0.3);
-        SmartDashboard.putNumber("PID LEFT DRIVE", -pid_m.calculate(calcDistance(), distanceSetPoint_m)*0.3);
+        SmartDashboard.putNumber("PID LEFT ANGLE", -pidAngle_m.calculate(calcTx(), angleSetPoint_m)*0.3);
+        SmartDashboard.putNumber("PID LEFT DRIVE", -pidDrive_m.calculate(calcDistance(), distanceSetPoint_m)*0.3);
     }
 
     @Override
