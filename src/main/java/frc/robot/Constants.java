@@ -148,6 +148,15 @@ public final class Constants {
         public static final int VAL_SAMPLES = (int) VAL_STALL_TIME/20;
     }
 
+    public static class Vision {
+        public static final double VAL_KP = 0.0001;
+        public static final double VAL_KI = 0;
+        public static final double VAL_KD = 0;
+        public static final double VAL_LEFT_ANGLE_OFSET = 2;
+        public static final double VAL_RIGHT_ANGLE_OFSET = 2;
+
+    }
+
     public static class PigeonBalance{
         public static final double VAL_KP_BAL_PID = 0.007;
         public static final double VAL_KI_BAL_PID = 0.00;

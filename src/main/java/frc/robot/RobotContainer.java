@@ -21,9 +21,11 @@ import frc.robot.commands.T_Subsystem_Manual;
 import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.commands.T_TronWheel_Move;
 import frc.robot.commands.T_TronWheel_Preset;
+import frc.robot.commands.T_Vision_Aim;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
+import frc.robot.subsystems.Vision;
 import frc.robot.util.ComboButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -54,6 +56,7 @@ public class RobotContainer {
   public static Cascade cascadeInst_s;
   public static TronWheel tronWheelInst_s;
   public static Intake intakeInst_s;
+  public static Vision visionInst_s;
 
   public static WPI_Pigeon2 pidgey_s;
   public static PowerDistribution pdb_s;
@@ -67,6 +70,7 @@ public class RobotContainer {
     tronWheelInst_s.setDefaultCommand(new T_TronWheel_Move());
     intakeInst_s = Intake.getInstance();
     intakeInst_s.setDefaultCommand(new T_Intake_In());
+    visionInst_s = Vision.getInstance();
     pdb_s = new PowerDistribution();
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
     
@@ -117,6 +121,8 @@ public class RobotContainer {
 
     operator_s.y().onTrue(
         Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
+
+        driver_s.a().whileTrue(new T_Vision_Aim());
 
     operator_s.rightBumper().onTrue(
         Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
