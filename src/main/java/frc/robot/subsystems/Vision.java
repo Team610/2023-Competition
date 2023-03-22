@@ -39,8 +39,6 @@ public class Vision extends Subsystem610{
         ledMode_m = 0;
         drivetrain_m = Drivetrain.getInstance();
 
-        // CameraServer.startAutomaticCapture();
-
         ShuffleboardTab visionTab = Shuffleboard.getTab("test");
 
         visionTab.add("Limelight", new HttpCamera("limelight", "http://10.6.10.12:5800/stream.mjpg"))
