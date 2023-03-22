@@ -29,7 +29,7 @@ public class T_Vision_Aim extends CommandBase{
      */
     @Override
     public void execute() {
-        visionInst_m.aim();
+        // visionInst_m.aim();
     }
 
     /**
@@ -43,6 +43,6 @@ public class T_Vision_Aim extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return false;
+        return visionInst_m.checkAim();
     }
 }

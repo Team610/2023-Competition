@@ -43,6 +43,5 @@ public class A_Intake_In extends CommandBase {
         intakeInst_m.stopIntake();
         intakeInst_m.setIntaking(false);
         RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0);
-
     }
 }

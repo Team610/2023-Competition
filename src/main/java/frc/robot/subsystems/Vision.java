@@ -21,7 +21,8 @@ public class Vision extends Subsystem610{
     private int ledMode_m;
     private int tv_m;
     private NetworkTable networkTable_m;
-    private PIDController pid_m;
+    private PIDController pidAngle_m;
+    private PIDController pidDrive_m;
     private boolean isAimed_m;
     private int conePosition_m;
     private double angleSetPoint_m;
@@ -40,7 +41,7 @@ public class Vision extends Subsystem610{
         ledMode_m = 0;
         conePosition_m = 0;
         angleSetPoint_m = 0;
-        distanceSetPoint_m = 100;
+        distanceSetPoint_m = 372;
         drivetrain_m = Drivetrain.getInstance();
 
         ShuffleboardTab visionTab = Shuffleboard.getTab("test");
@@ -55,8 +56,8 @@ public class Vision extends Subsystem610{
         networkTable_m = NetworkTableInstance.getDefault().getTable("limelight");
 
         networkTable_m.getEntry("ledMode").setNumber(ledMode_m);
-        pid_m = new PIDController(VAL_KP, VAL_KI, VAL_KD);
-
+        pidAngle_m = new PIDController(VAL_ANGLE_KP, VAL_ANGLE_KI, VAL_ANGLE_KD);
+        pidDrive_m = new PIDController(VAL_DRIVE_KP, VAL_DRIVE_KI, VAL_DRIVE_KD);
 
         }
 
@@ -115,38 +116,44 @@ public class Vision extends Subsystem610{
         return tv_m == 0 ? 0 : 209.0 / Math.tan(Math.toRadians(21 + calcTy()));
     }
 
+    public boolean checkDistance(){
+        return calcDistance() > 0 ? calcDistance() - distanceSetPoint_m < 10 : false ;
+    }
+
     /**
      * @return Boolean if the limelight is within the set threshold range
      */
     public boolean checkAim(){
-        return isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0;
+        return Math.abs(calcTx()) > 0 ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 : false;
     }
 
     /**
      * Use WPILib PID to turn the robot to the desired direction
      */
     public void aim() {
-        pid_m.setTolerance(1.4, 0);
-        drivetrain_m.setLeft(pid_m.calculate(calcTx(), angleSetPoint_m));
-        drivetrain_m.setRight(-pid_m.calculate(calcTx(), angleSetPoint_m));
+        pidAngle_m.setTolerance(1, 0);
+        drivetrain_m.setLeft(-pidAngle_m.calculate(calcTx(), angleSetPoint_m));
+        drivetrain_m.setRight(pidAngle_m.calculate(calcTx(), angleSetPoint_m));
     }
 
     /**
      * Use WPILib PID to move the robot to the desired distance
      */
     public void drive(){
-        pid_m.setTolerance(1.4, 0);
-        // drivetrain_m.setLeft(-pid_m.calculate(calcDistance(), distanceSetPoint)*0.3);
+        pidDrive_m.setTolerance(1.4, 0);
+        drivetrain_m.setLeft(pidDrive_m.calculate(calcDistance(), distanceSetPoint_m));
+        drivetrain_m.setRight(pidDrive_m.calculate(calcDistance(), distanceSetPoint_m));
     }
 
     public void writeDashboard(){
-        SmartDashboard.putNumber("Angle", Math.round(calcTx() * 1e5) / 1e5);
+        // SmartDashboard.putNumber("Angle", Math.round(calcTx() * 1e5) / 1e5);
         SmartDashboard.putBoolean("Aimed", checkAim());
-        SmartDashboard.putNumber("Cone Poisition", conePosition_m);
-        SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
-        SmartDashboard.putNumber("PID LEFT ANGLE", (pid_m.calculate(calcTx(), angleSetPoint_m)/100));
-        SmartDashboard.putNumber("angle error", angleSetPoint_m - Math.round(calcTx() * 1e5) / 1e5);
-        SmartDashboard.putNumber("PID LEFT DRIVE", (pid_m.calculate(calcDistance(), distanceSetPoint_m)*0.3)/100);
+        // SmartDashboard.putNumber("Cone Poisition", conePosition_m);
+        // SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
+        // SmartDashboard.putNumber("PID LEFT ANGLE", (pidAngle_m.calculate(calcTx(), angleSetPoint_m)));
+        // SmartDashboard.putNumber("angle error", angleSetPoint_m - Math.round(calcTx() * 1e5) / 1e5);
+        // SmartDashboard.putNumber("PID LEFT DRIVE", (pidDrive_m.calculate(calcDistance(), distanceSetPoint_m)));
+        // SmartDashboard.putNumber("Drive PID Error", (calcDistance()-distanceSetPoint_m));
     }
 
     @Override

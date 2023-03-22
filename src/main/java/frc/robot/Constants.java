@@ -149,11 +149,15 @@ public final class Constants {
     }
 
     public static class Vision {
-        public static final double VAL_KP = 0.0001;
-        public static final double VAL_KI = 0;
-        public static final double VAL_KD = 0;
+        public static final double VAL_ANGLE_KP = 0.02;
+        public static final double VAL_ANGLE_KI = 0;
+        public static final double VAL_ANGLE_KD = 0;
+        public static final double VAL_DRIVE_KP = 0.005;
+        public static final double VAL_DRIVE_KI = 0;
+        public static final double VAL_DRIVE_KD = 0.0005;
         public static final double VAL_LEFT_ANGLE_OFSET = 2;
         public static final double VAL_RIGHT_ANGLE_OFSET = 2;
+
 
     }
 

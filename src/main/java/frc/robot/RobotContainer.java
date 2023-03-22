@@ -22,6 +22,7 @@ import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.commands.T_TronWheel_Move;
 import frc.robot.commands.T_TronWheel_Preset;
 import frc.robot.commands.T_Vision_Aim;
+import frc.robot.commands.T_Vision_Drive;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
@@ -122,7 +123,9 @@ public class RobotContainer {
     operator_s.y().onTrue(
         Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
 
-        driver_s.a().whileTrue(new T_Vision_Aim());
+        driver_s.a().toggleOnTrue(new T_Vision_Aim());
+        // driver_s.b().whileTrue(new T_Vision_Drive());
+
 
     operator_s.rightBumper().onTrue(
         Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
