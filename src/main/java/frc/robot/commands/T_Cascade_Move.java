@@ -1,10 +1,12 @@
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Cascade;
 
 import static frc.robot.Constants.Cascade.*;
+import static frc.robot.Constants.*;
 
 public class T_Cascade_Move extends CommandBase {
     private Cascade cascadeInst_m;
@@ -24,15 +26,8 @@ public class T_Cascade_Move extends CommandBase {
     public void execute() {
         if(!cascadeInst_m.getSafety()){
             if(cascadeInst_m.getManual()){
-                if(RobotContainer.operator_s.leftBumper().getAsBoolean()) {
-                    cascadeInst_m.spin(-VAL_MAX_SPEED_IN);
-                }
-                else if(RobotContainer.operator_s.rightBumper().getAsBoolean()) {
-                    cascadeInst_m.spin(VAL_MAX_SPEED_OUT);
-                }
-                else {
-                    cascadeInst_m.stop();
-                }                
+                double speed = MathUtil.applyDeadband(-RobotContainer.operator_s.getLeftY() * VAL_MAX_SPEED_MANUAL, VAL_DEADBAND);
+                cascadeInst_m.spin(speed);           
             } else {
                 cascadeInst_m.spinMagic(down);
             }
