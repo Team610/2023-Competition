@@ -97,7 +97,6 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    // driver_s.rightTrigger(0.5).toggleOnTrue(new T_Intake_In());
     driver_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
@@ -117,9 +116,9 @@ public class RobotContainer {
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.x())
-        .whenShiftPressed(
-            Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
+      .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)))
+      .whenPressed(
+          Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)));
 
     operator_s.y().onTrue(
         Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));

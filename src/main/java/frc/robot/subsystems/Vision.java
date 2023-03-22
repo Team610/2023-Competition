@@ -101,7 +101,7 @@ public class Vision extends Subsystem610{
     }
 
     /**
-     * Use WPILib PID to move the robot to the desired direction
+     * Use WPILib PID to turn the robot to the desired direction
      */
     public void aim() {
         pid_m.setTolerance(1.4, 0);
@@ -109,11 +109,19 @@ public class Vision extends Subsystem610{
         // drivetrain_m.setRight(pid_m.calculate(calcTx(), 0)*0.3);
     }
 
+    /**
+     * Use WPILib PID to move the robot to the desired distance
+     */
+    public void drive(){
+        pid_m.setTolerance(1.4, 0);
+        // drivetrain_m.setLeft(-pid_m.calculate(calcDistance(), 0)*0.3);
+    }
+
     public void writeDashboard(){
-        
-        SmartDashboard.putNumber("tx", Math.round(calcTx() * 1e5) / 1e5);
+        SmartDashboard.putNumber("Angle", Math.round(calcTx() * 1e5) / 1e5);
         SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
-        SmartDashboard.putNumber("PID LEFT", -pid_m.calculate(calcTx(), 0)*0.3);
+        SmartDashboard.putNumber("PID LEFT ANGLE", -pid_m.calculate(calcTx(), 0)*0.3);
+        SmartDashboard.putNumber("PID LEFT DRIVE", -pid_m.calculate(calcDistance(), 0)*0.3);
     }
 
     @Override

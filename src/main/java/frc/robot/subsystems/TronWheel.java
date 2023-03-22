@@ -99,6 +99,10 @@ public class TronWheel extends Subsystem610 {
         targetPos_m = targetPos;
     }
 
+    public void setTicks(double ticks) {
+        rotateSRX_m.setSelectedSensorPosition(ticks);
+    }
+
     /**
      * A helper method to see if the Tron Wheel is approximately at the position it's set to go to
      * @return true if it is more or less at the target position (within 100 ticks)

@@ -88,11 +88,11 @@ public final class Constants {
         public static final double UNIT_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
         // Preset units are in ticks
-        public static final double VAL_MID_PRESET = 102000;
-        public static final double VAL_HIGH_PRESET = 142000;
+        public static final double VAL_MID_PRESET = 110000;
+        public static final double VAL_HIGH_PRESET = 145000;
         // public static final double VAL_RAMP_PRESET = 6700;
         public static final double VAL_RAMP_PRESET = 8060;
-        public static final double VAL_GROUND_PRESET = 1940;
+        public static final double VAL_GROUND_PRESET = 1940*3; // 1940;
         public static final double VAL_TRANSPORT_PRESET = 14000;
         public static final double VAL_LINEUP_PRESET = 50000;
         public static final double VAL_AUTO_PRESET = 12180;
@@ -127,7 +127,7 @@ public final class Constants {
 
         public static final double VAL_ANGLE_RAMP = 14000;  // ticks
         public static final double VAL_ANGLE_SCORE = 0;
-        public static final double VAL_ANGLE_GROUND_INIT = 29112; // angle to pickup from ground start
+        public static final double VAL_ANGLE_GROUND_INIT = 28017; // 29112; // angle to pickup from ground start
         public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+3000;  // angle to pickup from ground finish
         public static final double VAL_ANGLE_TRANSPORT = 10000;
         public static final double VAL_ANGLE_HYBRID = 18000;
@@ -136,7 +136,8 @@ public final class Constants {
     public static class Intake {
         public static final int CAN_INTAKE_SRX = 3;
 
-        public static final double VAL_IN_PERCENT = 9.5/12.0;
+        // public static final double VAL_IN_PERCENT = 0.8;
+        public static final double VAL_IN_PERCENT = 0.8;
         public static final double VAL_OUT_NORMAL = -0.3;
         public static final double VAL_OUT_TURBO = -0.5;
         public static final double VAL_HOLD_PERCENT = 0.3;
@@ -150,7 +151,16 @@ public final class Constants {
     public static class Vision {
         public static final double VAL_KP = 0.01;
         public static final double VAL_KI = 0;
-        public static final double VAL_KD = 0;
+        public static final double VAL_KD = 0.001;
 
+    }
+
+    public static class PigeonBalance{
+        public static final double VAL_KP_BAL_PID = 0.007;
+        public static final double VAL_KI_BAL_PID = 0.00;
+        public static final double VAL_KD_BAL_PID = 0.0007;
+        public static final double VAL_BAL_TOLERANCE = 0.5;
+        public static final double VAL_VELO_TOLERANCE = 0;
+        public static final double VAL_BAL_SETPOINT = 0;
     }
 }
