@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.commands.T_Cascade_Home;
 import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
+import frc.robot.commands.T_Cone_Position;
 import frc.robot.commands.G_BlueLeftGrid;
 import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
@@ -119,6 +120,11 @@ public class RobotContainer {
       .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)))
       .whenPressed(
           Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)));
+
+    new ComboButton(operator_s.start(), operator_s.leftBumper())
+      .whenShiftPressed(new T_Cone_Position(1));
+    new ComboButton(operator_s.start(), operator_s.rightBumper())
+      .whenShiftPressed(new T_Cone_Position(2));
 
     operator_s.y().onTrue(
         Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));

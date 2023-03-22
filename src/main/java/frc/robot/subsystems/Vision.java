@@ -1,8 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.cscore.CvSource;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTable;
@@ -26,6 +23,10 @@ public class Vision extends Subsystem610{
     private NetworkTable networkTable_m;
     private PIDController pid_m;
     private boolean isAimed_m;
+    private int conePosition_m;
+    private double angleSetPoint_m;
+    private int distanceSetPoint_m;
+    private Shuffleboard visionTab;
 
     public static Vision getInstance() {
         if (visionInst_s == null)
@@ -37,6 +38,9 @@ public class Vision extends Subsystem610{
         super("Limelight");
         
         ledMode_m = 0;
+        conePosition_m = 0;
+        angleSetPoint_m = 0;
+        distanceSetPoint_m = 100;
         drivetrain_m = Drivetrain.getInstance();
 
         ShuffleboardTab visionTab = Shuffleboard.getTab("test");
@@ -65,6 +69,25 @@ public class Vision extends Subsystem610{
 
     public void setLedMode(int ledMode){
         networkTable_m.getEntry("ledMode").setNumber(ledMode);
+    }
+
+    public int getConePosition(){
+        return conePosition_m;
+    }
+
+    public void setConePosition(int newPosition){
+        conePosition_m = newPosition;
+        if (conePosition_m == 0){
+            angleSetPoint_m = 0;
+        }
+        //cone is to the left
+        else if (conePosition_m == 1){
+            angleSetPoint_m = VAL_LEFT_ANGLE_OFSET;
+        }
+        //cone is to the right
+        else{
+            angleSetPoint_m = VAL_RIGHT_ANGLE_OFSET;
+        }
     }
 
     /**
@@ -103,8 +126,8 @@ public class Vision extends Subsystem610{
      */
     public void aim() {
         pid_m.setTolerance(1.4, 0);
-        // drivetrain_m.setLeft(-pid_m.calculate(calcTx(), 0)*0.3);
-        // drivetrain_m.setRight(pid_m.calculate(calcTx(), 0)*0.3);
+        // drivetrain_m.setLeft(-pid_m.calculate(calcTx(), angleSetPoint)*0.3);
+        // drivetrain_m.setRight(pid_m.calculate(calcTx(), angleSetPoint)*0.3);
     }
 
     /**
@@ -112,20 +135,21 @@ public class Vision extends Subsystem610{
      */
     public void drive(){
         pid_m.setTolerance(1.4, 0);
-        // drivetrain_m.setLeft(-pid_m.calculate(calcDistance(), 0)*0.3);
+        // drivetrain_m.setLeft(-pid_m.calculate(calcDistance(), distanceSetPoint)*0.3);
     }
 
     public void writeDashboard(){
         SmartDashboard.putNumber("Angle", Math.round(calcTx() * 1e5) / 1e5);
+        SmartDashboard.putBoolean("Aimed", isAimed_m);
+        SmartDashboard.putNumber("Cone Poisition", conePosition_m);
         SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
-        SmartDashboard.putNumber("PID LEFT ANGLE", -pid_m.calculate(calcTx(), 0)*0.3);
-        SmartDashboard.putNumber("PID LEFT DRIVE", -pid_m.calculate(calcDistance(), 0)*0.3);
+        SmartDashboard.putNumber("PID LEFT ANGLE", -pid_m.calculate(calcTx(), angleSetPoint_m)*0.3);
+        SmartDashboard.putNumber("PID LEFT DRIVE", -pid_m.calculate(calcDistance(), distanceSetPoint_m)*0.3);
     }
 
     @Override
     public void periodic() {
         tv_m = (int) networkTable_m.getEntry("tv").getDouble(0.0);
-        
         writeDashboard();
     }
     
