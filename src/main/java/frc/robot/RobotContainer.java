@@ -96,7 +96,8 @@ public class RobotContainer {
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
     driver_s.x().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET), new T_TronWheel_Preset(VAL_ANGLE_HYBRID)));
-    driver_s.y().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE), new T_Intake_In()));
+    driver_s.y().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE), 
+      Commands.runOnce(() -> intakeInst_s.setIntaking(true))) );
 
     // ! Operator Controls
     operator_s.back()
