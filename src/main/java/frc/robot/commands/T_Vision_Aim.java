@@ -11,7 +11,7 @@ public class T_Vision_Aim extends CommandBase{
     public T_Vision_Aim() {
         visionInst_m = Vision.getInstance();
         driveTrainInst_m = Drivetrain.getInstance();
-        addRequirements(visionInst_m, driveTrainInst_m);
+        addRequirements(visionInst_m);
 
     }
 

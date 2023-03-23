@@ -69,6 +69,10 @@ public class Vision extends Subsystem610{
         networkTable_m.getEntry("camMode").setNumber(camMode);
     }
 
+    /**
+     * 0 for on, 1 for off
+     * @param ledMode
+     */
     public void setLedMode(int ledMode){
         networkTable_m.getEntry("ledMode").setNumber(ledMode);
     }

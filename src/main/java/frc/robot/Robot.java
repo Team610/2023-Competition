@@ -20,6 +20,7 @@ public class Robot extends TimedRobot {
     RobotContainer.cascadeInst_s.setSafety(true);
     RobotContainer.tronWheelInst_s.setSafety(true);
     RobotContainer.pdb_s.setSwitchableChannel(false);
+    RobotContainer.visionInst_s.setLedMode(1);
   }
 
   @Override
@@ -32,6 +33,11 @@ public class Robot extends TimedRobot {
     RobotContainer.drivetrainInst_s.setCoast();
     RobotContainer.cascadeInst_s.setSafety(true);
     RobotContainer.tronWheelInst_s.setSafety(true);
+    RobotContainer.visionInst_s.setLedMode(1);
+
+    if (autonomousCommand_m != null) {
+      autonomousCommand_m.cancel();
+    }
   }
 
   @Override

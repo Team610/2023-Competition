@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -103,8 +104,12 @@ public class RobotContainer {
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
     driver_s.x().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET), new T_TronWheel_Preset(VAL_ANGLE_HYBRID)));
-    driver_s.y().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE), 
-      Commands.runOnce(() -> intakeInst_s.setIntaking(true))) );
+    driver_s.rightBumper().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE), 
+      Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
+
+      driver_s.a().toggleOnTrue(new T_Vision_Light());
+      // driver_s.b().whileTrue(new T_Vision_Drive());
+      // driver_s.b().whileTrue(new T_Vision_Aim());
 
     // ! Operator Controls
     operator_s.back()
@@ -134,16 +139,14 @@ public class RobotContainer {
     new ComboButton(operator_s.start(), operator_s.rightBumper())
       .whenShiftPressed(new T_Cone_Position(2));
 
-    driver_s.a().toggleOnTrue(new T_Vision_Light());
-    // driver_s.b().whileTrue(new T_Vision_Drive());
-    // driver_s.b().whileTrue(new T_Vision_Aim());
-
-
     operator_s.rightBumper().onTrue(
         Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
             Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
+    
+    new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
+    new POVButton(operator_s.getHID(), 180).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setBrake()).ignoringDisable(true));
   }
 
   public Command getAutonomousCommand() {
