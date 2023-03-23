@@ -28,9 +28,11 @@ public class T_Intake_In extends CommandBase {
     public void execute() {
         if(intakeInst_m.getIntaking()) {
             RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
+            RobotContainer.operatorRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
             intakeInst_m.intake(VAL_IN_PERCENT);
         } else {
             RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0);
+            RobotContainer.operatorRumble_s.setRumble(RumbleType.kBothRumble, 0);
             intakeInst_m.stopIntake();
         }
         if(tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT && tronWheelInst_m.checkClosedLoop()){

@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -51,9 +52,9 @@ public class G_BlueRightGrid1Half extends SequentialCommandGroup {
                                 Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
                                         new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
                                 Commands.sequence(
-                                        Commands.parallel(new A_Cascade_Move(VAL_GROUND_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)), new A_TronWheel_Move(VAL_TRANSPORT_PRESET, 110))
+                                        Commands.parallel(new A_Cascade_Move(VAL_GROUND_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)))
                         ),
-                        new A_Pidgeon_Balance()
+                        Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110))
                 );
         }
 }
