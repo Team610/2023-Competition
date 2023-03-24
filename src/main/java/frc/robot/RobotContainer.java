@@ -145,8 +145,8 @@ public class RobotContainer {
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     
-    new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
-    new POVButton(operator_s.getHID(), 180).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setBrake()).ignoringDisable(true));
+    // new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
+    // new POVButton(operator_s.getHID(), 180).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setBrake()).ignoringDisable(true));
   }
 
   public Command getAutonomousCommand() {

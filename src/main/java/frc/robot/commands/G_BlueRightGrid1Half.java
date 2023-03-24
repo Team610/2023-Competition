@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -35,6 +34,7 @@ public class G_BlueRightGrid1Half extends SequentialCommandGroup {
                 RobotContainer.tronWheelInst_s.setTicks(VAL_TRANSPORT_PRESET);
 
                 preload_m = pickup_m = null;
+
                 try {
                         preload_m = TrajectoryUtil.fromPathweaverJson(preload);
                         pickup_m = TrajectoryUtil.fromPathweaverJson(pickup);
