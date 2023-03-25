@@ -20,13 +20,14 @@ public class A_Pidgeon_Balance extends CommandBase {
     public void initialize() {
         //TODO Tune PID
         pidBal_m = new PIDController(VAL_KP_BAL_PID, VAL_KI_BAL_PID, VAL_KD_BAL_PID);
-        pidBal_m.setTolerance(VAL_BAL_TOLERANCE,VAL_VELO_TOLERANCE);
+        pidBal_m.setTolerance(VAL_BAL_TOLERANCE, VAL_VELO_TOLERANCE);
     }
 
     @Override
     public void execute() {
-        driveInst_m.setLeft(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(),VAL_BAL_SETPOINT));
-        driveInst_m.setRight(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(),VAL_BAL_SETPOINT));
+        driveInst_m.setLeft(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
+        driveInst_m.setRight(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
+        
         //curAng_s = RobotContainer.pidgey_s.getPitch();
         // if(curAng_s < -VAL_PIDGEY_RANGE){
         //     driveInst_m.setLeft(0.1);
@@ -38,7 +39,6 @@ public class A_Pidgeon_Balance extends CommandBase {
         //     driveInst_m.setLeft(0);
         //     driveInst_m.setRight(0);
         // }
-
     }
 
     @Override

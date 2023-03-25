@@ -44,8 +44,8 @@ public class G_BlueRightGridTwo extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(110)),
-                        new WaitCommand(0.1),
+                        // Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 100), new A_Intake_In(100)),
+                        new A_Cascade_Move(VAL_HIGH_PRESET, 100),
                         Commands.parallel(new A_TronWheel_Move(VAL_ANGLE_SCORE, 80), new A_Intake_Out()),
                         Commands.parallel(new A_Intake_In(550),
                                 Commands.sequence(
@@ -59,11 +59,11 @@ public class G_BlueRightGridTwo extends SequentialCommandGroup {
                                                         ),
                                                         Commands.parallel(new A_TronWheel_Move(VAL_TRANSPORT_PRESET, 110), new A_Cascade_Move(VAL_LINEUP_PRESET, 110))
                                                 )
-                                        ),
-                                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_SCORE, 110))
+                                        )
+                                        // Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_SCORE, 110))
                                 )
-                        ),
-                        new A_Intake_Out()
+                        )
+                        // new A_Intake_Out()   
                 );
         }
 }

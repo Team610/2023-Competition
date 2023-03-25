@@ -8,7 +8,7 @@ import frc.robot.commands.T_Cascade_Home;
 import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
 import frc.robot.commands.T_Cone_Position;
-import frc.robot.commands.G_BlueLeftGrid;
+import frc.robot.commands.G_BlueLeftGrid2;
 import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
 import frc.robot.commands.G_PreloadLeave;
@@ -58,6 +58,8 @@ public class RobotContainer {
   public static CommandXboxController operator_s;
   public static XboxController driverRumble_s;
   public static XboxController operatorRumble_s;
+  
+  public static boolean driverDPadLeft_s, driverDPadRight_s;
 
   public static Drivetrain drivetrainInst_s;
   public static Cascade cascadeInst_s;
@@ -85,7 +87,7 @@ public class RobotContainer {
     autoChooser_m.addOption("Preload", new G_Preload());
     autoChooser_m.addOption("Leave Comm, Bal", new G_PreloadLeave());
     autoChooser_m.addOption("Leave Comm, Bal CUBE", new G_PreloadLeaveCube());
-    autoChooser_m.addOption("Blue LeftGrid 2 Bal", new G_BlueLeftGrid());
+    autoChooser_m.addOption("Blue LeftGrid 2 Bal", new G_BlueLeftGrid2());
     autoChooser_m.addOption("Blue RightGrid 1.5 Bal", new G_BlueRightGrid1Half());
     autoChooser_m.addOption("Red LeftGrid 1.5 Bal", new G_RedLeftGrid1Half());
     autoChooser_m.addOption("Blue RightGrid 2", new G_BlueRightGridTwo());
@@ -94,6 +96,8 @@ public class RobotContainer {
 
     driver_s = new CommandXboxController(PORT_DRIVER);
     operator_s = new CommandXboxController(PORT_OPERATOR);
+
+    driverDPadLeft_s = driverDPadRight_s = false;
 
     driverRumble_s = new XboxController(PORT_DRIVER);
     operatorRumble_s = new XboxController(PORT_OPERATOR);
@@ -113,9 +117,9 @@ public class RobotContainer {
     driver_s.rightBumper().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE), 
       Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
 
-      driver_s.a().toggleOnTrue(new T_Vision_Light());
-      // driver_s.b().whileTrue(new T_Vision_Drive());
-      // driver_s.b().whileTrue(new T_Vision_Aim());
+    driver_s.a().toggleOnTrue(new T_Vision_Light());
+    // driver_s.b().whileTrue(new T_Vision_Drive());
+    // driver_s.b().whileTrue(new T_Vision_Aim());
 
     // ! Operator Controls
     operator_s.back()
