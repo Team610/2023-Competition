@@ -12,7 +12,9 @@ import frc.robot.commands.G_BlueLeftGrid;
 import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
 import frc.robot.commands.G_PreloadLeave;
+import frc.robot.commands.G_PreloadLeaveCube;
 import frc.robot.commands.G_RedLeftGrid1Half;
+import frc.robot.commands.G_RedLeftGridTwo;
 import frc.robot.commands.G_BlueRightGrid1Half;
 import frc.robot.commands.G_BlueRightGridTwo;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
@@ -82,10 +84,12 @@ public class RobotContainer {
     autoChooser_m.setDefaultOption("Preload Balance", new G_PreloadBalance());
     autoChooser_m.addOption("Preload", new G_Preload());
     autoChooser_m.addOption("Leave Comm, Bal", new G_PreloadLeave());
+    autoChooser_m.addOption("Leave Comm, Bal CUBE", new G_PreloadLeaveCube());
     autoChooser_m.addOption("Blue LeftGrid 2 Bal", new G_BlueLeftGrid());
     autoChooser_m.addOption("Blue RightGrid 1.5 Bal", new G_BlueRightGrid1Half());
     autoChooser_m.addOption("Red LeftGrid 1.5 Bal", new G_RedLeftGrid1Half());
     autoChooser_m.addOption("Blue RightGrid 2", new G_BlueRightGridTwo());
+    autoChooser_m.addOption("Red LeftGrid 2", new G_RedLeftGridTwo());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
 
     driver_s = new CommandXboxController(PORT_DRIVER);
