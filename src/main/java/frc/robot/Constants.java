@@ -88,7 +88,7 @@ public final class Constants {
         public static final double UNIT_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
         // Preset units are in ticks
-        public static final double VAL_MID_PRESET = 110000;
+        public static final double VAL_MID_PRESET = 109000;
         public static final double VAL_HIGH_PRESET = 145000;
         // public static final double VAL_RAMP_PRESET = 6700;
         public static final double VAL_RAMP_PRESET = 8060;
@@ -125,7 +125,6 @@ public final class Constants {
         public static final double VAL_KD = 0;
         public static final double VAL_KF = 0.4;
 
-
         public static final double VAL_ANGLE_RAMP = 14000;  // ticks
         public static final double VAL_ANGLE_SCORE = 0;
         public static final double VAL_ANGLE_GROUND_INIT = 28500; //28500;   // angle to pickup from ground start
@@ -158,8 +157,6 @@ public final class Constants {
         public static final double VAL_DRIVE_KD = 0.0005;
         public static final double VAL_LEFT_ANGLE_OFSET = 2;
         public static final double VAL_RIGHT_ANGLE_OFSET = 2;
-
-
     }
 
     public static class PigeonBalance{
