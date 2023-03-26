@@ -162,7 +162,7 @@ public final class Constants {
     public static class PigeonBalance{
         public static final double VAL_KP_BAL_PID = 0.007;
         public static final double VAL_KI_BAL_PID = 0.00;
-        public static final double VAL_KD_BAL_PID = 0.0007;
+        public static final double VAL_KD_BAL_PID = 0.0005;
         public static final double VAL_BAL_TOLERANCE = 0.4;
         public static final double VAL_VELO_TOLERANCE = 0;
         public static final double VAL_BAL_SETPOINT = 0;

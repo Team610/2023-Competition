@@ -40,12 +40,12 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
 
         y = y * y * y;
         x = x * x * x;
-        if(cascadeInt_m.cascadeTickPercent() >= .45){
-            y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
-        } else if(new POVButton(RobotContainer.driver_s.getHID(), 270).getAsBoolean()){
-            offset -= 0.5;
+        if(new POVButton(RobotContainer.driver_s.getHID(), 270).getAsBoolean()){
+            offset -= 0.1;
         } else if(new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean()){
-            offset += 0.5;
+            offset += 0.1;
+        } else if(cascadeInt_m.cascadeTickPercent() >= .45){
+            y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
         } else {
             offset = 0;
             y *= turbo ? 1 : 0.8;

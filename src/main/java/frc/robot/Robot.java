@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.A_Disable_Safeties;
 
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer_m;
@@ -72,6 +73,7 @@ public class Robot extends TimedRobot {
     RobotContainer.drivetrainInst_s.setBrake();
     RobotContainer.cascadeInst_s.setManual(false);
     RobotContainer.tronWheelInst_s.setManual(false);
+    new A_Disable_Safeties();
 
     if (autonomousCommand_m != null) {
       autonomousCommand_m.cancel();
