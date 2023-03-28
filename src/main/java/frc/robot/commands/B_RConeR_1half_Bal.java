@@ -31,7 +31,7 @@ public class B_RConeR_1half_Bal extends SequentialCommandGroup {
                 driveInst_m = Drivetrain.getInstance();
                 addRequirements(driveInst_m);
                 RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
-                RobotContainer.tronWheelInst_s.setTicks(VAL_TRANSPORT_PRESET);
+                RobotContainer.tronWheelInst_s.setTicks(VAL_ANGLE_TRANSPORT);
 
                 preload_m = pickup_m = null;
 

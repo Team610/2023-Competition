@@ -116,8 +116,7 @@ public final class Constants {
         public static final double VAL_FWD_LIM = 30000;
         
         public static final double VAL_MAX_ACCEL = 12000;
-        public static final double VAL_MAX_VELO = 3000;  // Ticks per 100 ms
-        public static final double VAL_CRUISE_VELO = VAL_MAX_VELO * 0.7;
+        public static final double VAL_CRUISE_VELO = 3000;
 
         public static final double VAL_KP = 0.45;
         public static final double VAL_KI = 0;

@@ -39,6 +39,7 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -129,10 +130,8 @@ public class RobotContainer {
 
     // ! Operator Controls
 
-    //homing
-    operator_s.back()
-        .onTrue(Commands.parallel(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
-            new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming)));
+    //cascade homing
+    operator_s.back().onTrue(new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
 
     new ComboButton(operator_s.start(), operator_s.a())
         //tronwheel manual toggle
@@ -166,8 +165,8 @@ public class RobotContainer {
     //intake toggle
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     
-    // new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
-    // new POVButton(operator_s.getHID(), 180).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setBrake()).ignoringDisable(true));
+    new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
+    new POVButton(operator_s.getHID(), 180).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setBrake()).ignoringDisable(true));
   }
 
   public Command getAutonomousCommand() {
