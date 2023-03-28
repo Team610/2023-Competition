@@ -18,7 +18,7 @@ public class G_IntakeTronWheel_Automatic extends SequentialCommandGroup{
 
         addCommands(
             new T_Intake_In(),
-            new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)
+            new T_TronWheel_Preset(VAL_ANG_CONE_TRANSPORT)
         );
     }
 }

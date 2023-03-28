@@ -47,7 +47,7 @@ public class G_PreloadBalance extends SequentialCommandGroup {
                                 Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m)),
                                 Commands.sequence(
                                         Commands.parallel(new A_Cascade_Move(VAL_TRANSPORT_PRESET, 110), 
-                                            new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110)))
+                                            new A_TronWheel_Move(VAL_ANG_CONE_TRANSPORT, 110)))
                         ),
                         new A_Pidgeon_Balance()
                 );

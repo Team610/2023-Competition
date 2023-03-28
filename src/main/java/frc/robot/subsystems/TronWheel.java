@@ -20,7 +20,7 @@ public class TronWheel extends Subsystem610 {
     private TronWheel() {
         super("TronWheel");
         safety_m = true;
-        targetPos_m = VAL_ANGLE_TRANSPORT;
+        targetPos_m = VAL_ANG_CONE_TRANSPORT;
         rotateSRX_m = MotorConfig.configTronRotateMotor(CAN_ROTATE_SRX);
     }
 

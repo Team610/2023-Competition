@@ -45,7 +45,7 @@ public class R_LCube_2 extends SequentialCommandGroup {
                 addCommands(
                         new A_Disable_Safeties(),
                         Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 100), new A_Intake_In(100)),
-                        Commands.parallel(new A_TronWheel_Move(VAL_ANGLE_SCORE, 80), new A_Intake_Out()),
+                        Commands.parallel(new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 80), new A_Intake_Out()),
                         Commands.parallel(new A_Intake_In(550),
                                 Commands.sequence(
                                         Commands.parallel(
@@ -54,12 +54,12 @@ public class R_LCube_2 extends SequentialCommandGroup {
                                                 Commands.sequence(
                                                         Commands.parallel(
                                                                 Commands.sequence(new A_Cascade_Move(VAL_RAMP_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_PRESET, 110)),
-                                                                new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)
+                                                                new A_TronWheel_Move(VAL_ANG_CONE_GROUND, 110)
                                                         ),
                                                         Commands.parallel(new A_TronWheel_Move(VAL_TRANSPORT_PRESET, 110), new A_Cascade_Move(VAL_LINEUP_PRESET, 110))
                                                 )
                                         ),
-                                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_SCORE, 110))
+                                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 110))
                                 )
                         ),
                         new A_Intake_Out()

@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
     RobotContainer.tronWheelInst_s.setSafety(false);  // Change to true to reenable safety
     RobotContainer.infrastructure_s.setSwitchable(false);
     RobotContainer.visionInst_s.setLedMode(1);
-    RobotContainer.tronWheelInst_s.setTicks(VAL_ANGLE_TRANSPORT);
+    RobotContainer.tronWheelInst_s.setTicks(VAL_ANG_CONE_TRANSPORT);
   }
 
   @Override

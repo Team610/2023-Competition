@@ -32,7 +32,7 @@ public class RB_CCube_1_Bal extends SequentialCommandGroup {
                 drivetrainInst_m = Drivetrain.getInstance();
                 addRequirements(drivetrainInst_m);
                 RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
-                RobotContainer.tronWheelInst_s.setTicks(VAL_ANGLE_TRANSPORT);
+                RobotContainer.tronWheelInst_s.setTicks(VAL_ANG_CONE_TRANSPORT);
 
                 preload_m = null;
                 try {
@@ -46,14 +46,14 @@ public class RB_CCube_1_Bal extends SequentialCommandGroup {
                         new A_Disable_Safeties(),
                         new A_Cascade_Move(VAL_HIGH_PRESET, 110),
                         new WaitCommand(0.1),
-                        Commands.parallel(new A_TronWheel_Move(VAL_ANGLE_SCORE, 80), new A_Intake_Out()),
+                        Commands.parallel(new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 80), new A_Intake_Out()),
                         Commands.parallel(
                                 Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
                                     new WaitCommand(0.5),
                                     new A_Reset_Odometry(balance_m), RamseteSetup.initializeRamseteCommand(balance_m)),
                                 Commands.sequence(
                                         Commands.parallel(new A_Cascade_Move(VAL_TRANSPORT_PRESET, 110), 
-                                            new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110)))
+                                            new A_TronWheel_Move(VAL_ANG_CONE_TRANSPORT, 110)))
                         ),
                         new A_Pidgeon_Balance()
                 );

@@ -92,10 +92,11 @@ public final class Constants {
         public static final double VAL_MID_PRESET = 109000;
         public static final double VAL_HIGH_PRESET = 145000;
         public static final double VAL_RAMP_PRESET = 8060;
-        public static final double VAL_GROUND_PRESET = 5500;
         public static final double VAL_TRANSPORT_PRESET = 14000;
         public static final double VAL_LINEUP_PRESET = 50000;
         public static final double VAL_AUTO_PRESET = 12180;
+        public static final double VAL_GROUND_PRESET = 5500;
+        
 
         /**
          * Converts vertical height to ticks for cascade arm to travel
@@ -123,12 +124,18 @@ public final class Constants {
         public static final double VAL_KD = 12;
         public static final double VAL_KF = 0.341;
 
-        public static final double VAL_ANGLE_RAMP = 14000;  // ticks
-        public static final double VAL_ANGLE_SCORE = 0;
-        public static final double VAL_ANGLE_GROUND_INIT = 28500;   // angle to pickup from ground start
-        public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+3000;  // angle to pickup from ground finish
-        public static final double VAL_ANGLE_TRANSPORT = 10000;
-        public static final double VAL_ANGLE_HYBRID = 18000;
+        public static final double VAL_ANG_CONE_RAMP = 14000;  // ticks
+        public static final double VAL_ANG_CONE_SCORE = 0;
+        public static final double VAL_ANG_CONE_GROUND = 28500;   // angle to pickup from ground start
+        public static final double VAL_ANG_CONE_TRANSPORT = 10000;
+        public static final double VAL_ANG_CONE_HYBRID = 18000;
+
+        // TODO: Redo values
+        public static final double VAL_ANG_CUBE_RAMP = 14000;  // ticks
+        public static final double VAL_ANG_CUBE_SCORE = 0;
+        public static final double VAL_ANG_CUBE_GROUND = 28500;   // angle to pickup from ground start
+        public static final double VAL_ANG_CUBE_TRANSPORT = 10000;
+        public static final double VAL_ANG_CUBE_HYBRID = 18000;
     }
 
     public static class Intake {
