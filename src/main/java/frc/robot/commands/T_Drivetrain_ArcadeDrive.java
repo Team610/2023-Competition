@@ -48,7 +48,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
             y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
         } else {
             offset = 0;
-            y *= turbo ? 1 : 0.8;
+            y *= turbo ? 1 : 0.7;
         }
         x *= 0.7;
         double leftSpeed = -y + x + offset;

@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-
+import frc.robot.states.TronWheelState;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
 
@@ -18,7 +18,7 @@ public class G_IntakeTronWheel_Automatic extends SequentialCommandGroup{
 
         addCommands(
             new T_Intake_In(),
-            new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)
+            new T_TronWheel_Preset(TronWheelState.TRANSPORT)
         );
     }
 }
