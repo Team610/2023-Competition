@@ -16,7 +16,7 @@ public class T_TronWheel_Home extends CommandBase {
     @Override
     public void initialize() {
         tronWheelInst_m.tronRevLimit();
-        tronWheelInst_m.rotate(-0.3);
+        tronWheelInst_m.rotate(-0.5);
     }
 
     @Override
@@ -34,7 +34,7 @@ public class T_TronWheel_Home extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         tronWheelInst_m.stopRotate();
-        tronWheelInst_m.setTargetPos(VAL_ANGLE_TRANSPORT);
+        tronWheelInst_m.setTargetPos(VAL_ANGLE_GROUND_INIT);
         tronWheelInst_m.setSafety(false);
     }
 }

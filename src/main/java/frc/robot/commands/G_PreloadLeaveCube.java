@@ -16,7 +16,7 @@ import frc.robot.RobotContainer;
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class G_PreloadLeave extends SequentialCommandGroup {
+public class G_PreloadLeaveCube extends SequentialCommandGroup {
         private Drivetrain drivetrainInst_m;
         private Trajectory preload_m, balance_m;
 
@@ -24,7 +24,7 @@ public class G_PreloadLeave extends SequentialCommandGroup {
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public G_PreloadLeave() {
+        public G_PreloadLeaveCube() {
                 String preloadHigh = "paths/output/LeaveComm.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 String balance = "paths/output/BalanceOut.wpilib.json";
@@ -44,9 +44,9 @@ public class G_PreloadLeave extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_SCORE, 110), new A_Intake_In(110)),
-                        new WaitCommand(0.2),
-                        new A_Intake_Out(),
+                        new A_Cascade_Move(VAL_HIGH_PRESET, 110),
+                        new WaitCommand(0.1),
+                        Commands.parallel(new A_TronWheel_Move(VAL_ANGLE_SCORE, 80), new A_Intake_Out()),
                         Commands.parallel(
                                 Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
                                     new WaitCommand(0.5),
