@@ -1,15 +1,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.states.TronWheelState;
 import frc.robot.subsystems.TronWheel;
 
 public class T_TronWheel_Preset extends CommandBase {
     private TronWheel tronWheelInst_m;
-    private double target_m;
+    private TronWheelState tronWheelState_m;
     
-    public T_TronWheel_Preset(double target) {
+    public T_TronWheel_Preset(TronWheelState state) {
         tronWheelInst_m = TronWheel.getInstance();
-        target_m = target;
+        tronWheelState_m = state;
         addRequirements(tronWheelInst_m);
     }
 
@@ -19,7 +20,7 @@ public class T_TronWheel_Preset extends CommandBase {
 
     @Override
     public void execute() {
-        tronWheelInst_m.setTargetPos(target_m);
+        tronWheelInst_m.setTargetPos(tronWheelState_m.getPreset());
     }
 
     @Override

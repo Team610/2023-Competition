@@ -27,7 +27,7 @@ import frc.robot.commands.T_Subsystem_Manual;
 import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.commands.T_TronWheel_Move;
 import frc.robot.commands.T_TronWheel_Preset;
-import frc.robot.states.CascadeState;
+import frc.robot.commands.T_Vision_Light;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
@@ -39,13 +39,12 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 
 import static frc.robot.Constants.*;
-import static frc.robot.Constants.Cascade.*;
-import static frc.robot.Constants.TronWheel.*;
+import frc.robot.states.CascadeState;
+import frc.robot.states.TronWheelState;
 import static frc.robot.Constants.Drivetrain.*;
 
 import com.ctre.phoenix.sensors.WPI_Pigeon2;
@@ -120,33 +119,51 @@ public class RobotContainer {
     //turbo outtake hold
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
     //reverse hybrid
-    driver_s.x().onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(VAL_ANGLE_HYBRID)));
+    driver_s.x().onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(TronWheelState.HYBRID), 
+      Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
+    //forward hybrid
+    driver_s.rightBumper().onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP), new T_TronWheel_Preset(TronWheelState.SCORE), 
+      Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
+    //limelight toggle
+    driver_s.a().toggleOnTrue(new T_Vision_Light());
 
     // ! Operator Controls
+
+    //homing
     operator_s.back()
         .onTrue(Commands.parallel(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
             new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming)));
 
     new ComboButton(operator_s.start(), operator_s.a())
+        //tronwheel manual toggle
         .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.MID), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
+        //mid scoring preset
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.MID), new T_TronWheel_Preset(TronWheelState.SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.b())
+        //cascade manual toggle
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.HIGH), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
+        //high scoring preset
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.HIGH), new T_TronWheel_Preset(TronWheelState.SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.x())
-        .whenShiftPressed(
-            Commands.parallel(new T_Cascade_Preset(CascadeState.GROUND), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.RAMP), new T_TronWheel_Preset(VAL_ANGLE_RAMP)));
+        //ramp pickup preset
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.RAMP), new T_TronWheel_Preset(TronWheelState.RAMP)))
+        //ground pickup preset
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.GROUND), new T_TronWheel_Preset(TronWheelState.GROUND)));
+        
 
-    operator_s.y().onTrue(
-        Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT)));
+    //transport preset
+    operator_s.y().onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), 
+                          new T_TronWheel_Preset(TronWheelState.TRANSPORT)));
 
-    operator_s.rightBumper().onTrue(
-        Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP),
-            Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
+    //lineup preset
+    operator_s.rightBumper().onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP), 
+                                    Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
+    
+    //ring light toggle
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
+    //intake toggle
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     
     // new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
