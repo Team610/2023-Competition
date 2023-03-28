@@ -7,18 +7,17 @@ package frc.robot;
 import frc.robot.commands.T_Cascade_Home;
 import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
-import frc.robot.commands.T_Cone_Position;
-import frc.robot.commands.G_BlueLeftGrid2;
+import frc.robot.commands.B_LCube_2;
 import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
-import frc.robot.commands.G_PreloadLeave;
-import frc.robot.commands.G_PreloadLeaveCube;
-import frc.robot.commands.G_RedLeftGrid1Half;
-import frc.robot.commands.G_RedLeftGrid1HalfCube;
-import frc.robot.commands.G_RedLeftGridTwo;
-import frc.robot.commands.G_BlueRightGrid1Half;
-import frc.robot.commands.G_BlueRightGrid1HalfCube;
-import frc.robot.commands.G_BlueRightGridTwo;
+import frc.robot.commands.RB_CCone_1_Bal;
+import frc.robot.commands.RB_CCube_1_Bal;
+import frc.robot.commands.R_LConeL_1Half;
+import frc.robot.commands.R_LCube_1Half_Bal;
+import frc.robot.commands.R_LCube_2;
+import frc.robot.commands.B_RConeR_1Half_Bal;
+import frc.robot.commands.B_RCube_1Half_Bal;
+import frc.robot.commands.B_RCube_2;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
@@ -31,6 +30,7 @@ import frc.robot.commands.T_Vision_Aim;
 import frc.robot.commands.T_Vision_Drive;
 import frc.robot.commands.T_Vision_Light;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Infrastructure;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
 import frc.robot.subsystems.Vision;
@@ -41,7 +41,6 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -70,7 +69,8 @@ public class RobotContainer {
   public static Vision visionInst_s;
 
   public static WPI_Pigeon2 pidgey_s;
-  public static PowerDistribution pdb_s;
+  public static Infrastructure infrastructure_s;
+  public static boolean coneMode_s;  // 1 for cone, 0 for cube
 
   public RobotContainer() {
     drivetrainInst_s = Drivetrain.getInstance();
@@ -82,20 +82,21 @@ public class RobotContainer {
     intakeInst_s = Intake.getInstance();
     intakeInst_s.setDefaultCommand(new T_Intake_In());
     visionInst_s = Vision.getInstance();
-    pdb_s = new PowerDistribution();
+    infrastructure_s = Infrastructure.getInstance();
+
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
     
     autoChooser_m.setDefaultOption("Preload Balance", new G_PreloadBalance());
     autoChooser_m.addOption("Preload", new G_Preload());
-    autoChooser_m.addOption("Leave Comm, Bal", new G_PreloadLeave());
-    autoChooser_m.addOption("Leave Comm, Bal CUBE", new G_PreloadLeaveCube());
-    autoChooser_m.addOption("B LeftGrid 2", new G_BlueLeftGrid2());
-    autoChooser_m.addOption("B RightGrid 1.5 Bal", new G_BlueRightGrid1Half());
-    autoChooser_m.addOption("B RightGrid Cube 1.5 Bal", new G_BlueRightGrid1HalfCube());
-    autoChooser_m.addOption("B RightGrid 2", new G_BlueRightGridTwo());
-    autoChooser_m.addOption("R LeftGrid 1.5 Bal", new G_RedLeftGrid1Half());
-    autoChooser_m.addOption("R LeftGrid Cube 1.5 Bal", new G_RedLeftGrid1HalfCube());
-    autoChooser_m.addOption("R LeftGrid 2", new G_RedLeftGridTwo());
+    autoChooser_m.addOption("Leave Comm, Bal", new RB_CCone_1_Bal());
+    autoChooser_m.addOption("Leave Comm, Bal CUBE", new RB_CCube_1_Bal());
+    autoChooser_m.addOption("B LeftGrid 2", new B_LCube_2());
+    autoChooser_m.addOption("B RightGrid 1.5 Bal", new B_RConeR_1Half_Bal());
+    autoChooser_m.addOption("B RightGrid Cube 1.5 Bal", new B_RCube_1Half_Bal());
+    autoChooser_m.addOption("B RightGrid 2", new B_RCube_2());
+    autoChooser_m.addOption("R LeftGrid 1.5 Bal", new R_LConeL_1Half());
+    autoChooser_m.addOption("R LeftGrid Cube 1.5 Bal", new R_LCube_1Half_Bal());
+    autoChooser_m.addOption("R LeftGrid 2", new R_LCube_2());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
 
     driver_s = new CommandXboxController(PORT_DRIVER);
@@ -105,6 +106,8 @@ public class RobotContainer {
 
     driverRumble_s = new XboxController(PORT_DRIVER);
     operatorRumble_s = new XboxController(PORT_OPERATOR);
+
+    coneMode_s = true;
 
     configureBindings();
   }
@@ -126,9 +129,10 @@ public class RobotContainer {
     // driver_s.b().whileTrue(new T_Vision_Aim());
 
     // ! Operator Controls
-    operator_s.back()
-        .onTrue(Commands.parallel(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
-            new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming)));
+    new ComboButton(operator_s.start(), operator_s.back())
+        .whenShiftPressed(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming))
+        .whenPressed(new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming));
+
 
     new ComboButton(operator_s.start(), operator_s.a())
         .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
@@ -146,14 +150,13 @@ public class RobotContainer {
     operator_s.y().onTrue(
         Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
 
-    
-
     new ComboButton(operator_s.start(), operator_s.rightBumper())
       .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE), 
       Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
       .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
             Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
-    operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
+      
+    operator_s.leftBumper().onTrue(Commands.runOnce(() -> coneMode_s = !coneMode_s));
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     
     // new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));

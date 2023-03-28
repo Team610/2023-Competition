@@ -15,7 +15,7 @@ import frc.robot.RobotContainer;
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class G_RedLeftGridTwo extends SequentialCommandGroup {
+public class R_LCube_2 extends SequentialCommandGroup {
         private Drivetrain drivetrainInst_m;
         private Trajectory preload_m, pickup_m;
 
@@ -23,7 +23,7 @@ public class G_RedLeftGridTwo extends SequentialCommandGroup {
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public G_RedLeftGridTwo() {
+        public R_LCube_2() {
                 String preloadHigh = "paths/output/RedLeftCubePreload.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 String pickupHigh = "paths/output/RedLeftPickupLeft.wpilib.json";

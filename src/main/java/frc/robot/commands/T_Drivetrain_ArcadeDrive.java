@@ -1,15 +1,16 @@
 package frc.robot.commands;
 
 
-import static frc.robot.Constants.*;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Cascade;
 import frc.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+
+import static frc.robot.Constants.*;
+import static frc.robot.Constants.Drivetrain.*;
 
 /**
  * Default teleop drive mode
@@ -45,12 +46,13 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         } else if(new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean()){
             offset += 0.1;
         } else if(cascadeInt_m.cascadeTickPercent() >= .45){
-            y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
+            y *= turbo ? (VAL_TURBO_SPEED-(0.3*cascadeInt_m.cascadeTickPercent())) : (VAL_MAX_SPEED-(0.7*cascadeInt_m.cascadeTickPercent()));
         } else {
             offset = 0;
-            y *= turbo ? 1 : 0.8;
+            y *= turbo ? VAL_TURBO_SPEED : VAL_MAX_SPEED;
         }
-        x *= 0.7;
+        x *= turbo ? VAL_TURBO_TURN_SPEED : VAL_TURN_SPEED;
+
         double leftSpeed = -y + x + offset;
         double rightSpeed = -y - x - offset;
         drivetrainInst_m.setLeft(leftSpeed);

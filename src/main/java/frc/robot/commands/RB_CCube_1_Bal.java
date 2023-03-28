@@ -16,7 +16,7 @@ import frc.robot.RobotContainer;
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class G_PreloadLeaveCube extends SequentialCommandGroup {
+public class RB_CCube_1_Bal extends SequentialCommandGroup {
         private Drivetrain drivetrainInst_m;
         private Trajectory preload_m, balance_m;
 
@@ -24,7 +24,7 @@ public class G_PreloadLeaveCube extends SequentialCommandGroup {
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public G_PreloadLeaveCube() {
+        public RB_CCube_1_Bal() {
                 String preloadHigh = "paths/output/LeaveComm.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 String balance = "paths/output/BalanceOut.wpilib.json";
