@@ -15,7 +15,7 @@ import frc.robot.RobotContainer;
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class G_BlueRightGrid1HalfCube extends SequentialCommandGroup {
+public class R_LCube_1half_Bal extends SequentialCommandGroup {
         private Drivetrain driveInst_m;
         private Trajectory preload_m, pickup_m;
 
@@ -23,10 +23,10 @@ public class G_BlueRightGrid1HalfCube extends SequentialCommandGroup {
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public G_BlueRightGrid1HalfCube() {
-                String preloadHigh = "paths/output/BlueRightCubePreload.wpilib.json";
+        public R_LCube_1half_Bal() {
+                String preloadHigh = "paths/output/RedLeftCubePreload.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
-                String pickupHigh = "paths/output/BlueRightPickupBalance.wpilib.json";
+                String pickupHigh = "paths/output/RedLeftPickupBalance.wpilib.json";
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 driveInst_m = Drivetrain.getInstance();
                 addRequirements(driveInst_m);
@@ -55,8 +55,8 @@ public class G_BlueRightGrid1HalfCube extends SequentialCommandGroup {
                                                 Commands.sequence(
                                                         Commands.parallel(
                                                                 Commands.sequence(new A_Cascade_Move(VAL_RAMP_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_PRESET, 110)),
-                                                                new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110))
-                                                )),
+                                                                new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)))
+                                        ),
                                         Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110))
                                 )
                         )

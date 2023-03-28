@@ -15,7 +15,7 @@ import frc.robot.RobotContainer;
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class G_RedLeftGridTwo extends SequentialCommandGroup {
+public class B_RCube_2 extends SequentialCommandGroup {
         private Drivetrain driveInst_m;
         private Trajectory preload_m, pickup_m;
 
@@ -23,10 +23,10 @@ public class G_RedLeftGridTwo extends SequentialCommandGroup {
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public G_RedLeftGridTwo() {
-                String preloadHigh = "paths/output/RedLeftCubePreload.wpilib.json";
+        public B_RCube_2() {
+                String preloadHigh = "paths/output/BlueRightCubePreload.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
-                String pickupHigh = "paths/output/RedLeftPickupLeft.wpilib.json";
+                String pickupHigh = "paths/output/BlueRightPickupRight.wpilib.json";
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 driveInst_m = Drivetrain.getInstance();
                 addRequirements(driveInst_m);
@@ -44,7 +44,8 @@ public class G_RedLeftGridTwo extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 100), new A_Intake_In(100)),
+                        // Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 100), new A_Intake_In(100)),
+                        new A_Cascade_Move(VAL_HIGH_PRESET, 100),
                         Commands.parallel(new A_TronWheel_Move(VAL_ANGLE_SCORE, 80), new A_Intake_Out()),
                         Commands.parallel(new A_Intake_In(550),
                                 Commands.sequence(
@@ -58,11 +59,11 @@ public class G_RedLeftGridTwo extends SequentialCommandGroup {
                                                         ),
                                                         Commands.parallel(new A_TronWheel_Move(VAL_TRANSPORT_PRESET, 110), new A_Cascade_Move(VAL_LINEUP_PRESET, 110))
                                                 )
-                                        ),
-                                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_SCORE, 110))
+                                        )
+                                        // Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_SCORE, 110))
                                 )
-                        ),
-                        new A_Intake_Out()
+                        )
+                        // new A_Intake_Out()   
                 );
         }
 }
