@@ -99,10 +99,10 @@ public class RobotContainer {
     driver_s = new CommandXboxController(PORT_DRIVER);
     operator_s = new CommandXboxController(PORT_OPERATOR);
 
-    driverDPadLeft_s = driverDPadRight_s = false;
-
     driverRumble_s = new XboxController(PORT_DRIVER);
     operatorRumble_s = new XboxController(PORT_OPERATOR);
+
+    driverDPadLeft_s = driverDPadRight_s = false;
 
     configureBindings();
   }
@@ -112,9 +112,14 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
+
+    //intake toggle
     driver_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
+    //outtake hold
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
+    //turbo outtake hold
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
+    //reverse hybrid
     driver_s.x().onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(VAL_ANGLE_HYBRID)));
 
     // ! Operator Controls
