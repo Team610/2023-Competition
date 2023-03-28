@@ -8,6 +8,7 @@ import frc.robot.subsystems.Cascade;
 
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Cascade.*;
+import static frc.robot.Constants.*;
 
 public class T_Cascade_Move extends CommandBase {
     private Cascade cascadeInst_m;
@@ -27,8 +28,8 @@ public class T_Cascade_Move extends CommandBase {
     public void execute() {
         if(!cascadeInst_m.getSafety()){
             if(cascadeInst_m.getManual()){
-                double speed = MathUtil.applyDeadband(RobotContainer.operator_s.getLeftY() * VAL_MAX_SPEED_MANUAL, VAL_DEADBAND);
-                cascadeInst_m.spin(speed);
+                double speed = MathUtil.applyDeadband(-RobotContainer.operator_s.getLeftY() * VAL_MAX_SPEED_MANUAL, VAL_DEADBAND);
+                cascadeInst_m.spin(speed);           
             } else {
                 cascadeInst_m.spinMagic(down);
             }
