@@ -7,6 +7,7 @@ import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotContainer;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -38,7 +39,7 @@ public class Intake extends Subsystem610 {
      * @param spin Output percentage
      */
     public void intake(double spin) {
-        intakeSRX_m.set(ControlMode.PercentOutput, spin);
+        intakeSRX_m.set(ControlMode.PercentOutput, RobotContainer.coneMode_s ? spin : -spin);
     }
 
     /**
