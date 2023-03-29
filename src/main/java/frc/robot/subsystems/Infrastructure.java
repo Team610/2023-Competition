@@ -13,7 +13,6 @@ public class Infrastructure extends Subsystem610 {
 
     private Infrastructure() {
         super("Infrastructure");
-        infrastructure_s =  new Infrastructure();
         pdb_s = new PowerDistribution();
     }
 

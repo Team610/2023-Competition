@@ -128,15 +128,29 @@ public class Vision extends Subsystem610{
      * @return Boolean if the limelight is within the set threshold range
      */
     public boolean checkAim(){
-        return Math.abs(calcTx()) > 0 ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 : false;
+        return Math.abs(calcTx()) > 0 ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 && calcDistance() - distanceSetPoint_m < 10 : false;
     }
 
     /**
-     * Use WPILib PID to turn the robot to the desired direction
+     * Use WPILib PID to turn and drive the robot to the desired direction
      */
-    public void aim() {
-        drivetrain_m.setLeft(-pidAngle_m.calculate(calcTx(), angleSetPoint_m));
-        drivetrain_m.setRight(pidAngle_m.calculate(calcTx(), angleSetPoint_m));
+    public double[] aim() {
+        double steeringAdjust = 0;
+        double headingError = calcTx() - angleSetPoint_m;
+        double distanceError = calcTy();
+
+        if (headingError > 1){
+            steeringAdjust = -pidAngle_m.calculate(headingError) - VAL_MIN_POWER;
+        }
+        else if (headingError < 1){
+            steeringAdjust = pidAngle_m.calculate(headingError) + VAL_MIN_POWER;
+        }
+
+        // drivetrain_m.setLeft(steeringAdjust + pidDrive_m.calculate(distanceError));
+        // drivetrain_m.setRight(steeringAdjust + pidDrive_m.calculate(distanceError));
+
+        return new double[]{steeringAdjust + pidDrive_m.calculate(distanceError), steeringAdjust + pidDrive_m.calculate(distanceError)};
+
     }
 
     /**
@@ -152,8 +166,8 @@ public class Vision extends Subsystem610{
         SmartDashboard.putBoolean("Aimed", isAimed_m);
         SmartDashboard.putNumber("Cone Poisition", conePosition_m);
         SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
-        SmartDashboard.putNumber("PID LEFT ANGLE", -pidAngle_m.calculate(calcTx(), angleSetPoint_m)*0.3);
-        SmartDashboard.putNumber("PID LEFT DRIVE", -pidDrive_m.calculate(calcDistance(), distanceSetPoint_m)*0.3);
+        SmartDashboard.putNumber("PID LEFT", aim()[0]);
+        SmartDashboard.putNumber("PID RIGHT", aim()[1]);
     }
 
     @Override
