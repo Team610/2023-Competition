@@ -16,7 +16,6 @@ import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
 public class B_LCube_2 extends SequentialCommandGroup {
-        private Drivetrain drivetrainInst_m;
         private Trajectory preload_m, pickup_m, balance_m;
 
         /**
@@ -28,8 +27,8 @@ public class B_LCube_2 extends SequentialCommandGroup {
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 String pickupHigh = "paths/output/BlueLeftPickupRight.wpilib.json";
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
-                drivetrainInst_m = Drivetrain.getInstance();
-                addRequirements(drivetrainInst_m);
+                RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
+                addRequirements(RobotContainer.drivetrainInst_s);
                 RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_PRESET);
 
                 preload_m = pickup_m = null;

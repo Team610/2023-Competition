@@ -139,6 +139,7 @@ public final class Constants {
     }
 
     public static class Intake {
+        public static final int CAN_KICKER_SRX = 1;
         public static final int CAN_INTAKE_SRX = 3;
 
         public static final double VAL_IN_PERCENT = 0.8;

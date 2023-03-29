@@ -17,7 +17,6 @@ import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
 public class RB_CCube_1_Bal extends SequentialCommandGroup {
-        private Drivetrain drivetrainInst_m;
         private Trajectory preload_m, balance_m;
 
         /**
@@ -29,8 +28,8 @@ public class RB_CCube_1_Bal extends SequentialCommandGroup {
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 String balance = "paths/output/BalanceOut.wpilib.json";
                 Path balancePath = Filesystem.getDeployDirectory().toPath().resolve(balance);
-                drivetrainInst_m = Drivetrain.getInstance();
-                addRequirements(drivetrainInst_m);
+                RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
+                addRequirements(RobotContainer.drivetrainInst_s);
                 RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
                 RobotContainer.tronWheelInst_s.setTicks(VAL_ANG_CONE_TRANSPORT);
 

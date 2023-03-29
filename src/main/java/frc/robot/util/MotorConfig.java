@@ -134,4 +134,13 @@ public class MotorConfig {
         talon.enableCurrentLimit(true);
         return talon;
     }
+
+    public static WPI_TalonSRX configKickerMotor(int CAN_ID) {
+        WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
+        talon.setNeutralMode(NeutralMode.Brake);
+        talon.setInverted(false);
+        talon.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+        talon.configForwardLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
+        return talon;
+    }
 }

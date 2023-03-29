@@ -1,22 +1,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.TronWheel;
+import frc.robot.RobotContainer;
 
 import static frc.robot.Constants.TronWheel.*;
 
 public class T_TronWheel_Home extends CommandBase {
-    private TronWheel tronWheelInst_m;
 
     public T_TronWheel_Home() {
-        tronWheelInst_m = TronWheel.getInstance();
-        addRequirements(tronWheelInst_m);
+        addRequirements(RobotContainer.tronWheelInst_s);
     }
 
     @Override
     public void initialize() {
-        tronWheelInst_m.tronRevLimit();
-        tronWheelInst_m.rotate(-0.5);
+        RobotContainer.tronWheelInst_s.tronRevLimit();
+        RobotContainer.tronWheelInst_s.rotate(-0.5);
     }
 
     @Override
@@ -28,13 +26,13 @@ public class T_TronWheel_Home extends CommandBase {
      */
     @Override
     public boolean isFinished() {
-        return tronWheelInst_m.tronRevLimit();
+        return RobotContainer.tronWheelInst_s.tronRevLimit();
     }
 
     @Override
     public void end(boolean interrupted) {
-        tronWheelInst_m.stopRotate();
-        tronWheelInst_m.setTargetPos(VAL_ANG_CONE_GROUND);
-        tronWheelInst_m.setSafety(false);
+        RobotContainer.tronWheelInst_s.stopRotate();
+        RobotContainer.tronWheelInst_s.setTargetPos(VAL_ANG_CONE_GROUND);
+        RobotContainer.tronWheelInst_s.setSafety(false);
     }
 }

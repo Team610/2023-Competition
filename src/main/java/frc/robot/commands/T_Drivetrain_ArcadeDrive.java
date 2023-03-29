@@ -2,8 +2,6 @@ package frc.robot.commands;
 
 
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Cascade;
-import frc.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,13 +14,9 @@ import static frc.robot.Constants.Drivetrain.*;
  * Default teleop drive mode
  */
 public class T_Drivetrain_ArcadeDrive extends CommandBase {
-    private Drivetrain drivetrainInst_m;
-    private Cascade cascadeInt_m;
 
     public T_Drivetrain_ArcadeDrive() {
-        drivetrainInst_m = Drivetrain.getInstance();
-        cascadeInt_m = Cascade.getInstance();
-        addRequirements(drivetrainInst_m);
+        addRequirements(RobotContainer.drivetrainInst_s);
     }
 
     @Override
@@ -45,8 +39,8 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
             offset -= 0.1;
         } else if(new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean()){
             offset += 0.1;
-        } else if(cascadeInt_m.cascadeTickPercent() >= .45){
-            y *= turbo ? (VAL_TURBO_SPEED-(0.3*cascadeInt_m.cascadeTickPercent())) : (VAL_MAX_SPEED-(0.7*cascadeInt_m.cascadeTickPercent()));
+        } else if(RobotContainer.cascadeInst_s.cascadeTickPercent() >= .45){
+            y *= turbo ? (VAL_TURBO_SPEED-(0.3*RobotContainer.cascadeInst_s.cascadeTickPercent())) : (VAL_MAX_SPEED-(0.7*RobotContainer.cascadeInst_s.cascadeTickPercent()));
         } else {
             offset = 0;
             y *= turbo ? VAL_TURBO_SPEED : VAL_MAX_SPEED;
@@ -55,7 +49,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
 
         double leftSpeed = -y + x + offset;
         double rightSpeed = -y - x - offset;
-        drivetrainInst_m.setLeft(leftSpeed);
-        drivetrainInst_m.setRight(rightSpeed);
+        RobotContainer.drivetrainInst_s.setLeft(leftSpeed);
+        RobotContainer.drivetrainInst_s.setRight(rightSpeed);
     }
 }

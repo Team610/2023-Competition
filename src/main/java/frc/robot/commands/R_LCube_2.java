@@ -8,7 +8,6 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.util.RamseteSetup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.RobotContainer;
@@ -16,7 +15,6 @@ import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
 public class R_LCube_2 extends SequentialCommandGroup {
-        private Drivetrain drivetrainInst_m;
         private Trajectory preload_m, pickup_m;
 
         /**
@@ -28,8 +26,8 @@ public class R_LCube_2 extends SequentialCommandGroup {
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 String pickupHigh = "paths/output/RedLeftPickupLeft.wpilib.json";
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
-                drivetrainInst_m = Drivetrain.getInstance();
-                addRequirements(drivetrainInst_m);
+                RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
+                addRequirements(RobotContainer.drivetrainInst_s);
                 RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
                 RobotContainer.tronWheelInst_s.setTicks(VAL_TRANSPORT_PRESET);
 

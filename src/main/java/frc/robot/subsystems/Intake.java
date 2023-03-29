@@ -12,16 +12,18 @@ import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
 import static frc.robot.Constants.Intake.*;
+import static frc.robot.Constants.TronWheel.*;
 
 public class Intake extends Subsystem610 {
     private static Intake intakeInst_s;
-    private WPI_TalonSRX intakeSRX_m;
+    private WPI_TalonSRX intakeSRX_m, kickerSRX_m;
     private static LinearFilter singlePoleIIR;
     private boolean intaking_m;
 
     private Intake() {
         super("Intake");
         intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX);
+        kickerSRX_m = MotorConfig.configKickerMotor(CAN_KICKER_SRX);
         singlePoleIIR = LinearFilter.singlePoleIIR(0.5, 0.02);
         intaking_m = false;
     }
@@ -39,7 +41,11 @@ public class Intake extends Subsystem610 {
      * @param spin Output percentage
      */
     public void intake(double spin) {
-        intakeSRX_m.set(ControlMode.PercentOutput, RobotContainer.coneMode_s ? spin : -spin);
+        spin = RobotContainer.coneMode_s ? spin : -spin;
+        intakeSRX_m.set(ControlMode.PercentOutput, spin);
+        if(RobotContainer.tronWheelInst_s.getTargetPos() == VAL_ANG_CONE_GROUND || RobotContainer.tronWheelInst_s.getTargetPos() == VAL_ANG_CUBE_GROUND){
+            kickerSRX_m.set(ControlMode.PercentOutput, spin);
+        }
     }
 
     /**

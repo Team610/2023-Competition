@@ -1,14 +1,12 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Vision;
+import frc.robot.RobotContainer;
 
 public class T_Vision_Drive extends CommandBase{
-    private Vision visionInst_m;
 
     public T_Vision_Drive(){
-        visionInst_m = Vision.getInstance();
-        addRequirements(visionInst_m);
+        addRequirements(RobotContainer.visionInst_s);
     }
 
     /**
@@ -16,8 +14,8 @@ public class T_Vision_Drive extends CommandBase{
      */
     @Override
     public void initialize() {
-        visionInst_m.setCamMode(0);
-        visionInst_m.setLedMode(0);
+        RobotContainer.visionInst_s.setCamMode(0);
+        RobotContainer.visionInst_s.setLedMode(0);
     }
 
     /**
@@ -25,7 +23,7 @@ public class T_Vision_Drive extends CommandBase{
      */
     @Override
     public void execute() {
-        visionInst_m.drive();
+        RobotContainer.visionInst_s.drive();
     }
 
     /**
@@ -33,12 +31,12 @@ public class T_Vision_Drive extends CommandBase{
      */
     @Override
     public void end(boolean interrupted) {
-        visionInst_m.setCamMode(1);
-        visionInst_m.setLedMode(1);
+        RobotContainer.visionInst_s.setCamMode(1);
+        RobotContainer.visionInst_s.setLedMode(1);
     }
 
     @Override
     public boolean isFinished() {
-        return visionInst_m.checkDistance();
+        return RobotContainer.visionInst_s.checkDistance();
     }
 }

@@ -3,17 +3,14 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Drivetrain;
 
 import static frc.robot.Constants.PigeonBalance.*;
 
 public class A_Pidgeon_Balance extends CommandBase {
-    private Drivetrain driveInst_m;
     private PIDController pidBal_m;
 
     public A_Pidgeon_Balance() {
-        driveInst_m = Drivetrain.getInstance();
-        addRequirements(driveInst_m);
+        addRequirements(RobotContainer.drivetrainInst_s);
     }
 
     @Override
@@ -25,8 +22,8 @@ public class A_Pidgeon_Balance extends CommandBase {
 
     @Override
     public void execute() {
-        driveInst_m.setLeft(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
-        driveInst_m.setRight(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
+        RobotContainer.drivetrainInst_s.setLeft(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
+        RobotContainer.drivetrainInst_s.setRight(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
         
         //curAng_s = RobotContainer.pidgey_s.getPitch();
         // if(curAng_s < -VAL_PIDGEY_RANGE){
