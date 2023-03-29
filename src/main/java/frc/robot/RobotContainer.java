@@ -84,18 +84,18 @@ public class RobotContainer {
     infrastructure_s = Infrastructure.getInstance();
 
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
-
-    autoChooser_m.setDefaultOption("Preload Balance", new G_PreloadBalance());
-    autoChooser_m.addOption("Preload", new G_Preload());
-    autoChooser_m.addOption("Leave Comm, Bal", new RB_CCone_1_Bal());
-    autoChooser_m.addOption("Leave Comm, Bal CUBE", new RB_CCube_1_Bal());
-    autoChooser_m.addOption("B LeftGrid 2", new B_LCube_2());
-    autoChooser_m.addOption("B RightGrid 1.5 Bal", new B_RConeR_1Half_Bal());
-    autoChooser_m.addOption("B RightGrid Cube 1.5 Bal", new B_RCube_1Half_Bal());
-    autoChooser_m.addOption("B RightGrid 2", new B_RCube_2());
-    autoChooser_m.addOption("R LeftGrid 1.5 Bal", new R_LConeL_1Half());
-    autoChooser_m.addOption("R LeftGrid Cube 1.5 Bal", new R_LCube_1Half_Bal());
-    autoChooser_m.addOption("R LeftGrid 2", new R_LCube_2());
+    
+    // autoChooser_m.setDefaultOption("Preload Balance", new G_PreloadBalance());
+    // autoChooser_m.addOption("Preload", new G_Preload());
+    autoChooser_m.setDefaultOption("RB Coop Cone 1 Bal", new RB_CCone_1_Bal());
+    autoChooser_m.addOption("RB Coop Cube 1 Bal", new RB_CCube_1_Bal());
+    autoChooser_m.addOption("B Left Cube 2", new B_LCube_2());
+    autoChooser_m.addOption("B Right Cone Right 1.5 Bal", new B_RConeR_1Half_Bal());
+    autoChooser_m.addOption("B Right Cube 1.5 Bal", new B_RCube_1Half_Bal());
+    autoChooser_m.addOption("B Right Cube 2", new B_RCube_2());
+    autoChooser_m.addOption("R Left Cone Left 1.5", new R_LConeL_1Half());
+    autoChooser_m.addOption("R Left Cube 1.5 Bal", new R_LCube_1Half_Bal());
+    autoChooser_m.addOption("R Left Cube 2", new R_LCube_2());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
 
     driver_s = new CommandXboxController(PORT_DRIVER);
