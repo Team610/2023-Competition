@@ -72,7 +72,6 @@ public class Robot extends TimedRobot {
     RobotContainer.drivetrainInst_s.setBrake();
     RobotContainer.cascadeInst_s.setManual(false);
     RobotContainer.tronWheelInst_s.setManual(false);
-    new A_Disable_Safeties();
 
     if (autonomousCommand_m != null) {
       autonomousCommand_m.cancel();
