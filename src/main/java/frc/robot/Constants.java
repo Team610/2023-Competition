@@ -132,9 +132,9 @@ public final class Constants {
 
         // TODO: Redo values
         public static final double VAL_ANG_CUBE_RAMP = 14000;  // ticks
-        public static final double VAL_ANG_CUBE_SCORE = 0;
-        public static final double VAL_ANG_CUBE_GROUND = 28500;   // angle to pickup from ground start
-        public static final double VAL_ANG_CUBE_TRANSPORT = 10000;
+        public static final double VAL_ANG_CUBE_SCORE = 5000;
+        public static final double VAL_ANG_CUBE_GROUND = 0;   // angle to pickup from ground start
+        public static final double VAL_ANG_CUBE_TRANSPORT = 15000;
         public static final double VAL_ANG_CUBE_HYBRID = 18000;
     }
 

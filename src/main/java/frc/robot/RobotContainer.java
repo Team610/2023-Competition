@@ -138,32 +138,32 @@ public class RobotContainer {
         .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
         .whenPressed(
             Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET),
-                new T_TronWheel_Preset(coneMode_s ? VAL_ANG_CONE_SCORE : VAL_ANG_CUBE_SCORE)));
+                new T_TronWheel_Preset(VAL_ANG_CONE_SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.b())
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
         .whenPressed(
             Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET),
-                new T_TronWheel_Preset(coneMode_s ? VAL_ANG_CONE_SCORE : VAL_ANG_CUBE_SCORE)));
+                new T_TronWheel_Preset(VAL_ANG_CONE_SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.x())
         .whenShiftPressed(
             Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET),
-                new T_TronWheel_Preset(coneMode_s ? VAL_ANG_CONE_RAMP : VAL_ANG_CUBE_RAMP)))
+                new T_TronWheel_Preset(VAL_ANG_CONE_RAMP)))
         .whenPressed(
             Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET),
-                new T_TronWheel_Preset(coneMode_s ? VAL_ANG_CONE_GROUND : VAL_ANG_CUBE_GROUND)));
+                new T_TronWheel_Preset(VAL_ANG_CONE_GROUND)));
 
     new ComboButton(operator_s.start(), operator_s.y())
         .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANG_CONE_SCORE),
         Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET),
-            new T_TronWheel_Preset(coneMode_s ? VAL_ANG_CONE_TRANSPORT : VAL_ANG_CUBE_TRANSPORT)));
+            new T_TronWheel_Preset(VAL_ANG_CONE_TRANSPORT)));
 
     new ComboButton(operator_s.start(), operator_s.rightBumper())
         .whenShiftPressed(
             Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
-                new T_TronWheel_Preset(coneMode_s ? VAL_ANG_CONE_SCORE : VAL_ANG_CUBE_SCORE),
+                new T_TronWheel_Preset(VAL_ANG_CONE_SCORE),
                 Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
             Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
