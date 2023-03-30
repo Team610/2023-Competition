@@ -114,6 +114,7 @@ public class TronWheel extends Subsystem610 {
     public void writeSmartDashboard() {
         SmartDashboard.putString("Tron Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Tron Preset", targetPos_m);
+        SmartDashboard.putNumber("Tron Current Tick", rotateSRX_m.getSelectedSensorPosition());
         SmartDashboard.putBoolean("Tron Manual Mode", getManual());
     }
 

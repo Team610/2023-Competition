@@ -155,7 +155,8 @@ public class RobotContainer {
                 new T_TronWheel_Preset(coneMode_s ? VAL_ANG_CONE_GROUND : VAL_ANG_CUBE_GROUND)));
 
     new ComboButton(operator_s.start(), operator_s.y())
-        .whenShiftPressed(null)
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANG_CONE_SCORE),
+        Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
         .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET),
             new T_TronWheel_Preset(coneMode_s ? VAL_ANG_CONE_TRANSPORT : VAL_ANG_CUBE_TRANSPORT)));
 
