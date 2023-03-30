@@ -142,9 +142,9 @@ public final class Constants {
         public static final int CAN_KICKER_SRX = 1;
         public static final int CAN_INTAKE_SRX = 3;
 
-        public static final double VAL_IN_PERCENT = 0.8;
+        public static final double VAL_IN_PERCENT = 1.0;
         public static final double VAL_OUT_NORMAL = -0.3;
-        public static final double VAL_OUT_TURBO = -0.5;
+        public static final double VAL_OUT_TURBO = -0.7;
         public static final double VAL_HOLD_PERCENT = 0.3;
 
         public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 5;
