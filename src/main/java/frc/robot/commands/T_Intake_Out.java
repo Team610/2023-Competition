@@ -3,11 +3,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class T_Intake_Out extends CommandBase {
-    private double speed_m;
+import static frc.robot.Constants.Intake.*;
 
-    public T_Intake_Out(double speed) {
-        speed_m = speed;
+public class T_Intake_Out extends CommandBase {
+    private boolean turbo_m;
+
+    public T_Intake_Out(boolean turbo) {
+        turbo_m = turbo;
         addRequirements(RobotContainer.intakeInst_s);
     }
 
@@ -18,7 +20,7 @@ public class T_Intake_Out extends CommandBase {
 
     @Override
     public void execute() {
-        RobotContainer.intakeInst_s.intake(speed_m);
+        RobotContainer.intakeInst_s.intake(turbo_m ? VAL_OUT_TURBO : RobotContainer.coneMode_s ? VAL_OUT_CONE_NORMAL : VAL_OUT_CUBE_NORMAL);
     }
 
     /**

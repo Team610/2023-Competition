@@ -89,21 +89,21 @@ public final class Constants {
         public static final double UNIT_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
         // Preset units are in ticks
-        public static final double VAL_MID_CONE_PRESET = 109000;
+        public static final double VAL_MID_CONE_PRESET = 108000;
         public static final double VAL_HIGH_CONE_PRESET = 145000;
         public static final double VAL_RAMP_CONE_PRESET = 8060;
         public static final double VAL_TRANSPORT_CONE_PRESET = 14000;
         public static final double VAL_LINEUP_CONE_PRESET = 50000;
         public static final double VAL_AUTO_CONE_PRESET = 12180;
-        public static final double VAL_GROUND_CONE_PRESET = 5500;
+        public static final double VAL_GROUND_CONE_PRESET = 7000;
 
-        public static final double VAL_MID_CUBE_PRESET = 109000;
-        public static final double VAL_HIGH_CUBE_PRESET = 145000;
+        public static final double VAL_MID_CUBE_PRESET = 90000;
+        public static final double VAL_HIGH_CUBE_PRESET = 137000;
         public static final double VAL_RAMP_CUBE_PRESET = 8060;
         public static final double VAL_TRANSPORT_CUBE_PRESET = 14000;
         public static final double VAL_LINEUP_CUBE_PRESET = 50000;
         public static final double VAL_AUTO_CUBE_PRESET = 12180;
-        public static final double VAL_GROUND_CUBE_PRESET = 5500;
+        public static final double VAL_GROUND_CUBE_PRESET = 0;
         
 
         /**
@@ -134,15 +134,14 @@ public final class Constants {
 
         public static final double VAL_ANG_CONE_RAMP = 14000;  // ticks
         public static final double VAL_ANG_CONE_SCORE = 0;
-        public static final double VAL_ANG_CONE_GROUND = 25600;   // angle to pickup from ground start
+        public static final double VAL_ANG_CONE_GROUND = 26800;   // angle to pickup from ground start
         public static final double VAL_ANG_CONE_TRANSPORT = 10000;
         public static final double VAL_ANG_CONE_HYBRID = 18000;
 
-        // TODO: Redo values
         public static final double VAL_ANG_CUBE_RAMP = 14000;  // ticks
-        public static final double VAL_ANG_CUBE_SCORE = 5000;
+        public static final double VAL_ANG_CUBE_SCORE = 13600;
         public static final double VAL_ANG_CUBE_GROUND = 0;   // angle to pickup from ground start
-        public static final double VAL_ANG_CUBE_TRANSPORT = 15000;
+        public static final double VAL_ANG_CUBE_TRANSPORT = 19500;
         public static final double VAL_ANG_CUBE_HYBRID = 18000;
     }
 
@@ -151,11 +150,12 @@ public final class Constants {
         public static final int CAN_INTAKE_SRX = 3;
 
         public static final double VAL_IN_PERCENT = 1.0;
-        public static final double VAL_OUT_NORMAL = -0.3;
+        public static final double VAL_OUT_CONE_NORMAL = -0.3;
+        public static final double VAL_OUT_CUBE_NORMAL = -0.5;
         public static final double VAL_OUT_TURBO = -0.7;
         public static final double VAL_HOLD_PERCENT = 0.3;
 
-        public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 5;
+        public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 15;
         
         public static final double VAL_STALL_TIME = 0.5 *1000; // ms
         public static final int VAL_SAMPLES = (int) VAL_STALL_TIME/20;

@@ -20,7 +20,7 @@ public class A_Intake_Out extends CommandBase {
     @Override
     public void execute() {
         RobotContainer.intakeInst_s.incrementLoopCount();
-        RobotContainer.intakeInst_s.intake(VAL_OUT_NORMAL);
+        RobotContainer.intakeInst_s.intake(VAL_OUT_CONE_NORMAL);
     }
 
     @Override

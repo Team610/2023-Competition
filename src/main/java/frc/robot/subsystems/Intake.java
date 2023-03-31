@@ -43,7 +43,7 @@ public class Intake extends Subsystem610 {
     public void intake(double spin) {
         spin = RobotContainer.coneMode_s ? spin : -spin;
         intakeSRX_m.set(ControlMode.PercentOutput, spin);
-        if(RobotContainer.tronWheelInst_s.getTargetPos() == VAL_ANG_CUBE_GROUND){
+        if(RobotContainer.tronWheelInst_s.getTargetPos() == VAL_ANG_CUBE_GROUND && !RobotContainer.coneMode_s){
             kickerSRX_m.set(ControlMode.PercentOutput, -spin);
         }
     }
