@@ -18,7 +18,7 @@ public class T_Cascade_Preset extends CommandBase {
 
     @Override
     public void execute() {
-        RobotContainer.cascadeInst_s.setTargetPos(!RobotContainer.coneMode_s ? state_m.getConePreset() : state_m.getCubePreset());
+        RobotContainer.cascadeInst_s.setTargetPos(RobotContainer.coneMode_s ? state_m.getConePreset() : state_m.getCubePreset());
     }
 
     @Override

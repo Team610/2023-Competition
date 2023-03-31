@@ -18,7 +18,7 @@ public class T_TronWheel_Preset extends CommandBase {
 
     @Override
     public void execute() {
-        RobotContainer.tronWheelInst_s.setTargetPos(!RobotContainer.coneMode_s ? state_m.getConeAng() : state_m.getCubeAng());
+        RobotContainer.tronWheelInst_s.setTargetPos(RobotContainer.coneMode_s ? state_m.getConeAng() : state_m.getCubeAng());
     }
 
     @Override
