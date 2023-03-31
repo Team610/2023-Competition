@@ -29,6 +29,8 @@ import frc.robot.commands.T_TronWheel_Preset;
 import frc.robot.commands.T_Vision_Aim;
 import frc.robot.commands.T_Vision_Drive;
 import frc.robot.commands.T_Vision_Light;
+import frc.robot.states.CascadeState;
+import frc.robot.states.TronWheelState;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Infrastructure;
 import frc.robot.subsystems.Intake;
@@ -120,9 +122,9 @@ public class RobotContainer {
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
     driver_s.x().onTrue(
-        Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET), new T_TronWheel_Preset(VAL_ANG_CONE_HYBRID)));
+        Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(TronWheelState.HYBRID)));
     driver_s.rightBumper()
-        .onTrue(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANG_CONE_SCORE),
+        .onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP), new T_TronWheel_Preset(TronWheelState.SCORE),
             Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
 
     driver_s.a().toggleOnTrue(new T_Vision_Light());
@@ -137,35 +139,35 @@ public class RobotContainer {
     new ComboButton(operator_s.start(), operator_s.a())
         .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
         .whenPressed(
-            Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET),
-                new T_TronWheel_Preset(VAL_ANG_CONE_SCORE)));
+            Commands.parallel(new T_Cascade_Preset(CascadeState.MID),
+                new T_TronWheel_Preset(TronWheelState.SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.b())
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
         .whenPressed(
-            Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET),
-                new T_TronWheel_Preset(VAL_ANG_CONE_SCORE)));
+            Commands.parallel(new T_Cascade_Preset(CascadeState.HIGH),
+                new T_TronWheel_Preset(TronWheelState.SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.x())
         .whenShiftPressed(
-            Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET),
-                new T_TronWheel_Preset(VAL_ANG_CONE_RAMP)))
+            Commands.parallel(new T_Cascade_Preset(CascadeState.RAMP),
+                new T_TronWheel_Preset(TronWheelState.RAMP)))
         .whenPressed(
-            Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET),
-                new T_TronWheel_Preset(VAL_ANG_CONE_GROUND)));
+            Commands.parallel(new T_Cascade_Preset(CascadeState.GROUND),
+                new T_TronWheel_Preset(TronWheelState.GROUND)));
 
     new ComboButton(operator_s.start(), operator_s.y())
-        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANG_CONE_SCORE),
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP), new T_TronWheel_Preset(TronWheelState.SCORE),
         Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_TRANSPORT_PRESET),
-            new T_TronWheel_Preset(VAL_ANG_CONE_TRANSPORT)));
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT),
+            new T_TronWheel_Preset(TronWheelState.TRANSPORT)));
 
     new ComboButton(operator_s.start(), operator_s.rightBumper())
         .whenShiftPressed(
-            Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
-                new T_TronWheel_Preset(VAL_ANG_CONE_SCORE),
+            Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP),
+                new T_TronWheel_Preset(TronWheelState.SCORE),
                 Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP),
             Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
 
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> coneMode_s = !coneMode_s));

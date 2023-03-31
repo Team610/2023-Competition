@@ -29,7 +29,7 @@ public class B_LCube_2 extends SequentialCommandGroup {
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
                 addRequirements(RobotContainer.drivetrainInst_s);
-                RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_PRESET);
+                RobotContainer.cascadeInst_s.setTicks(VAL_RAMP_CONE_PRESET);
 
                 preload_m = pickup_m = null;
                 try {
@@ -41,7 +41,7 @@ public class B_LCube_2 extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(110)),
+                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_CONE_PRESET, 110), new A_Intake_In(110)),
                         new WaitCommand(0.1),
                         Commands.parallel(new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 80), new A_Intake_Out()),
                         Commands.parallel(new A_Intake_In(550),
@@ -51,13 +51,13 @@ public class B_LCube_2 extends SequentialCommandGroup {
                                                         new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
                                                 Commands.sequence(
                                                         Commands.parallel(
-                                                                Commands.sequence(new A_Cascade_Move(VAL_RAMP_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_PRESET, 110)),
+                                                                Commands.sequence(new A_Cascade_Move(VAL_RAMP_CONE_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_CONE_PRESET, 110)),
                                                                 new A_TronWheel_Move(VAL_ANG_CONE_GROUND, 110)
                                                         ),
-                                                        Commands.parallel(new A_TronWheel_Move(VAL_TRANSPORT_PRESET, 110), new A_Cascade_Move(VAL_LINEUP_PRESET, 110))
+                                                        Commands.parallel(new A_TronWheel_Move(VAL_TRANSPORT_CONE_PRESET, 110), new A_Cascade_Move(VAL_LINEUP_CONE_PRESET, 110))
                                                 )
                                         ),
-                                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 110))
+                                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_CONE_PRESET, 110), new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 110))
                                 )
                         ),
                         new A_Intake_Out()

@@ -10,7 +10,7 @@ public class G_VisionScore extends SequentialCommandGroup{
     public G_VisionScore(){
         addCommands(
             //aim and extend arm
-            Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_Intake_In(50), new T_Vision_Aim()),
+            Commands.parallel(new A_Cascade_Move(VAL_HIGH_CONE_PRESET, 110), new A_Intake_In(50), new T_Vision_Aim()),
             //score the cone
             new A_Intake_Out()
         );

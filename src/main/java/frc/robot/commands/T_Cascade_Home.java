@@ -33,7 +33,7 @@ public class T_Cascade_Home extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         RobotContainer.cascadeInst_s.stop();
-        RobotContainer.cascadeInst_s.setTargetPos(VAL_GROUND_PRESET);
+        RobotContainer.cascadeInst_s.setTargetPos(VAL_GROUND_CONE_PRESET);
         RobotContainer.cascadeInst_s.setSafety(false);
     }
 }

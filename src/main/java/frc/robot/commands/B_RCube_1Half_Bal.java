@@ -29,8 +29,8 @@ public class B_RCube_1Half_Bal extends SequentialCommandGroup {
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
                 addRequirements(RobotContainer.drivetrainInst_s);
-                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
-                RobotContainer.tronWheelInst_s.setTicks(VAL_TRANSPORT_PRESET);
+                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_CONE_PRESET);
+                RobotContainer.tronWheelInst_s.setTicks(VAL_TRANSPORT_CONE_PRESET);
 
                 preload_m = pickup_m = null;
 
@@ -43,7 +43,7 @@ public class B_RCube_1Half_Bal extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 110), new A_Intake_In(110)),
+                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_CONE_PRESET, 110), new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 110), new A_Intake_In(110)),
                         new WaitCommand(0.1),
                         new A_Intake_Out(),
                         Commands.parallel(new A_Intake_In(400),
@@ -53,7 +53,7 @@ public class B_RCube_1Half_Bal extends SequentialCommandGroup {
                                                         new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
                                                 Commands.sequence(
                                                         Commands.parallel(
-                                                                Commands.sequence(new A_Cascade_Move(VAL_RAMP_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_PRESET, 110)),
+                                                                Commands.sequence(new A_Cascade_Move(VAL_RAMP_CONE_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_CONE_PRESET, 110)),
                                                                 new A_TronWheel_Move(VAL_ANG_CONE_GROUND, 110))
                                                 )),
                                         Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(VAL_ANG_CONE_TRANSPORT, 110))
