@@ -173,11 +173,15 @@ public class Drivetrain extends Subsystem610 {
         setLeft(-pidAim_m.calculate(headingError, 0));
         setRight(pidAim_m.calculate(headingError, 0));
     }
+    
+    public void writeSmartDashboard() {
+        SmartDashboard.putString("Drive Cmd", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
+    }
 
     @Override
     public void periodic() {
         odometry_m.update(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters());
-        SmartDashboard.putNumber("Pidgey", pidgey_m.getRotation2d().getDegrees());
+        writeSmartDashboard();
     }
 
     @Override

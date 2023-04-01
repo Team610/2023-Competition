@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.util.RamseteSetup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.RobotContainer;
+import frc.robot.states.CascadeState;
+import frc.robot.states.TronWheelState;
+
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
@@ -44,8 +47,8 @@ public class B_RCube_2 extends SequentialCommandGroup {
                 addCommands(
                         new A_Disable_Safeties(),
                         // Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 100), new A_Intake_In(100)),
-                        new A_Cascade_Move(VAL_HIGH_CONE_PRESET, 100),
-                        Commands.parallel(new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 80), new A_Intake_Out()),
+                        new A_Cascade_Move(CascadeState.HIGH, false, 100),
+                        Commands.parallel(new A_TronWheel_Move(TronWheelState.SCORE, false, 70), new A_Intake_Out(false)),
                         Commands.parallel(new A_Intake_In(550),
                                 Commands.sequence(
                                         Commands.parallel(
@@ -53,13 +56,13 @@ public class B_RCube_2 extends SequentialCommandGroup {
                                                         new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
                                                 Commands.sequence(
                                                         Commands.parallel(
-                                                                Commands.sequence(new A_Cascade_Move(VAL_RAMP_CONE_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_CONE_PRESET, 110)),
-                                                                new A_TronWheel_Move(VAL_ANG_CONE_GROUND, 110)
+                                                                Commands.sequence(new A_Cascade_Move(CascadeState.RAMP, true, 110), new T_Cascade_Home(), new A_Cascade_Move(CascadeState.GROUND, true, 110)),
+                                                                new A_TronWheel_Move(TronWheelState.GROUND, true, 70)
                                                         ),
-                                                        Commands.parallel(new A_TronWheel_Move(VAL_TRANSPORT_CONE_PRESET, 110), new A_Cascade_Move(VAL_LINEUP_CONE_PRESET, 110))
+                                                        Commands.parallel(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 70), new A_Cascade_Move(CascadeState.LINEUP, true, 110))
                                                 )
                                         )
-                                        // Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_SCORE, 110))
+                                        // Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, true, 110), new A_TronWheel_Move(TronWheelState.SCORE, true, 110))
                                 )
                         )
                         // new A_Intake_Out()   

@@ -7,8 +7,10 @@ import static frc.robot.Constants.Intake.*;
 
 
 public class A_Intake_Out extends CommandBase {
+    private boolean coneMode_m;
 
-    public A_Intake_Out() {
+    public A_Intake_Out(boolean coneMode) {
+        coneMode_m = coneMode;
         addRequirements(RobotContainer.intakeInst_s);
     }
 
@@ -20,7 +22,7 @@ public class A_Intake_Out extends CommandBase {
     @Override
     public void execute() {
         RobotContainer.intakeInst_s.incrementLoopCount();
-        RobotContainer.intakeInst_s.intake(VAL_OUT_CONE_NORMAL);
+        RobotContainer.intakeInst_s.intake(coneMode_m ? VAL_OUT_CONE_NORMAL : -VAL_OUT_CUBE_NORMAL);
     }
 
     @Override
