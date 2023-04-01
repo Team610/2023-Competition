@@ -37,6 +37,7 @@ public class T_Vision_Light extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return RobotContainer.visionInst_s.checkAim();
+        // return RobotContainer.visionInst_s.checkAim();
+        return false;
     }
 }

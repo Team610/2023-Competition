@@ -9,7 +9,6 @@ import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
 import frc.robot.commands.B_LCube_2;
 import frc.robot.commands.G_Preload;
-import frc.robot.commands.G_PreloadBalance;
 import frc.robot.commands.RB_CCone_1_Bal;
 import frc.robot.commands.RB_CCube_1_Bal;
 import frc.robot.commands.R_LConeL_1Half;
@@ -22,12 +21,12 @@ import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
 import frc.robot.commands.T_Intake_Out;
+import frc.robot.commands.T_Pidgey_Aim;
 import frc.robot.commands.T_Subsystem_Manual;
 import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.commands.T_TronWheel_Move;
 import frc.robot.commands.T_TronWheel_Preset;
 import frc.robot.commands.T_Vision_Aim;
-import frc.robot.commands.T_Vision_Drive;
 import frc.robot.commands.T_Vision_Light;
 import frc.robot.states.CascadeState;
 import frc.robot.states.TronWheelState;
@@ -121,15 +120,12 @@ public class RobotContainer {
     driver_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(false));
     driver_s.start().whileTrue(new T_Intake_Out(true));
-    driver_s.x().onTrue(
+    driver_s.rightBumper().onTrue(
         Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(TronWheelState.HYBRID)));
-    driver_s.rightBumper()
-        .onTrue(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP), new T_TronWheel_Preset(TronWheelState.SCORE),
-            Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
-
+    
     driver_s.a().toggleOnTrue(new T_Vision_Light());
-    // driver_s.b().whileTrue(new T_Vision_Drive());
-    // driver_s.b().whileTrue(new T_Vision_Aim());
+    driver_s.b().whileTrue(new T_Vision_Aim());
+    driver_s.x().whileTrue(new T_Pidgey_Aim());
 
     // ! Operator Controls
     new ComboButton(operator_s.start(), operator_s.back())

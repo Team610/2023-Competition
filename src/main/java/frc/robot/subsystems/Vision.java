@@ -56,6 +56,7 @@ public class Vision extends Subsystem610{
         networkTable_m = NetworkTableInstance.getDefault().getTable("limelight");
 
         networkTable_m.getEntry("ledMode").setNumber(ledMode_m);
+        setCamMode(0);
         pidAngle_m = new PIDController(VAL_ANGLE_KP, VAL_ANGLE_KI, VAL_ANGLE_KD);
         pidDrive_m = new PIDController(VAL_DRIVE_KP, VAL_DRIVE_KI, VAL_DRIVE_KD);
 
@@ -131,25 +132,28 @@ public class Vision extends Subsystem610{
         return Math.abs(calcTx()) > 0 ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 && calcDistance() - distanceSetPoint_m < 10 : false;
     }
 
+    public double[] getAimPID(){
+        double steeringAdjust = pidAngle_m.calculate(calcTx(), angleSetPoint_m);
+
+        return new double[]{-steeringAdjust, steeringAdjust};
+
+    }
+
     /**
      * Use WPILib PID to turn and drive the robot to the desired direction
      */
-    public double[] aim() {
-        double steeringAdjust = 0;
-        double headingError = calcTx() - angleSetPoint_m;
-        double distanceError = calcTy();
+    public void aim() {
+        double distanceError = calcDistance() - distanceSetPoint_m;
+        double[] steeringAdjust = getAimPID();
 
-        if (headingError > 1){
-            steeringAdjust = -pidAngle_m.calculate(headingError) - VAL_MIN_POWER;
-        }
-        else if (headingError < 1){
-            steeringAdjust = pidAngle_m.calculate(headingError) + VAL_MIN_POWER;
-        }
+        // steeringAdjust = (pidAngle_m.calculate(headingError) + VAL_MIN_POWER) * (headingError > 1 ? -1 : 1);
+
 
         // drivetrain_m.setLeft(steeringAdjust + pidDrive_m.calculate(distanceError));
         // drivetrain_m.setRight(steeringAdjust + pidDrive_m.calculate(distanceError));
 
-        return new double[]{steeringAdjust + pidDrive_m.calculate(distanceError), steeringAdjust + pidDrive_m.calculate(distanceError)};
+        drivetrain_m.setLeft(steeringAdjust[0]);
+        drivetrain_m.setRight(steeringAdjust[1]);
 
     }
 
@@ -165,9 +169,11 @@ public class Vision extends Subsystem610{
         SmartDashboard.putNumber("Angle", Math.round(calcTx() * 1e5) / 1e5);
         SmartDashboard.putBoolean("Aimed", isAimed_m);
         SmartDashboard.putNumber("Cone Poisition", conePosition_m);
-        SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
-        SmartDashboard.putNumber("PID LEFT", aim()[0]);
-        SmartDashboard.putNumber("PID RIGHT", aim()[1]);
+        SmartDashboard.putNumber("Heading Error", calcTx() - angleSetPoint_m);
+        SmartDashboard.putNumber("Distance Error", calcDistance() - distanceSetPoint_m);
+        SmartDashboard.putNumber("PID LEFT", getAimPID()[0]);
+        SmartDashboard.putNumber("PID RIGHT", getAimPID()[1]);
+        SmartDashboard.putNumber("PID", pidAngle_m.calculate(calcTx() - angleSetPoint_m));
     }
 
     @Override

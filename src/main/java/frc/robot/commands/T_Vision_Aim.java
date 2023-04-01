@@ -6,7 +6,7 @@ import frc.robot.RobotContainer;
 public class T_Vision_Aim extends CommandBase{
 
     public T_Vision_Aim() {
-        addRequirements(RobotContainer.visionInst_s);
+        addRequirements(RobotContainer.visionInst_s, RobotContainer.drivetrainInst_s);
 
     }
 
@@ -38,6 +38,7 @@ public class T_Vision_Aim extends CommandBase{
 
     @Override
     public boolean isFinished() {
-        return RobotContainer.visionInst_s.checkAim();
+        // return RobotContainer.visionInst_s.checkAim();
+        return false;
     }
 }

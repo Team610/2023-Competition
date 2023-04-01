@@ -3,12 +3,14 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.*;
 import static frc.robot.Constants.Drivetrain.*;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -22,6 +24,8 @@ public class Drivetrain extends Subsystem610 {
     private WPI_TalonFX leftBatman_m, leftRobin_m, rightBatman_m, rightRobin_m;
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
+    private PIDController pidAim_m;
+    private boolean aimed_m;
 
     private Drivetrain() {
         super("Drivetrain");
@@ -33,6 +37,8 @@ public class Drivetrain extends Subsystem610 {
         pidgey_m = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
+        pidAim_m = new PIDController(VAL_ANGLE_KP, VAL_ANGLE_KI, VAL_ANGLE_KD);
+        aimed_m = false;
     }
 
     public static Drivetrain getInstance() {
@@ -147,6 +153,7 @@ public class Drivetrain extends Subsystem610 {
     public void resetSensors() {
         leftBatman_m.setSelectedSensorPosition(0);
         rightBatman_m.setSelectedSensorPosition(0);
+        pidgey_m.reset();
     }
 
     /**
@@ -157,9 +164,20 @@ public class Drivetrain extends Subsystem610 {
         odometry_m.resetPosition(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters(), pose);
     }
 
+    public boolean getAimed(){
+        return Math.abs(pidgey_m.getRotation2d().getDegrees() % 360) < 5;
+    }
+
+    public void aim(){
+        double headingError = pidgey_m.getRotation2d().getDegrees() % 360;
+        setLeft(-pidAim_m.calculate(headingError, 0));
+        setRight(pidAim_m.calculate(headingError, 0));
+    }
+
     @Override
     public void periodic() {
         odometry_m.update(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters());
+        SmartDashboard.putNumber("Pidgey", pidgey_m.getRotation2d().getDegrees());
     }
 
     @Override
