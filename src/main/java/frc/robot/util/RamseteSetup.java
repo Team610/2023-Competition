@@ -9,6 +9,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
 import java.util.List;
@@ -16,8 +17,6 @@ import java.util.List;
 import static frc.robot.Constants.Drivetrain.*;
 
 public final class RamseteSetup {
-    public static Drivetrain driveInst_m = Drivetrain.getInstance();
-
     private static final RamseteController controller_s = new RamseteController(VAL_RAMSETE_B, VAL_RAMSETE_ZETA);
     private static final SimpleMotorFeedforward feedForward_s = new SimpleMotorFeedforward(VAL_KS, VAL_KV, VAL_KA);
     private static final PIDController PID_s = new PIDController(VAL_KP, VAL_KI, VAL_KD);
@@ -56,19 +55,19 @@ public final class RamseteSetup {
     public static RamseteCommand initializeRamseteCommand(Trajectory traj) {
         ramseteCmd_m = new RamseteCommand(
                 traj,
-                driveInst_m::getPose,
+                RobotContainer.drivetrainInst_s::getPose,
                 controller_s,
                 feedForward_s,
                 DRIVE_KINEMATICS,
-                driveInst_m::getWheelSpeeds,
+                RobotContainer.drivetrainInst_s::getWheelSpeeds,
                 PID_s,
                 PID_s,
                 // RamseteCommand passes volts to the callback
-                driveInst_m::tankDriveVolts,
-                driveInst_m);
+                RobotContainer.drivetrainInst_s::tankDriveVolts,
+                RobotContainer.drivetrainInst_s);
         
         // Reset odometry to the starting pose of the trajectory.
-        driveInst_m.resetOdometry(traj.getInitialPose());
+        RobotContainer.drivetrainInst_s.resetOdometry(traj.getInitialPose());
 
         return ramseteCmd_m;
     }

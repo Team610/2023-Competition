@@ -9,6 +9,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
@@ -157,9 +158,14 @@ public class Drivetrain extends Subsystem610 {
         odometry_m.resetPosition(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters(), pose);
     }
 
+    public void writeSmartDashboard() {
+        SmartDashboard.putString("Drive Cmd", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
+    }
+
     @Override
     public void periodic() {
         odometry_m.update(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters());
+        writeSmartDashboard();
     }
 
     @Override

@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.util.RamseteSetup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.RobotContainer;
+import frc.robot.states.CascadeState;
+import frc.robot.states.TronWheelState;
+
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
@@ -43,9 +46,9 @@ public class R_LConeL_1Half extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_CONE_PRESET, 110), new A_TronWheel_Move(VAL_ANG_CONE_SCORE, 110), new A_Intake_In(110)),
+                        Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, true, 110), new A_TronWheel_Move(TronWheelState.SCORE, true, 70), new A_Intake_In(110)),
                         new WaitCommand(0.1),
-                        new A_Intake_Out(),
+                        new A_Intake_Out(true),
                         Commands.parallel(new A_Intake_In(400),
                                 Commands.sequence(
                                         Commands.parallel(
@@ -53,10 +56,10 @@ public class R_LConeL_1Half extends SequentialCommandGroup {
                                                         // new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
                                                 Commands.sequence(
                                                         Commands.parallel(
-                                                                Commands.sequence(new A_Cascade_Move(VAL_RAMP_CONE_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_CONE_PRESET, 110)),
-                                                                new A_TronWheel_Move(VAL_ANG_CONE_GROUND, 110)))
+                                                                Commands.sequence(new A_Cascade_Move(CascadeState.RAMP, true, 110), new T_Cascade_Home(), new A_Cascade_Move(CascadeState.GROUND, true, 110)),
+                                                                new A_TronWheel_Move(TronWheelState.GROUND, true, 70)))
                                         )
-                                        // Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110))
+                                        // Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 110))
                                 )
                         )
                 );

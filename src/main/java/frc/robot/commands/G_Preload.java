@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.RobotContainer;
+import frc.robot.states.CascadeState;
+import frc.robot.states.TronWheelState;
 
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
@@ -22,11 +24,11 @@ public class G_Preload extends SequentialCommandGroup {
 
         addCommands(
                 new A_Disable_Safeties(),
-                Commands.parallel(new A_Cascade_Move(VAL_HIGH_CONE_PRESET, 110), new A_Intake_In(50)),
+                Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, true, 110), new A_Intake_In(50)),
                 new WaitCommand(0.5),
-                new A_Intake_Out(),
-                Commands.parallel(new A_Cascade_Move(VAL_TRANSPORT_CONE_PRESET, 110),
-                        new A_TronWheel_Move(VAL_ANG_CONE_TRANSPORT, 110))
+                new A_Intake_Out(true),
+                Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, true, 110),
+                        new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 70))
 
         );
     }
