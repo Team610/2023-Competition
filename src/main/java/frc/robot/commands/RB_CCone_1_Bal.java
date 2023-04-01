@@ -8,7 +8,6 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.util.RamseteSetup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.RobotContainer;
@@ -46,12 +45,12 @@ public class RB_CCone_1_Bal extends SequentialCommandGroup {
                 addCommands(
                         new A_Disable_Safeties(),
                         Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, true, 110), new A_TronWheel_Move(TronWheelState.SCORE, true, 70), new A_Intake_In(110)),
-                        new WaitCommand(0.2),
+                        new A_Wait(0.2),
                         new A_Intake_Out(true),
                         Commands.parallel(
                                 Commands.sequence(
                                     new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
-                                    new WaitCommand(0.5),
+                                    new A_Wait(0.5),
                                     new A_Reset_Odometry(balance_m), RamseteSetup.initializeRamseteCommand(balance_m)
                                 ),
                                 Commands.sequence(
