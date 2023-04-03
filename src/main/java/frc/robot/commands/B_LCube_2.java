@@ -49,8 +49,10 @@ public class B_LCube_2 extends SequentialCommandGroup {
                         Commands.parallel(new A_Intake_In(550),
                                 Commands.sequence(
                                         Commands.parallel(
-                                                Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
-                                                        new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
+                                                Commands.sequence(
+                                                        new A_RamsetePath(preload_m),
+                                                        new A_RamsetePath(pickup_m)
+                                                ),
                                                 Commands.sequence(
                                                         Commands.parallel(
                                                                 Commands.sequence(new A_Cascade_Move(CascadeState.RAMP, true, 110), new T_Cascade_Home(), new A_Cascade_Move(CascadeState.GROUND, true, 110)),

@@ -50,10 +50,10 @@ public class RB_CCube_1_Bal extends SequentialCommandGroup {
                         new A_Intake_Out(false),
                         Commands.parallel(
                                 Commands.sequence(
-                                        Commands.sequence(new WaitCommand(2)),
-                                        new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
-                                        Commands.sequence(new WaitCommand(2)),
-                                        new A_Reset_Odometry(balance_m), RamseteSetup.initializeRamseteCommand(balance_m)
+                                        new WaitCommand(2),
+                                        new A_RamsetePath(preload_m),
+                                        new WaitCommand(2),
+                                        new A_RamsetePath(balance_m)
                                 ),
                                 Commands.sequence(
                                         Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, false, 110), 

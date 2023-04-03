@@ -50,9 +50,9 @@ public class RB_CCone_1_Bal extends SequentialCommandGroup {
                         new A_Intake_Out(true),
                         Commands.parallel(
                                 Commands.sequence(
-                                    new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m),
+                                    new A_RamsetePath(preload_m),
                                     new WaitCommand(0.5),
-                                    new A_Reset_Odometry(balance_m), RamseteSetup.initializeRamseteCommand(balance_m)
+                                    new A_RamsetePath(balance_m)
                                 ),
                                 Commands.sequence(
                                         Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, true, 110), 

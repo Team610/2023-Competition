@@ -107,6 +107,11 @@ public class Drivetrain extends Subsystem610 {
         rightBatman_m.set(mode, output);
     }
 
+    public void stop() {
+        leftBatman_m.set(ControlMode.PercentOutput, 0);
+        rightBatman_m.set(ControlMode.PercentOutput, 0);
+    }
+
     /**
      * Sets the robot to drive based on a voltage number, uses setLeft and setRight methods to do it
      * @param leftVolts the desired voltage for the left motor
