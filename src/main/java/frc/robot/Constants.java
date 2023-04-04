@@ -35,10 +35,10 @@ public final class Constants {
             return (meters/UNIT_DIST_PER_REV)*UNIT_TICKS_PER_REV;
         }
         
-        public static final double VAL_KS = 0.11044;
-        public static final double VAL_KV = 2.8771;
-        public static final double VAL_KA = 0.43234;
-        public static final double VAL_KP = 0.60741;
+        public static final double VAL_KS = 0.14611;
+        public static final double VAL_KV = 3.95; //2.8265;
+        public static final double VAL_KA = 0.5; //0.4084;
+        public static final double VAL_KP = 1; //0.67203; //0.4
         public static final double VAL_KD = 0.0;
         public static final double VAL_KI = 0;
 
@@ -46,9 +46,9 @@ public final class Constants {
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(VAL_TRACK_WIDTH);
 
         public static final double VAL_WHEEL_DIA = 0.1524;
-        public static final double VAL_MAX_VELO = 3;
-        public static final double VAL_MAX_ACCEL = VAL_MAX_VELO;
-        public static final double VAL_MAX_VOLTS = 10;
+        public static final double VAL_MAX_VELO = 2.33;
+        public static final double VAL_MAX_ACCEL = 1.0;
+        public static final double VAL_MAX_VOLTS = 7;
 
         public static final double VAL_MAX_SPEED = 0.7;
         public static final double VAL_TURBO_SPEED = 1.0;
