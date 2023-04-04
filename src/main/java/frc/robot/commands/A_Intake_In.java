@@ -10,6 +10,9 @@ import static frc.robot.Constants.Intake.*;
 public class A_Intake_In extends CommandBase {
     private int timer_m;
 
+    /**
+     * @param timer 1 second is 50
+     */
     public A_Intake_In(int timer) {
         timer_m = timer;
         addRequirements(RobotContainer.intakeInst_s);

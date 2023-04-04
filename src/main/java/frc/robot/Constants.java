@@ -46,9 +46,9 @@ public final class Constants {
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(VAL_TRACK_WIDTH);
 
         public static final double VAL_WHEEL_DIA = 0.1524;
-        public static final double VAL_MAX_VELO = 3.8;
+        public static final double VAL_MAX_VELO = 3;
         public static final double VAL_MAX_ACCEL = VAL_MAX_VELO;
-        public static final double VAL_MAX_VOLTS = 11;
+        public static final double VAL_MAX_VOLTS = 10;
 
         public static final double VAL_MAX_SPEED = 0.7;
         public static final double VAL_TURBO_SPEED = 1.0;
@@ -65,6 +65,8 @@ public final class Constants {
         public static final double VAL_MAX_SPEED_MANUAL = 0.5;
         public static final double VAL_MAX_SPEED_OUT = 0.3;
         public static final double VAL_MAX_SPEED_IN = 0.2;
+        public static final int VAL_AUTO_TIMEOUT = 110;
+
 
         public static final int VAL_MAX_TICKS = 145000;  // Max ticks for cascade to extend
         public static final double VAL_CRUISE_VELO_UP = 15000;  // Ticks per 100ms
@@ -99,7 +101,7 @@ public final class Constants {
         public static final double VAL_TRANSPORT_CONE_PRESET = 14000;
         public static final double VAL_LINEUP_CONE_PRESET = 50000;
         public static final double VAL_AUTO_CONE_PRESET = 12180;
-        public static final double VAL_GROUND_CONE_PRESET = 7000;
+        public static final double VAL_GROUND_CONE_PRESET = 7750; //7500;
 
         public static final double VAL_MID_CUBE_PRESET = 90000;
         public static final double VAL_HIGH_CUBE_PRESET = 137000;

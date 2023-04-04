@@ -30,7 +30,7 @@ public class G_PreloadBalance extends SequentialCommandGroup {
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
                 addRequirements(RobotContainer.drivetrainInst_s);
-                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_CONE_PRESET);
+                // RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_CONE_PRESET);
 
                 preload_m = null;
                 try {
@@ -40,17 +40,18 @@ public class G_PreloadBalance extends SequentialCommandGroup {
                 }
 
                 addCommands(
-                        new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, true, 110), new A_Intake_In(50)),
-                        new WaitCommand(0.5),
-                        new A_Intake_Out(true),
-                        Commands.parallel(
-                                Commands.sequence(new A_RamsetePath(preload_m)),
-                                Commands.sequence(
-                                        Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, true, 110), 
-                                            new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 70)))
-                        ),
-                        new A_Pidgeon_Balance()
+                        new A_RamsetePath(preload_m)
+                        // new A_Disable_Safeties(),
+                        // Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, true, 110), new A_Intake_In(50)),
+                        // new WaitCommand(0.5),
+                        // new A_Intake_Out(true),
+                        // Commands.parallel(
+                        //         Commands.sequence(new A_RamsetePath(preload_m)),
+                        //         Commands.sequence(
+                        //                 Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, true, 110), 
+                        //                     new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 70)))
+                        // ),
+                        // new A_Pidgeon_Balance()
                 );
         }
 }

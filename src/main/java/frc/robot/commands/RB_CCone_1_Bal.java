@@ -48,15 +48,17 @@ public class RB_CCone_1_Bal extends SequentialCommandGroup {
                         Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, true, 110), new A_TronWheel_Move(TronWheelState.SCORE, true, 70), new A_Intake_In(110)),
                         new WaitCommand(0.2),
                         new A_Intake_Out(true),
-                        Commands.parallel(
+                        // new WaitCommand(3),
+                        Commands.sequence(
+                                Commands.sequence(
+                                        Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, true, 110), 
+                                            new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 110))),
+                                // new WaitCommand(1),
                                 Commands.sequence(
                                     new A_RamsetePath(preload_m),
                                     new WaitCommand(0.5),
                                     new A_RamsetePath(balance_m)
-                                ),
-                                Commands.sequence(
-                                        Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, true, 110), 
-                                            new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 110)))
+                                )    
                         ),
                         new A_Pidgeon_Balance()
                 );
