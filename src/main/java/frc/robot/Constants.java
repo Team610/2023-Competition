@@ -48,7 +48,7 @@ public final class Constants {
 
         public static final double VAL_WHEEL_DIA = 0.1524;
         public static final double VAL_MAX_VELO = 2.8;
-        public static final double VAL_MAX_ACCEL = 2.8;
+        public static final double VAL_MAX_ACCEL = 3.0;
         public static final double VAL_MAX_VOLTS = 10;
 
         public static final double VAL_MAX_SPEED = 0.7;
