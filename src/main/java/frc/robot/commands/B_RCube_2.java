@@ -28,6 +28,7 @@ public class B_RCube_2 extends SequentialCommandGroup {
         public B_RCube_2() {
                 String preloadHigh = "paths/output/BlueRightCubePreload.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
+                // String pickupHigh = "paths/output/BlueRightPickupRight.wpilib.json";
                 String pickupHigh = "paths/output/BlueRightPickupRight.wpilib.json";
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
@@ -46,11 +47,11 @@ public class B_RCube_2 extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        new G_Score(false, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT),
+                        // new G_Score(false, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT),
                         new A_Cascade_Move(CascadeState.GROUND, true, VAL_AUTO_TIMEOUT)
                         .alongWith(new A_TronWheel_Move(TronWheelState.GROUND, true, VAL_AUTO_TIMEOUT)),
                         new A_RamsetePath(preload_m)
-                        .alongWith(new A_Intake_In(175)),
+                        .alongWith(new A_Intake_In(200)),
                         new A_Intake_In(110)
                         .alongWith(new A_Cascade_Move(CascadeState.TRANSPORT, true, VAL_AUTO_TIMEOUT)
                         .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT))

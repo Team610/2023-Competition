@@ -20,8 +20,8 @@ public final class Constants {
         public static final double VAL_PIDGEY_RANGE = 2.0;
 
         // units are in meters for Ramsete
-        public static final double VAL_RAMSETE_B = 1;
-        public static final double VAL_RAMSETE_ZETA = 0.7;
+        public static final double VAL_RAMSETE_B = 1.0;
+        public static final double VAL_RAMSETE_ZETA = 0.85;
         
         public static final double UNIT_FEET_IN_METERS = 3.280;
         public static final double UNIT_METERS_IN_FEET = 0.305;
@@ -34,11 +34,13 @@ public final class Constants {
         public static final double CALC_METERS_TO_TICKS(double meters) {
             return (meters/UNIT_DIST_PER_REV)*UNIT_TICKS_PER_REV;
         }
-        
-        public static final double VAL_KS = 0.14611;
-        public static final double VAL_KV = 3.95; //2.8265;
-        public static final double VAL_KA = 0.5; //0.4084;
-        public static final double VAL_KP = 1; //0.67203; //0.4
+        //25ft7in
+
+        public static final double VAL_KS = 0.2; //0.14611;
+        public static final double VAL_KV = 3.6;//2.8098; //3.95; //2.8265;
+        public static final double VAL_KA = 0.42962; // 0.5; //0.4084;
+        public static final double VAL_KP_L = 5.0643; //5.5778;//0.67203;
+        public static final double VAL_KP_R = 4.0331; //5.5778;//0.67203;
         public static final double VAL_KD = 0.0;
         public static final double VAL_KI = 0;
 
@@ -46,9 +48,9 @@ public final class Constants {
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(VAL_TRACK_WIDTH);
 
         public static final double VAL_WHEEL_DIA = 0.1524;
-        public static final double VAL_MAX_VELO = 2.33;
-        public static final double VAL_MAX_ACCEL = 1.0;
-        public static final double VAL_MAX_VOLTS = 7;
+        public static final double VAL_MAX_VELO = 2.8;
+        public static final double VAL_MAX_ACCEL = 3;
+        public static final double VAL_MAX_VOLTS = 10;
 
         public static final double VAL_MAX_SPEED = 0.7;
         public static final double VAL_TURBO_SPEED = 1.0;

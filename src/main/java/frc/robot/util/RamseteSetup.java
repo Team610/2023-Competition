@@ -19,7 +19,8 @@ import static frc.robot.Constants.Drivetrain.*;
 public final class RamseteSetup {
     private static final RamseteController controller_s = new RamseteController(VAL_RAMSETE_B, VAL_RAMSETE_ZETA);
     private static final SimpleMotorFeedforward feedForward_s = new SimpleMotorFeedforward(VAL_KS, VAL_KV, VAL_KA);
-    private static final PIDController PID_s = new PIDController(VAL_KP, VAL_KI, VAL_KD);
+    private static final PIDController PID_L_s = new PIDController(VAL_KP_L, VAL_KI, VAL_KD);
+    private static final PIDController PID_R_s = new PIDController(VAL_KP_R, VAL_KI, VAL_KD);
     private static RamseteCommand ramseteCmd_m;
 
     /**
@@ -60,8 +61,8 @@ public final class RamseteSetup {
                 feedForward_s,
                 DRIVE_KINEMATICS,
                 RobotContainer.drivetrainInst_s::getWheelSpeeds,
-                PID_s,
-                PID_s,
+                PID_L_s,
+                PID_R_s,
                 // RamseteCommand passes volts to the callback
                 RobotContainer.drivetrainInst_s::tankDriveVolts,
                 RobotContainer.drivetrainInst_s);
