@@ -21,7 +21,7 @@ public final class Constants {
 
         // units are in meters for Ramsete
         public static final double VAL_RAMSETE_B = 1.0;
-        public static final double VAL_RAMSETE_ZETA = 0.85;
+        public static final double VAL_RAMSETE_ZETA = 0.1;
         
         public static final double UNIT_FEET_IN_METERS = 3.280;
         public static final double UNIT_METERS_IN_FEET = 0.305;
@@ -34,13 +34,12 @@ public final class Constants {
         public static final double CALC_METERS_TO_TICKS(double meters) {
             return (meters/UNIT_DIST_PER_REV)*UNIT_TICKS_PER_REV;
         }
-        //25ft7in
 
-        public static final double VAL_KS = 0.2; //0.14611;
-        public static final double VAL_KV = 3.6;//2.8098; //3.95; //2.8265;
-        public static final double VAL_KA = 0.42962; // 0.5; //0.4084;
-        public static final double VAL_KP_L = 5.0643; //5.5778;//0.67203;
-        public static final double VAL_KP_R = 4.0331; //5.5778;//0.67203;
+        public static final double VAL_KS = 0.2;
+        public static final double VAL_KV = 3.6;
+        public static final double VAL_KA = 0.1; //0.42962;
+        public static final double VAL_KP_L = 5.0643;
+        public static final double VAL_KP_R = 4.0331;
         public static final double VAL_KD = 0.0;
         public static final double VAL_KI = 0;
 
@@ -49,7 +48,7 @@ public final class Constants {
 
         public static final double VAL_WHEEL_DIA = 0.1524;
         public static final double VAL_MAX_VELO = 2.8;
-        public static final double VAL_MAX_ACCEL = 3;
+        public static final double VAL_MAX_ACCEL = 2.8;
         public static final double VAL_MAX_VOLTS = 10;
 
         public static final double VAL_MAX_SPEED = 0.7;
@@ -97,8 +96,8 @@ public final class Constants {
         public static final double UNIT_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
         // Preset units are in ticks
-        public static final double VAL_MID_CONE_PRESET = 108000;
-        public static final double VAL_HIGH_CONE_PRESET = 145000;
+        public static final double VAL_MID_CONE_PRESET = 101000;
+        public static final double VAL_HIGH_CONE_PRESET = 140000;
         public static final double VAL_RAMP_CONE_PRESET = 8060;
         public static final double VAL_TRANSPORT_CONE_PRESET = 14000;
         public static final double VAL_LINEUP_CONE_PRESET = 50000;
@@ -159,8 +158,8 @@ public final class Constants {
 
         public static final double VAL_IN_PERCENT = 1.0;
         public static final double VAL_OUT_CONE_NORMAL = -0.4;
-        public static final double VAL_OUT_CUBE_NORMAL = -0.5;
-        public static final double VAL_OUT_TURBO = -0.7;
+        public static final double VAL_OUT_CUBE_NORMAL = -0.6;
+        public static final double VAL_OUT_TURBO = -0.8;
         public static final double VAL_HOLD_PERCENT = 0.3;
 
         public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 15;

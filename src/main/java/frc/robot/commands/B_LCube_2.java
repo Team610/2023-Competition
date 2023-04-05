@@ -43,17 +43,25 @@ public class B_LCube_2 extends SequentialCommandGroup {
                 }
 
                 addCommands(
-                        new A_Disable_Safeties(),
-                        new G_Score(false, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT),
-                        new A_Cascade_Move(CascadeState.GROUND, isFinished(), VAL_AUTO_TIMEOUT)
-                        .alongWith(new A_TronWheel_Move(TronWheelState.GROUND, true, VAL_AUTO_TIMEOUT)),
-                        new A_RamsetePath(preload_m)
-                        .alongWith(new A_Intake_In(200)),
-                        new A_Intake_In(110)
-                        .alongWith(new A_Cascade_Move(CascadeState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
-                        .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
-                        .alongWith(new A_RamsetePath(pickup_m)),
-                        new G_Score(true, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT)
+                        new A_RamsetePath(preload_m),
+                        new WaitCommand(0.5),
+                        new A_RamsetePath(pickup_m)
+
+
+                        // new A_Disable_Safeties(),
+                        // new G_Score(false, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT),
+                        // new A_Cascade_Move(CascadeState.GROUND, isFinished(), VAL_AUTO_TIMEOUT)
+                        // .alongWith(new A_TronWheel_Move(TronWheelState.GROUND, true, VAL_AUTO_TIMEOUT)),
+                        // new A_RamsetePath(preload_m)
+                        // .alongWith(new A_Intake_In(200)),
+                        // new A_Intake_In(110)
+                        // .alongWith(new A_Cascade_Move(CascadeState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
+                        // .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
+                        // .alongWith(new A_RamsetePath(pickup_m)),
+                        // new G_Score(true, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT)
+
+
+
 
                         // new A_Disable_Safeties(),
                         // Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, false, 110), new A_Intake_In(110)),
