@@ -21,7 +21,7 @@ public final class Constants {
 
         // units are in meters for Ramsete
         public static final double VAL_RAMSETE_B = 1.0;
-        public static final double VAL_RAMSETE_ZETA = 0.1;
+        public static final double VAL_RAMSETE_ZETA = 0.7;
         
         public static final double UNIT_FEET_IN_METERS = 3.280;
         public static final double UNIT_METERS_IN_FEET = 0.305;
@@ -35,8 +35,8 @@ public final class Constants {
             return (meters/UNIT_DIST_PER_REV)*UNIT_TICKS_PER_REV;
         }
 
-        public static final double VAL_KS = 0.2;
-        public static final double VAL_KV = 3.6;
+        public static final double VAL_KS = 0.1;
+        public static final double VAL_KV = 2.5; //3.6
         public static final double VAL_KA = 0.1; //0.42962;
         public static final double VAL_KP_L = 5.0643;
         public static final double VAL_KP_R = 4.0331;
@@ -102,7 +102,7 @@ public final class Constants {
         public static final double VAL_TRANSPORT_CONE_PRESET = 14000;
         public static final double VAL_LINEUP_CONE_PRESET = 50000;
         public static final double VAL_AUTO_CONE_PRESET = 12180;
-        public static final double VAL_GROUND_CONE_PRESET = 7750; //7500;
+        public static final double VAL_GROUND_CONE_PRESET = 8000; //7750; //7500;
 
         public static final double VAL_MID_CUBE_PRESET = 90000;
         public static final double VAL_HIGH_CUBE_PRESET = 137000;
@@ -141,7 +141,7 @@ public final class Constants {
 
         public static final double VAL_ANG_CONE_RAMP = 14000;  // ticks
         public static final double VAL_ANG_CONE_SCORE = 0;
-        public static final double VAL_ANG_CONE_GROUND = 26800;   // angle to pickup from ground start
+        public static final double VAL_ANG_CONE_GROUND = 27200;   // angle to pickup from ground start
         public static final double VAL_ANG_CONE_TRANSPORT = 10000;
         public static final double VAL_ANG_CONE_HYBRID = 18000;
 
