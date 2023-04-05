@@ -18,17 +18,17 @@ import frc.robot.states.TronWheelState;
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class B_RConeR_1Half_Bal extends SequentialCommandGroup {
+public class R_LConeL_1Half_Bal extends SequentialCommandGroup {
         private Trajectory preload_m, pickup_m;
 
         /**
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public B_RConeR_1Half_Bal() {
-                String preloadHigh = "paths/output/BlueRightPreloadRight.wpilib.json";
+        public R_LConeL_1Half_Bal() {
+                String preloadHigh = "paths/output/RedLeftPreloadLeft.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
-                String pickupHigh = "paths/output/BlueRightPickupBalance.wpilib.json";
+                String pickupHigh = "paths/output/RedLeftPickupBalance.wpilib.json";
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
                 addRequirements(RobotContainer.drivetrainInst_s);
@@ -62,16 +62,17 @@ public class B_RConeR_1Half_Bal extends SequentialCommandGroup {
                         // new WaitCommand(0.1),
                         // new A_Intake_Out(true),
                         // Commands.parallel(new A_Intake_In(400),
-                        //         Commands.sequence( 
+                        //         Commands.sequence(
                         //                 Commands.parallel(
-                        //                         Commands.sequence(new A_RamsetePath(preload_m)),
+                        //                         Commands.sequence(
+                        //                                 new A_RamsetePath(preload_m)),
                         //                                 // new A_RamsetePath(pickup_m)),
                         //                         Commands.sequence(
                         //                                 Commands.parallel(
                         //                                         Commands.sequence(new A_Cascade_Move(CascadeState.RAMP, true, 110), new T_Cascade_Home(), new A_Cascade_Move(CascadeState.GROUND, true, 110)),
-                        //                                         new A_TronWheel_Move(TronWheelState.GROUND, true, 70))
-                        //                         ))
-                        //                 // Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110))
+                        //                                         new A_TronWheel_Move(TronWheelState.GROUND, true, 70)))
+                        //                 )
+                        //                 // Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 110))
                         //         )
                         // )
                 );

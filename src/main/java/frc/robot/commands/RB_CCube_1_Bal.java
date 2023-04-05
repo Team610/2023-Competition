@@ -45,21 +45,30 @@ public class RB_CCube_1_Bal extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, false, 110), new A_TronWheel_Move(TronWheelState.SCORE, true, 70), new A_Intake_In(110)),
-                        new WaitCommand(0.2),
-                        new A_Intake_Out(false),
-                        Commands.parallel(
-                                Commands.sequence(
-                                        new WaitCommand(2),
-                                        new A_RamsetePath(preload_m),
-                                        new WaitCommand(2),
-                                        new A_RamsetePath(balance_m)
-                                ),
-                                Commands.sequence(
-                                        Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, false, 110), 
-                                            new A_TronWheel_Move(TronWheelState.TRANSPORT, false, 110)))
-                        ),
+                        new G_Score(false, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT),
+                        new A_Cascade_Move(CascadeState.TRANSPORT, true, VAL_AUTO_TIMEOUT)
+                        .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT)),
+                        new A_RamsetePath(preload_m),
+                        new WaitCommand(0.5),
+                        new A_RamsetePath(balance_m),
                         new A_Pidgeon_Balance()
+
+                        // new A_Disable_Safeties(),
+                        // Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, false, 110), new A_TronWheel_Move(TronWheelState.SCORE, true, 70), new A_Intake_In(110)),
+                        // new WaitCommand(0.2),
+                        // new A_Intake_Out(false),
+                        // Commands.parallel(
+                        //         Commands.sequence(
+                        //                 new WaitCommand(2),
+                        //                 new A_RamsetePath(preload_m),
+                        //                 new WaitCommand(2),
+                        //                 new A_RamsetePath(balance_m)
+                        //         ),
+                        //         Commands.sequence(
+                        //                 Commands.parallel(new A_Cascade_Move(CascadeState.TRANSPORT, false, 110), 
+                        //                     new A_TronWheel_Move(TronWheelState.TRANSPORT, false, 110)))
+                        // ),
+                        // new A_Pidgeon_Balance()
                 );
         }
 }

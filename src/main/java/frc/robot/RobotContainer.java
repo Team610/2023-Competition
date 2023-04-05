@@ -12,7 +12,7 @@ import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
 import frc.robot.commands.RB_CCone_1_Bal;
 import frc.robot.commands.RB_CCube_1_Bal;
-import frc.robot.commands.R_LConeL_1Half;
+import frc.robot.commands.R_LConeL_1Half_Bal;
 import frc.robot.commands.R_LCube_1Half_Bal;
 import frc.robot.commands.R_LCube_2;
 import frc.robot.commands.B_RConeR_1Half_Bal;
@@ -95,7 +95,7 @@ public class RobotContainer {
     autoChooser_m.addOption("B Right Cone Right 1.5 Bal", new B_RConeR_1Half_Bal());
     // autoChooser_m.addOption("B Right Cube 1.5 Bal", new B_RCube_1Half_Bal());
     autoChooser_m.addOption("B Right Cube 2", new B_RCube_2());
-    autoChooser_m.addOption("R Left Cone Left 1.5", new R_LConeL_1Half());
+    autoChooser_m.addOption("R Left Cone Left 1.5", new R_LConeL_1Half_Bal());
     autoChooser_m.addOption("R Left Cube 1.5 Bal", new R_LCube_1Half_Bal());
     autoChooser_m.addOption("R Left Cube 2", new R_LCube_2());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
