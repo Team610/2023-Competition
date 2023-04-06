@@ -33,8 +33,8 @@ public class B_RCube_2 extends SequentialCommandGroup {
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
                 RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
                 addRequirements(RobotContainer.drivetrainInst_s);
-                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_CONE_PRESET);
-                RobotContainer.tronWheelInst_s.setTicks(VAL_TRANSPORT_CONE_PRESET);
+                RobotContainer.cascadeInst_s.setTicks(VAL_TRANSPORT_CONE_PRESET);
+                RobotContainer.tronWheelInst_s.setTicks(VAL_ANG_CONE_TRANSPORT);
 
                 preload_m = pickup_m = null;
 
@@ -51,7 +51,8 @@ public class B_RCube_2 extends SequentialCommandGroup {
                         new A_Cascade_Move(CascadeState.GROUND, true, VAL_AUTO_TIMEOUT)
                         .alongWith(new A_TronWheel_Move(TronWheelState.GROUND, true, VAL_AUTO_TIMEOUT)),
                         new A_RamsetePath(preload_m)
-                        .alongWith(new A_Intake_In(200)),
+                        .alongWith(new A_Intake_In(200))
+                        .alongWith(new A_Cascade_Move(CascadeState.GROUND, true, 200)),
                         new A_Intake_In(110)
                         .alongWith(new A_Cascade_Move(CascadeState.TRANSPORT, true, VAL_AUTO_TIMEOUT)
                         .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
