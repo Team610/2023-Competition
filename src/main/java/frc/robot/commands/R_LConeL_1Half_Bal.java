@@ -50,7 +50,8 @@ public class R_LConeL_1Half_Bal extends SequentialCommandGroup {
                         new A_TronWheel_Move(TronWheelState.GROUND, true, VAL_AUTO_TIMEOUT)
                         .alongWith(new A_Cascade_Move(CascadeState.GROUND, true, VAL_AUTO_TIMEOUT)),
                         new A_RamsetePath(preload_m)
-                        .alongWith(new A_Intake_In(200)),
+                        .alongWith(new A_Intake_In(200))
+                        .alongWith(new A_Cascade_Move(CascadeState.GROUND, true, 200)),
                         new A_Intake_In(110)
                         .alongWith(new A_Cascade_Move(CascadeState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
                         .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT))

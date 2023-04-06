@@ -157,8 +157,8 @@ public final class Constants {
         public static final int CAN_INTAKE_SRX = 3;
 
         public static final double VAL_IN_PERCENT = 1.0;
-        public static final double VAL_OUT_CONE_NORMAL = -0.4;
-        public static final double VAL_OUT_CUBE_NORMAL = -0.6;
+        public static final double VAL_OUT_CONE_NORMAL = -0.3;
+        public static final double VAL_OUT_CUBE_NORMAL = -0.5;
         public static final double VAL_OUT_TURBO = -0.8;
         public static final double VAL_HOLD_PERCENT = 0.3;
 

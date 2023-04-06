@@ -27,7 +27,7 @@ public class Vision extends Subsystem610{
     private int conePosition_m;
     private double angleSetPoint_m;
     private int distanceSetPoint_m;
-    private Shuffleboard visionTab;
+    public ShuffleboardTab visionTab_m;
 
     public static Vision getInstance() {
         if (visionInst_s == null)
@@ -44,9 +44,9 @@ public class Vision extends Subsystem610{
         distanceSetPoint_m = 372;
         drivetrain_m = Drivetrain.getInstance();
 
-        ShuffleboardTab visionTab = Shuffleboard.getTab("test");
+        visionTab_m = Shuffleboard.getTab("test");
 
-        visionTab.add("Limelight", new HttpCamera("limelight", "http://10.6.10.12:5800/stream.mjpg"))
+        visionTab_m.add("Limelight", new HttpCamera("limelight", "http://10.6.10.12:5800/stream.mjpg"))
             .withWidget(BuiltInWidgets.kCameraStream)
             .withPosition(0, 0)
             .withSize(3, 3);

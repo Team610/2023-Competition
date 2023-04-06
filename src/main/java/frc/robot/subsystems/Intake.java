@@ -104,6 +104,7 @@ public class Intake extends Subsystem610 {
         SmartDashboard.putNumber("single pole", singlePoleIIR.calculate(getSRXSupplyCurrent()));
         SmartDashboard.putBoolean("Floor Lim", getHasGamePiece());
         SmartDashboard.putBoolean("Rollers Running", getIntaking());
+        SmartDashboard.putBoolean("Cone", RobotContainer.getConeMode());
     }
 
     @Override

@@ -113,6 +113,10 @@ public class RobotContainer {
     configureBindings();
   }
 
+  public static boolean getConeMode() {
+    return coneMode_s;
+  }
+
   /**
    * Driver/Operator controls
    */
