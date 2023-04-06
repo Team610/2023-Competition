@@ -38,8 +38,8 @@ public final class Constants {
         public static final double VAL_KS = 0.1;
         public static final double VAL_KV = 2.5; //3.6
         public static final double VAL_KA = 0.1; //0.42962;
-        public static final double VAL_KP_L = 5.0643;
-        public static final double VAL_KP_R = 4.0331;
+        public static final double VAL_KP_L = 3.0643;
+        public static final double VAL_KP_R = 2.0331;
         public static final double VAL_KD = 0.0;
         public static final double VAL_KI = 0;
 
@@ -48,7 +48,7 @@ public final class Constants {
 
         public static final double VAL_WHEEL_DIA = 0.1524;
         public static final double VAL_MAX_VELO = 2.8;
-        public static final double VAL_MAX_ACCEL = 3.0;
+        public static final double VAL_MAX_ACCEL = 1.8;
         public static final double VAL_MAX_VOLTS = 10;
 
         public static final double VAL_MAX_SPEED = 0.7;
