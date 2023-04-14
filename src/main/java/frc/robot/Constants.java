@@ -128,7 +128,7 @@ public final class Constants {
         public static final double VAL_MAX_SPEED = 0.5;
         public static final double VAL_DEGREES_TO_TICKS = 93.75;  // Ticks/degree
 
-        public static final double VAL_FWD_LIM = 30000;
+        public static final double VAL_FWD_LIM = 30000+ 937.5;
         
         public static final double VAL_MAX_ACCEL = 12000;
         public static final double VAL_CRUISE_VELO = 3000;  // Ticks per 100 ms
@@ -158,7 +158,7 @@ public final class Constants {
         public static final double VAL_IN_PERCENT = 1.0;
         public static final double VAL_OUT_CONE_NORMAL = -0.4;
         public static final double VAL_OUT_CUBE_NORMAL = -0.5;
-        public static final double VAL_OUT_TURBO = -0.8;
+        public static final double VAL_OUT_TURBO = 0.8;
         public static final double VAL_HOLD_PERCENT = 0.3;
 
         public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 15;

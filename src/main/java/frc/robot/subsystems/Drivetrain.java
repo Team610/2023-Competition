@@ -38,6 +38,7 @@ public class Drivetrain extends Subsystem610 {
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
         pidAim_m = new PIDController(VAL_ANGLE_KP, VAL_ANGLE_KI, VAL_ANGLE_KD);
+        pidAim_m.enableContinuousInput(-180, 180); //TO-DO: not sure if this works
         aimed_m = false;
     }
 
