@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
 import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.can.BaseTalon;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -116,8 +117,8 @@ public class MotorConfig {
         return talon;
     }
 
-    public static WPI_TalonSRX configIntakeMotor(int CAN_ID) {
-        WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
+    public static WPI_TalonFX configIntakeMotor(int CAN_ID) {
+        WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, false);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.setInverted(true);
         talon.configReverseLimitSwitchSource(LimitSwitchSource.Deactivated, LimitSwitchNormal.Disabled);
@@ -128,10 +129,8 @@ public class MotorConfig {
         talon.configNominalOutputReverse(-0.3);
         talon.configPeakOutputForward(0.8);
         talon.configPeakOutputReverse(-0.8);
-        talon.configPeakCurrentLimit(27);
-        talon.configContinuousCurrentLimit(VAL_CONTINUOUS_CURRENT_LIMIT);
-        talon.configPeakCurrentDuration(100);
-        talon.enableCurrentLimit(true);
+        talon.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(false, VAL_CONTINUOUS_CURRENT_LIMIT, VAL_CURRENT_THRESHOLD, VAL_CURRENT_TIME));
+        talon.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, VAL_CONTINUOUS_CURRENT_LIMIT, VAL_CURRENT_THRESHOLD, VAL_CURRENT_TIME));
         return talon;
     }
 

@@ -162,6 +162,8 @@ public final class Constants {
         public static final double VAL_HOLD_PERCENT = 0.3;
 
         public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 15;
+        public static final int VAL_CURRENT_THRESHOLD = 27;
+        public static final int VAL_CURRENT_TIME = 1;  // seconds
         
         public static final double VAL_STALL_TIME = 0.5 *1000; // ms
         public static final int VAL_SAMPLES = (int) VAL_STALL_TIME/20;

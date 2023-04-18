@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.filter.LinearFilter;
@@ -16,13 +18,14 @@ import static frc.robot.Constants.TronWheel.*;
 
 public class Intake extends Subsystem610 {
     private static Intake intakeInst_s;
-    private WPI_TalonSRX intakeSRX_m, kickerSRX_m;
+    private WPI_TalonSRX kickerSRX_m;
+    private WPI_TalonFX intakeFX_m;
     private static LinearFilter singlePoleIIR;
     private boolean intaking_m;
 
     private Intake() {
         super("Intake");
-        intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX);
+        intakeFX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX);
         kickerSRX_m = MotorConfig.configKickerMotor(CAN_KICKER_SRX);
         singlePoleIIR = LinearFilter.singlePoleIIR(0.5, 0.02);
         intaking_m = false;
@@ -42,9 +45,10 @@ public class Intake extends Subsystem610 {
      */
     public void intake(double spin) {
         spin = RobotContainer.coneMode_s ? spin : -spin;
-        intakeSRX_m.set(ControlMode.PercentOutput, spin);
+        // intakeSRX_m.set(ControlMode.PercentOutput, spin);
+        intakeFX_m.set(TalonFXControlMode.Velocity, spin);
         if(RobotContainer.tronWheelInst_s.getTargetPos() == VAL_ANG_CUBE_GROUND && !RobotContainer.coneMode_s){
-            kickerSRX_m.set(ControlMode.PercentOutput, -spin);
+            kickerSRX_m.set(ControlMode.PercentOutput, -1);
         }
     }
 
@@ -52,7 +56,7 @@ public class Intake extends Subsystem610 {
      * Stops the hamster wheel from rotating
      */
     public void stopIntake() {
-        intakeSRX_m.set(ControlMode.PercentOutput, 0);
+        intakeFX_m.set(ControlMode.PercentOutput, 0);
         kickerSRX_m.set(ControlMode.PercentOutput, 0);
     }
 
@@ -61,14 +65,15 @@ public class Intake extends Subsystem610 {
      *         break beam is triggered)
      */
     public boolean getHasGamePiece() {
-        return !intakeSRX_m.getSensorCollection().isFwdLimitSwitchClosed();
+        // return !intakeSRX_m.getSensorCollection().isFwdLimitSwitchClosed();
+        return false;
     }
 
     /**
      * @return The supply current of the intake motor
      */
-    public double getSRXSupplyCurrent() {
-        return intakeSRX_m.getSupplyCurrent();
+    public double getIntakeSupplyCurrent() {
+        return intakeFX_m.getSupplyCurrent();
     }
 
     /**
@@ -76,8 +81,8 @@ public class Intake extends Subsystem610 {
      * 
      * @param current The desired current
      */
-    public void setSRXSupplyCurrent(double current) {
-        intakeSRX_m.set(ControlMode.Current, current);
+    public void setIntakeSupplyCurrent(double current) {
+        intakeFX_m.set(ControlMode.Current, current);
     }
 
     /**
@@ -100,8 +105,8 @@ public class Intake extends Subsystem610 {
     public void writeSmartDashboard() {
         SmartDashboard.putString("Intake Command",
                 getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
-        SmartDashboard.putNumber("Intake Supply Current", getSRXSupplyCurrent());
-        SmartDashboard.putNumber("single pole", singlePoleIIR.calculate(getSRXSupplyCurrent()));
+        SmartDashboard.putNumber("Intake Supply Current", getIntakeSupplyCurrent());
+        SmartDashboard.putNumber("single pole", singlePoleIIR.calculate(getIntakeSupplyCurrent()));
         SmartDashboard.putBoolean("Floor Lim", getHasGamePiece());
         SmartDashboard.putBoolean("Rollers Running", getIntaking());
         SmartDashboard.putBoolean("Cone", RobotContainer.getConeMode());
