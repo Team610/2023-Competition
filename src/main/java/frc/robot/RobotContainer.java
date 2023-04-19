@@ -10,6 +10,7 @@ import frc.robot.commands.T_Cascade_Preset;
 import frc.robot.commands.B_LCube_2;
 import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
+import frc.robot.commands.G_Substation_Lineup;
 import frc.robot.commands.RB_CCone_1_Bal;
 import frc.robot.commands.RB_CCube_1_Bal;
 import frc.robot.commands.R_LConeL_1Half_Bal;
@@ -22,7 +23,7 @@ import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
 import frc.robot.commands.T_Intake_Out;
-import frc.robot.commands.T_Pidgey_Aim;
+import frc.robot.commands.T_Pidgey_Aim_Score;
 import frc.robot.commands.T_Subsystem_Manual;
 import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.commands.T_TronWheel_Move;
@@ -130,7 +131,8 @@ public class RobotContainer {
     
     driver_s.a().toggleOnTrue(new T_Vision_Light());
     driver_s.b().whileTrue(new T_Vision_Aim());
-    driver_s.x().whileTrue(new T_Pidgey_Aim());
+    driver_s.x().whileTrue(new T_Pidgey_Aim_Score());
+    driver_s.y().toggleOnTrue(new G_Substation_Lineup());
 
     // ! Operator Controls
     new ComboButton(operator_s.start(), operator_s.back())
