@@ -26,7 +26,7 @@ public class Vision extends Subsystem610{
     private boolean isAimed_m;
     private int conePosition_m;
     private double angleSetPoint_m;
-    private int distanceSetPoint_m;
+private int distanceSetPoint_m;
     public ShuffleboardTab visionTab_m;
 
     public static Vision getInstance() {
@@ -121,10 +121,6 @@ public class Vision extends Subsystem610{
         return tv_m == 0 ? 0 : 209.0 / Math.tan(Math.toRadians(21 + calcTy()));
     }
 
-    public boolean checkDistance(){
-        return calcDistance() > 0 ? calcDistance() - distanceSetPoint_m < 10 : false ;
-    }
-
     /**
      * @return Boolean if the limelight is within the set threshold range
      */
@@ -132,11 +128,17 @@ public class Vision extends Subsystem610{
         return Math.abs(calcTx()) > 0 ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 && calcDistance() - distanceSetPoint_m < 10 : false;
     }
 
+    /**
+     * @return Boolean if the limelight is within the set threshold range for distance from wall
+     */
+    public boolean checkSubstationAim(){
+        return tv_m == 0 || (calcDistance() - VAL_SUBSTATION_DIST_FROM_WALL < 10 && tv_m > 0);
+    }
+
     public double[] getAimPID(){
         double steeringAdjust = pidAngle_m.calculate(calcTx(), angleSetPoint_m);
 
         return new double[]{-steeringAdjust, steeringAdjust};
-
     }
 
     /**

@@ -177,6 +177,7 @@ public final class Constants {
         public static final double VAL_LEFT_ANGLE_OFSET = 2;
         public static final double VAL_RIGHT_ANGLE_OFSET = 2;
         public static final double VAL_MIN_POWER = 0.01;
+        public static final double VAL_SUBSTATION_DIST_FROM_WALL = 400;
     }
 
     public static class PigeonBalance{

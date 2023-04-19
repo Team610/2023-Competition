@@ -4,12 +4,15 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class T_Pidgey_Aim extends CommandBase {
-
-
+public class T_Pidgey_Aim_Score extends CommandBase {
     
-    public T_Pidgey_Aim() {
+    public T_Pidgey_Aim_Score() {
         addRequirements(RobotContainer.drivetrainInst_s);
+    }
+
+    @Override
+    public void initialize() {
+        RobotContainer.drivetrainInst_s.setAimSetpoint_m(0);
     }
 
     @Override

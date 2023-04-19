@@ -25,7 +25,7 @@ public class Drivetrain extends Subsystem610 {
     private DifferentialDriveOdometry odometry_m;
     private WPI_Pigeon2 pidgey_m;
     private PIDController pidAim_m;
-    private boolean aimed_m;
+    private double aimSetpoint_m;
 
     private Drivetrain() {
         super("Drivetrain");
@@ -38,7 +38,8 @@ public class Drivetrain extends Subsystem610 {
 
         odometry_m = new DifferentialDriveOdometry(Rotation2d.fromDegrees(0), getLeftMeters(), getRightMeters());
         pidAim_m = new PIDController(VAL_ANGLE_KP, VAL_ANGLE_KI, VAL_ANGLE_KD);
-        aimed_m = false;
+
+        aimSetpoint_m = 0;
     }
 
     public static Drivetrain getInstance() {
@@ -169,14 +170,18 @@ public class Drivetrain extends Subsystem610 {
         odometry_m.resetPosition(pidgey_m.getRotation2d(), getLeftMeters(), getRightMeters(), pose);
     }
 
+    public void setAimSetpoint_m(double newSetpoint) {
+        aimSetpoint_m = newSetpoint;
+    }
+
     public boolean getAimed(){
-        return Math.abs(pidgey_m.getRotation2d().getDegrees() % 360) < 5;
+        return Math.abs(pidgey_m.getRotation2d().getDegrees() % 360) < (aimSetpoint_m + 5);
     }
 
     public void aim(){
         double headingError = pidgey_m.getRotation2d().getDegrees() % 360;
-        setLeft(-pidAim_m.calculate(headingError, 0));
-        setRight(pidAim_m.calculate(headingError, 0));
+        setLeft(-pidAim_m.calculate(headingError, aimSetpoint_m));
+        setRight(pidAim_m.calculate(headingError, aimSetpoint_m));
     }
     
     public void writeSmartDashboard() {
