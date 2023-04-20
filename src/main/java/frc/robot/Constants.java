@@ -102,7 +102,7 @@ public final class Constants {
         public static final double VAL_TRANSPORT_CONE_PRESET = 14000;
         public static final double VAL_LINEUP_CONE_PRESET = 50000;
         public static final double VAL_AUTO_CONE_PRESET = 12180;
-        public static final double VAL_GROUND_CONE_PRESET = 8000;
+        public static final double VAL_GROUND_CONE_PRESET = 6000;
 
         public static final double VAL_MID_CUBE_PRESET = 90000;
         public static final double VAL_HIGH_CUBE_PRESET = 137000;
@@ -140,12 +140,12 @@ public final class Constants {
 
         public static final double VAL_ANG_CONE_RAMP = 14000 + 937.5;  // ticks
         public static final double VAL_ANG_CONE_SCORE = 0;
-        public static final double VAL_ANG_CONE_GROUND = 27200 + 937.5;   // angle to pickup from ground start
+        public static final double VAL_ANG_CONE_GROUND = 29000; // 27200 + 937.5;   // angle to pickup from ground start
         public static final double VAL_ANG_CONE_TRANSPORT = 10000 + 937.5;
         public static final double VAL_ANG_CONE_HYBRID = 18000 + 937.5;
 
         public static final double VAL_ANG_CUBE_RAMP = 14000 + 937.5;  // ticks
-        public static final double VAL_ANG_CUBE_SCORE = 13600 + 937.5;
+        public static final double VAL_ANG_CUBE_SCORE = 13600;
         public static final double VAL_ANG_CUBE_GROUND = 0;   // angle to pickup from ground start
         public static final double VAL_ANG_CUBE_TRANSPORT = 19500 + 937.5;
         public static final double VAL_ANG_CUBE_HYBRID = 18000 + 937.5;

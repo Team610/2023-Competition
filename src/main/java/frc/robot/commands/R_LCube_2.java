@@ -55,10 +55,10 @@ public class R_LCube_2 extends SequentialCommandGroup {
                         new A_Intake_In(110)
                         .alongWith(new A_Cascade_Move(CascadeState.TRANSPORT, true, VAL_AUTO_TIMEOUT)
                         .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
-                        .alongWith(new A_RamsetePath(pickup_m))),
-                        new A_Intake_In(VAL_AUTO_TIMEOUT)
-                        .alongWith(new A_Cascade_Move(CascadeState.LINEUP, true, VAL_AUTO_TIMEOUT))
-                        .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
+                        .alongWith(new A_RamsetePath(pickup_m)))
+                        // new A_Intake_In(VAL_AUTO_TIMEOUT)
+                        // .alongWith(new A_Cascade_Move(CascadeState.LINEUP, true, VAL_AUTO_TIMEOUT))
+                        // .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT))
                         // new G_Score(true, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT),
                         // new A_Cascade_Move(CascadeState.GROUND, true, VAL_AUTO_TIMEOUT)
                         // .alongWith(new A_TronWheel_Move(TronWheelState.GROUND, true, VAL_AUTO_TIMEOUT))

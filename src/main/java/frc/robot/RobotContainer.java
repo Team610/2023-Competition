@@ -10,6 +10,7 @@ import frc.robot.commands.T_Cascade_Preset;
 import frc.robot.commands.B_LCube_2;
 import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
+import frc.robot.commands.RB_CCone_1Half_Bal;
 import frc.robot.commands.RB_CCone_1_Bal;
 import frc.robot.commands.RB_CCube_1_Bal;
 import frc.robot.commands.R_LConeL_1Half_Bal;
@@ -89,8 +90,8 @@ public class RobotContainer {
     
     // autoChooser_m.addOption("Preload", new G_Preload());
     autoChooser_m.setDefaultOption("RB Coop Cone 1 Bal", new RB_CCone_1_Bal());
-    autoChooser_m.addOption("Preload Balance", new G_PreloadBalance());
     autoChooser_m.addOption("RB Coop Cube 1 Bal", new RB_CCube_1_Bal());
+    autoChooser_m.addOption("RB Coop Cone 1.5 Bal", new RB_CCone_1Half_Bal());
     autoChooser_m.addOption("B Left Cube 2", new B_LCube_2());
     autoChooser_m.addOption("B Right Cone Right 1.5 Bal", new B_RConeR_1Half_Bal());
     // autoChooser_m.addOption("B Right Cube 1.5 Bal", new B_RCube_1Half_Bal());

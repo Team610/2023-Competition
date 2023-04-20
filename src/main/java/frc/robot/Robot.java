@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void disabledInit() {
-    RobotContainer.drivetrainInst_s.setCoast();
+    RobotContainer.drivetrainInst_s.setBrake();
     RobotContainer.cascadeInst_s.setSafety(true);
     RobotContainer.tronWheelInst_s.setSafety(false);
     RobotContainer.visionInst_s.setLedMode(1);
