@@ -18,17 +18,17 @@ import frc.robot.states.TronWheelState;
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class RB_CCone_1Half_Bal extends SequentialCommandGroup {
+public class B_CCone_1Half_Bal extends SequentialCommandGroup {
         private Trajectory preload_m, balance_m;
 
         /**
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public RB_CCone_1Half_Bal() {
-                String preloadHigh = "paths/output/PreloadPickup.wpilib.json";
+        public B_CCone_1Half_Bal() {
+                String preloadHigh = "paths/output/BluePreloadPickup.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
-                String balance = "paths/output/PickupBal.wpilib.json";
+                String balance = "paths/output/BluePickupBal.wpilib.json";
                 Path balancePath = Filesystem.getDeployDirectory().toPath().resolve(balance);
                 RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
                 addRequirements(RobotContainer.drivetrainInst_s);
