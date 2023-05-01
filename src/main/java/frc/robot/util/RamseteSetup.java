@@ -10,7 +10,6 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.Drivetrain;
 
 import java.util.List;
 

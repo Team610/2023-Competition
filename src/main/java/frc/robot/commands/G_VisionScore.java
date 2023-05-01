@@ -5,8 +5,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.states.CascadeState;
 
-import static frc.robot.Constants.Cascade.*;
-
 public class G_VisionScore extends SequentialCommandGroup{
 
     public G_VisionScore(){

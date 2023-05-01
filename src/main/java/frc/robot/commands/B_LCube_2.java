@@ -5,21 +5,15 @@ import java.nio.file.Path;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.util.RamseteSetup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.RobotContainer;
-import frc.robot.states.CascadeState;
-import frc.robot.states.TronWheelState;
-import frc.robot.commands.A_RamsetePath;
 
-import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
 public class B_LCube_2 extends SequentialCommandGroup {
-        private Trajectory preload_m, pickup_m, balance_m;
+        private Trajectory preload_m, pickup_m;
 
         /**
          * Add all the commands you would like to happen in auto to this, in order of
