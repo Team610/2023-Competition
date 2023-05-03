@@ -142,7 +142,7 @@ public class Cascade extends Subsystem610 {
     }
 
     /**
-     * converts inches of cascade travel to encoder ticks
+     * Converts inches of cascade travel to encoder ticks
      * 
      * @param in: inches of cascade travelled
      * @return encoder ticks travelled
@@ -151,8 +151,10 @@ public class Cascade extends Subsystem610 {
         return in * UNIT_INCHES_TO_TICKS;
     }
 
-    /*
-     * converts ticks of cascade into percent travelled
+    /**
+     * Converts ticks of cascade into percent travelled
+     * 
+     * @return The percent the cascade has travelled from the bottom
      */
     public double cascadeTickPercent() {
         return (cascadeFX_m.getSelectedSensorPosition() / VAL_CONVERT_TICKS) / 100;

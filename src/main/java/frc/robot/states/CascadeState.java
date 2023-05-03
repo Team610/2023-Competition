@@ -19,10 +19,18 @@ public enum CascadeState {
         cubePreset_m = cubePreset;
     }
 
+    /**
+     * 
+     * @return The current cone cascade preset
+     */
     public double getConePreset() {
         return conePreset_m;
     }
 
+    /**
+     * 
+     * @return The current cube cascade preset
+     */
     public double getCubePreset() {
         return cubePreset_m;
     }

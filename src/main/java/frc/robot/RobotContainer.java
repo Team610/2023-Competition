@@ -86,13 +86,11 @@ public class RobotContainer {
 
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
     
-    // autoChooser_m.addOption("Preload", new G_Preload());
     autoChooser_m.setDefaultOption("RB Coop Cone 1 Bal", new RB_CCone_1_Bal());
     autoChooser_m.addOption("RB Coop Cube 1 Bal", new RB_CCube_1_Bal());
     autoChooser_m.addOption("B Coop Cone 1.5 Bal", new B_CCone_1Half_Bal());
     autoChooser_m.addOption("B Left Cube 2", new B_LCube_2());
     autoChooser_m.addOption("B Right Cone Right 1.5 Bal", new B_RConeR_1Half_Bal());
-    // autoChooser_m.addOption("B Right Cube 1.5 Bal", new B_RCube_1Half_Bal());
     autoChooser_m.addOption("B Right Cube 2", new B_RCube_2());
     autoChooser_m.addOption("R Left Cone Left 1.5", new R_LConeL_1Half_Bal());
     autoChooser_m.addOption("R Left Cube 1.5 Bal", new R_LCube_1Half_Bal());
@@ -113,6 +111,9 @@ public class RobotContainer {
     configureBindings();
   }
 
+  /**
+   * @return True if currently in cone mode
+   */
   public static boolean getConeMode() {
     return coneMode_s;
   }
@@ -173,11 +174,6 @@ public class RobotContainer {
 
     operator_s.leftBumper().onTrue(Commands.runOnce(() -> coneMode_s = !coneMode_s));
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
-
-    // new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()->
-    // RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
-    // new POVButton(operator_s.getHID(), 180).onTrue(Commands.runOnce(()->
-    // RobotContainer.drivetrainInst_s.setBrake()).ignoringDisable(true));
   }
 
   public Command getAutonomousCommand() {

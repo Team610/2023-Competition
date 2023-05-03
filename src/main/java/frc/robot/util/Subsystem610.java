@@ -25,14 +25,15 @@ public abstract class Subsystem610 implements Subsystem, Sendable {
     //! Methods all subsystems inherit
     /**
      * Increment the loop counter for this subsystem, should be done once per code cycle
+     * Based on roborio update time should increment once every 20 ms (approximate)
      */
     public synchronized void incrementLoopCount() {
         loopCounter_m++;
     }
 
-    //! Accessors/Mutators
+    // * Accessors/Mutators
     /**
-     * Get the current loop counter value for this subsystem
+     * Get the current loop count value for the calling subsystem
      * @return The loop counter value, should be the number of code cycles iterated
      */
     public synchronized int getLoopCount() {
@@ -40,28 +41,28 @@ public abstract class Subsystem610 implements Subsystem, Sendable {
     }
 
     /**
-     * Reset the loop counter to 0 for this subsystem
+     * Reset the loop count to 0 for the calling subsystem
      */
     public synchronized void resetLoopCount() {
         loopCounter_m = 0;
     }
 
     /**
-     * @return Current manual state of this subsystem
+     * @return Current manual state of the calling subsystem
      */
     public boolean getManual() {
         return isManual_m;
     }
 
     /**
-     * @param manual Desired manual state of this subsystem
+     * @param manual Desired manual state of the calling subsystem
      */
     public void setManual(boolean manual) {
         isManual_m = manual;
     }
 
     /**
-     * @param tab the tab to add to the driver shuffleboard
+     * @param tab The tab to add to the driver shuffleboard
      */
     public abstract void addToDriveTab(ShuffleboardTab tab);
 }

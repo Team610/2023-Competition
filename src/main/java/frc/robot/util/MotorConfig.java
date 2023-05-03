@@ -42,11 +42,11 @@ public class MotorConfig {
     }
 
     /**
-     * Creates a BATMAN motor on default settings
-     * @param CAN_ID tells the code which CAN id it uses
-     * @param inverted tells the code whether or not to invert the motor
-     * @param sensorPhase tells the code whether or not it is inverted
-     * @return returns the talon created
+     * Creates a BATMAN (master) motor on default settings
+     * @param CAN_ID The CAN ID to use
+     * @param inverted True if the motor is inverted
+     * @param sensorPhase True if the encoder is inverted
+     * @return The created BATMAN TalonFX
      */
     public static WPI_TalonFX configDriveMotor(int CAN_ID, boolean inverted, boolean sensorPhase) {
         WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
@@ -57,12 +57,12 @@ public class MotorConfig {
     }
 
     /**
-     * Creates a ROBIN motor on default settings
-     * @param CAN_ID tells the code which CAN id it uses
-     * @param remoteId tells the code which motor to follow
-     * @param inverted tells the code whether or not to invert the motor
-     * @param sensorPhase tells the code whether or not it is inverted
-     * @return returns the talon created
+     * Creates a ROBIN (follower) motor on default settings
+     * @param CAN_ID The CAN ID to use
+     * @param remoteId Tells the code which motor to follow
+     * @param inverted True if the motor is inverted
+     * @param sensorPhase True if the encoder is inverted
+     * @return The created ROBIN TalonFX
      */
     public static WPI_TalonFX configDriveFollower(int CAN_ID, int remoteId, boolean inverted, boolean sensorPhase) {
         WPI_TalonFX talon = MotorConfig.configDriveMotor(CAN_ID, inverted, sensorPhase);
@@ -70,7 +70,13 @@ public class MotorConfig {
         return talon;
     }
 
-
+    /**
+     * Creates a cascade motor
+     * @param CAN_ID The CAN ID to use
+     * @param inverted True if the motor is inverted
+     * @param sensorPhase True if the encoder is inverted
+     * @return The created cascade TalonFX
+     */
     public static WPI_TalonFX configCascadeMotor(int CAN_ID, boolean inverted, boolean sensorPhase){
         WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
         talon.configReverseLimitSwitchSource(LimitSwitchSource.FeedbackConnector, LimitSwitchNormal.NormallyOpen, VAL_CONFIG_TIMEOUT);

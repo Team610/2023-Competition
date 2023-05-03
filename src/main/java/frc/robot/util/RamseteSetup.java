@@ -27,7 +27,7 @@ public final class RamseteSetup {
      * waypoints
      * 
      * @param waypoints The list of waypoints you would like to pass through
-     * @param reversed  If you want to drive backwards, this should be true
+     * @param reversed  True if you want to drive backwards
      * @return A Trajectory, a.k.a the path for the robot to follow
      */
     public static Trajectory initializeTrajectory(List<Pose2d> waypoints, boolean reversed) {
@@ -47,10 +47,10 @@ public final class RamseteSetup {
     }
 
     /**
-     * initialize ramsete command by passing in trajectory to follow
+     * Initialize ramsete command by passing in trajectory to follow
      * 
-     * @param traj trajectory parameter to follow
-     * @return new ramsete command to be scheduled
+     * @param traj Trajectory parameter to follow
+     * @return New ramsete command to be scheduled
      */
     public static RamseteCommand initializeRamseteCommand(Trajectory traj) {
         ramseteCmd_m = new RamseteCommand(
