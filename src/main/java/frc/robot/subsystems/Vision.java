@@ -13,8 +13,7 @@ import frc.robot.util.Subsystem610;
 
 import static frc.robot.Constants.Vision.*;
 
-
-public class Vision extends Subsystem610{
+public class Vision extends Subsystem610 {
     private static Vision visionInst_s;
     private static Drivetrain drivetrain_m;
 
@@ -37,7 +36,7 @@ public class Vision extends Subsystem610{
 
     private Vision() {
         super("Limelight");
-        
+
         ledMode_m = 0;
         conePosition_m = 0;
         angleSetPoint_m = 0;
@@ -47,12 +46,11 @@ public class Vision extends Subsystem610{
         visionTab_m = Shuffleboard.getTab("test");
 
         visionTab_m.add("Limelight", new HttpCamera("limelight", "http://10.6.10.12:5800/stream.mjpg"))
-            .withWidget(BuiltInWidgets.kCameraStream)
-            .withPosition(0, 0)
-            .withSize(3, 3);
+                .withWidget(BuiltInWidgets.kCameraStream)
+                .withPosition(0, 0)
+                .withSize(3, 3);
 
-
-        //make sure the pipeline team number is set to 610
+        // Make sure the pipeline team number is set to 610
         networkTable_m = NetworkTableInstance.getDefault().getTable("limelight");
 
         networkTable_m.getEntry("ledMode").setNumber(ledMode_m);
@@ -60,112 +58,125 @@ public class Vision extends Subsystem610{
         pidAngle_m = new PIDController(VAL_ANGLE_KP, VAL_ANGLE_KI, VAL_ANGLE_KD);
         pidDrive_m = new PIDController(VAL_DRIVE_KP, VAL_DRIVE_KI, VAL_DRIVE_KD);
 
-        }
+    }
 
+    /**
+     * @return The current state of the Limelight's LED's
+     */
     public int getLedMode() {
         return ledMode_m;
     }
 
-    public void setCamMode(int camMode){
-        networkTable_m.getEntry("camMode").setNumber(camMode);
-    }
-
     /**
-     * 0 for on, 1 for off
-     * @param ledMode
+     * Turns the led's of the limelight on or off
+     * 
+     * @param ledMode 0 for on, 1 for off
      */
-    public void setLedMode(int ledMode){
+    public void setLedMode(int ledMode) {
         networkTable_m.getEntry("ledMode").setNumber(ledMode);
     }
 
-    public int getConePosition(){
+    /**
+     * Switches the camera mode of the limelight
+     * 
+     * @param camMode 0 for vision processor, 1 for driver cam
+     */
+    public void setCamMode(int camMode) {
+        networkTable_m.getEntry("camMode").setNumber(camMode);
+    }
+
+    public int getConePosition() {
         return conePosition_m;
     }
 
-    public void setConePosition(int newPosition){
+    /**
+     * Changes limelight offset to left, center, right
+     * 
+     * @param newPosition new cone position in intake
+     */
+    public void setConePosition(int newPosition) {
         conePosition_m = newPosition;
-        if (conePosition_m == 0){
+        if (conePosition_m == 0) {
             angleSetPoint_m = 0;
         }
-        //cone is to the left
-        else if (conePosition_m == 1){
-            angleSetPoint_m = VAL_LEFT_ANGLE_OFSET;
+        // cone is to the left
+        else if (conePosition_m == 1) {
+            angleSetPoint_m = VAL_LEFT_ANGLE_OFFSET;
         }
-        //cone is to the right
-        else{
-            angleSetPoint_m = VAL_RIGHT_ANGLE_OFSET;
+        // cone is to the right
+        else {
+            angleSetPoint_m = VAL_RIGHT_ANGLE_OFFSET;
         }
     }
 
     /**
-     * Fetch the horizontal offset from crosshair to target (tx)
-     * @return tx
+     * @return The horizontal offset from crosshair to target (tx)
      */
-    public double calcTx(){ 
+    public double calcTx() {
         // ternary operator to return the horizontal angle if a valid target is detected
         return networkTable_m.getEntry("tx").getDouble(0.0);
     }
 
     /**
-     * Fetch the vertical offset from crosshair to target (ty)
-     * @return ty
+     * @return The vertical offset from crosshair to target (ty)
      */
-    public double calcTy(){
+    public double calcTy() {
         return tv_m == 0 ? 0 : networkTable_m.getEntry("ty").getDouble(0.0);
     }
 
     /**
      * @return The distance from the Limelight to the target
      */
-    public double calcDistance(){
+    public double calcDistance() {
         return tv_m == 0 ? 0 : 209.0 / Math.tan(Math.toRadians(21 + calcTy()));
     }
 
-    public boolean checkDistance(){
-        return calcDistance() > 0 ? calcDistance() - distanceSetPoint_m < 10 : false ;
+    /**
+     * @return True only when the Limelight is within a set distance setpoint
+     */
+    public boolean checkDistance() {
+        return calcDistance() > 0 ? calcDistance() - distanceSetPoint_m < 10 : false;
     }
 
     /**
-     * @return Boolean if the limelight is within the set threshold range
+     * @return True only when the limelight is within the set threshold range
      */
-    public boolean checkAim(){
-        return Math.abs(calcTx()) > 0 ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 && calcDistance() - distanceSetPoint_m < 10 : false;
+    public boolean checkAim() {
+        return Math.abs(calcTx()) > 0
+                ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 && calcDistance() - distanceSetPoint_m < 10
+                : false;
     }
 
-    public double[] getAimPID(){
+    /**
+     * @return An array with left and right motor output values for drivetrain
+     */
+    public double[] getAimPID() {
         double steeringAdjust = pidAngle_m.calculate(calcTx(), angleSetPoint_m);
 
-        return new double[]{-steeringAdjust, steeringAdjust};
-
+        return new double[] { -steeringAdjust, steeringAdjust };
     }
 
     /**
-     * Use WPILib PID to turn and drive the robot to the desired direction
+     * Use WPILib PID to rotate the robot to aim at the target
      */
     public void aim() {
-        double distanceError = calcDistance() - distanceSetPoint_m;
         double[] steeringAdjust = getAimPID();
-
-        // steeringAdjust = (pidAngle_m.calculate(headingError) + VAL_MIN_POWER) * (headingError > 1 ? -1 : 1);
-
-
-        // drivetrain_m.setLeft(steeringAdjust + pidDrive_m.calculate(distanceError));
-        // drivetrain_m.setRight(steeringAdjust + pidDrive_m.calculate(distanceError));
-
         drivetrain_m.setLeft(steeringAdjust[0]);
         drivetrain_m.setRight(steeringAdjust[1]);
-
     }
 
     /**
      * Use WPILib PID to move the robot to the desired distance
      */
-    public void drive(){
+    public void drive() {
         drivetrain_m.setLeft(pidDrive_m.calculate(calcDistance(), distanceSetPoint_m));
         drivetrain_m.setLeft(pidDrive_m.calculate(calcDistance(), distanceSetPoint_m));
     }
 
-    public void writeDashboard(){
+    /**
+     * Contains all items put to SmartDashboard in the Vision class
+     */
+    public void writeSmartDashboard() {
         SmartDashboard.putNumber("Angle", Math.round(calcTx() * 1e5) / 1e5);
         SmartDashboard.putBoolean("Aimed", isAimed_m);
         SmartDashboard.putNumber("Cone Poisition", conePosition_m);
@@ -179,19 +190,16 @@ public class Vision extends Subsystem610{
     @Override
     public void periodic() {
         tv_m = (int) networkTable_m.getEntry("tv").getDouble(0.0);
-        writeDashboard();
+        writeSmartDashboard();
     }
-    
+
     @Override
     public void initSendable(SendableBuilder builder) {
         // TODO Auto-generated method stub
-        
     }
 
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
         // TODO Auto-generated method stub
-        
     }
-    
 }

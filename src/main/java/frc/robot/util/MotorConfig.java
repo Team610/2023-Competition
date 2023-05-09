@@ -42,11 +42,12 @@ public class MotorConfig {
     }
 
     /**
-     * Creates a BATMAN (master) motor on default settings
+     * Creates a BATMAN (master) TalonFX on default settings.
+     * 610 used 2 Batman motors, one on each side, to power our drivetrain
      * @param CAN_ID The CAN ID to use
      * @param inverted True if the motor is inverted
      * @param sensorPhase True if the encoder is inverted
-     * @return The created BATMAN TalonFX
+     * @return A TalonFX object
      */
     public static WPI_TalonFX configDriveMotor(int CAN_ID, boolean inverted, boolean sensorPhase) {
         WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
@@ -57,12 +58,13 @@ public class MotorConfig {
     }
 
     /**
-     * Creates a ROBIN (follower) motor on default settings
+     * Creates a ROBIN (follower) TalonFX on default settings.
+     * 610 used 2 Robin motors, one on each side, to power our drivetrain
      * @param CAN_ID The CAN ID to use
      * @param remoteId Tells the code which motor to follow
      * @param inverted True if the motor is inverted
      * @param sensorPhase True if the encoder is inverted
-     * @return The created ROBIN TalonFX
+     * @return A TalonFX object
      */
     public static WPI_TalonFX configDriveFollower(int CAN_ID, int remoteId, boolean inverted, boolean sensorPhase) {
         WPI_TalonFX talon = MotorConfig.configDriveMotor(CAN_ID, inverted, sensorPhase);
@@ -71,11 +73,12 @@ public class MotorConfig {
     }
 
     /**
-     * Creates a cascade motor
+     * Creates a TalonFX object with the necessary configurations
+     * that 610 used to move our cascading arms up and down
      * @param CAN_ID The CAN ID to use
      * @param inverted True if the motor is inverted
      * @param sensorPhase True if the encoder is inverted
-     * @return The created cascade TalonFX
+     * @return A TalonFX object
      */
     public static WPI_TalonFX configCascadeMotor(int CAN_ID, boolean inverted, boolean sensorPhase){
         WPI_TalonFX talon = (WPI_TalonFX)MotorConfig.createDefaultTalon(CAN_ID, true);
@@ -102,6 +105,12 @@ public class MotorConfig {
         return talon;
     }
 
+    /**
+     * Creates a TalonSRX object that was used in conjunction with a Vex 775 Pro motor
+     * to rotate our Tron Wheel
+     * @param CAN_ID The CAN ID to use
+     * @return A TalonSRX object
+     */
     public static WPI_TalonSRX configTronRotateMotor(int CAN_ID) {
         WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
         talon.setNeutralMode(NeutralMode.Brake);
@@ -122,6 +131,12 @@ public class MotorConfig {
         return talon;
     }
 
+    /**
+     * Creates a TalonSRX object that was used in conjunction with a Bag motor
+     * to power the intake/outtake of our Tron wheel
+     * @param CAN_ID The CAN ID to use
+     * @return A TalonSRX object
+     */
     public static WPI_TalonSRX configIntakeMotor(int CAN_ID) {
         WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
         talon.setNeutralMode(NeutralMode.Brake);
@@ -141,6 +156,12 @@ public class MotorConfig {
         return talon;
     }
 
+    /**
+     * Creates a TalonSRX object that was used in conjunction with a Bag motor
+     * to power the kicker roller used for ground cube intake
+     * @param CAN_ID The CAN ID to use
+     * @return A TalonSRX object
+     */
     public static WPI_TalonSRX configKickerMotor(int CAN_ID) {
         WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
         talon.setNeutralMode(NeutralMode.Brake);

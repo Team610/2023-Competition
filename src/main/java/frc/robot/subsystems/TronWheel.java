@@ -40,29 +40,29 @@ public class TronWheel extends Subsystem610 {
     }
 
      /**
-     * Uses MotionMagic to spin the motor to a set position
-     * @param ticks The position to spin the motor to
+     * Uses MotionMagic to rotate the tron wheel to a set position
+     * @param ticks The position to rotate the tron wheel to
      */
     public void rotateMagic() {
         rotateSRX_m.set(ControlMode.MotionMagic, targetPos_m);
     }
 
     /**
-     * Stops the hamster wheel from spinning
+     * Stops the tron wheel from rotating
      */
     public void stopRotate() {
         rotateSRX_m.set(ControlMode.PercentOutput, 0);
     }
 
     /**
-     * @return If the reverse limit switch is pressed
+     * @return True only when the reverse limit switch is pressed
      */
     public boolean tronRevLimit() {
         return rotateSRX_m.isRevLimitSwitchClosed() == 1;
     }
 
     /**
-     * @return If the forward limit switch is pressed
+     * @return True only when the forward limit switch is pressed
      */
     public boolean tronFwdLimit() {
         return rotateSRX_m.isFwdLimitSwitchClosed() == 1;
@@ -79,33 +79,37 @@ public class TronWheel extends Subsystem610 {
     }
 
     /**
-     * @return Whether or not the safety is still on
+     * @return True only when the tron wheel safety is on
      */
     public boolean getSafety() {
         return safety_m;
     }
     
     /**
-     * @return The target position the Tron Wheel is moving to
+     * @return The target position the tron wheel is rotating to
      */
     public double getTargetPos() {
         return targetPos_m;
     }
 
     /**
-     * @param targetPos The target for the Tron Wheel to move to
+     * @param targetPos The target for the tron wheel to rotate to
      */
     public void setTargetPos(double targetPos) {
         targetPos_m = targetPos;
     }
 
+    /**
+     * Manually specifying the current tick count of the tron wheel encoder
+     * @param ticks The tick count to set
+     */
     public void setTicks(double ticks) {
         rotateSRX_m.setSelectedSensorPosition(ticks);
     }
 
     /**
      * A helper method to see if the Tron Wheel is approximately at the position it's set to go to
-     * @return true if it is more or less at the target position (within 100 ticks)
+     * @return True only when it is within 100 ticks of the target position
      */
     public boolean checkClosedLoop(){
         return Math.abs(rotateSRX_m.getClosedLoopError()) < 100;
@@ -130,9 +134,5 @@ public class TronWheel extends Subsystem610 {
 
     @Override
     public void addToDriveTab(ShuffleboardTab tab) {
-        // rotateManual_m = tab.add("Rotate M", getManual())
-        //     .withPosition(10, 0)
-        //     .withSize(1, 1)
-        //     .getEntry();
     }
 }

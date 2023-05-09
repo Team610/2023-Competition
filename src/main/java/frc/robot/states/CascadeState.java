@@ -20,7 +20,6 @@ public enum CascadeState {
     }
 
     /**
-     * 
      * @return The current cone cascade preset
      */
     public double getConePreset() {
@@ -28,7 +27,6 @@ public enum CascadeState {
     }
 
     /**
-     * 
      * @return The current cube cascade preset
      */
     public double getCubePreset() {

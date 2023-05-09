@@ -36,8 +36,7 @@ public class Intake extends Subsystem610 {
     }
 
     /**
-     * Sets output percentage of intake motor to param
-     * 
+     * Sets output percentage of intake motor
      * @param spin Output percentage
      */
     public void intake(double spin) {
@@ -49,7 +48,7 @@ public class Intake extends Subsystem610 {
     }
 
     /**
-     * Stops the hamster wheel from rotating
+     * Stops the intake and kicker from spinning
      */
     public void stopIntake() {
         intakeSRX_m.set(ControlMode.PercentOutput, 0);
@@ -57,7 +56,7 @@ public class Intake extends Subsystem610 {
     }
 
     /**
-     * @return Whether or not there is a game piece in the bumper cutout (if the
+     * @return True only when there is a game piece in the bumper cutout (if the
      *         break beam is triggered)
      */
     public boolean getHasGamePiece() {
@@ -72,8 +71,7 @@ public class Intake extends Subsystem610 {
     }
 
     /**
-     * Sets current output of intake motor to param
-     * 
+     * Sets current output of intake motor
      * @param current The desired current
      */
     public void setSRXSupplyCurrent(double current) {
@@ -81,8 +79,8 @@ public class Intake extends Subsystem610 {
     }
 
     /**
-     * Used for the default command T_Intake_In. This boolean being true will cause the intaking to intake in
-     * @return The state of the intaking boolean, true = intaking in
+     * Used for the default command T_Intake_In. This boolean being true will cause the intake to run in
+     * @return True only when the intake boolean is true, a.k.a the intake is spinning in
      */
     public boolean getIntaking() {
         return intaking_m;

@@ -17,8 +17,6 @@ public final class Constants {
         public static final int CAN_RIGHT_ROBIN = 2;
         public static final int CAN_PIDGEY = 1;
 
-        public static final double VAL_PIDGEY_RANGE = 2.0;
-
         // Units are in meters for Ramsete
         public static final double VAL_RAMSETE_B = 1.0;
         public static final double VAL_RAMSETE_ZETA = 0.7;
@@ -176,8 +174,8 @@ public final class Constants {
         public static final double VAL_DRIVE_KP = 0.005;
         public static final double VAL_DRIVE_KI = 0;
         public static final double VAL_DRIVE_KD = 0.0005;
-        public static final double VAL_LEFT_ANGLE_OFSET = 2;
-        public static final double VAL_RIGHT_ANGLE_OFSET = 2;
+        public static final double VAL_LEFT_ANGLE_OFFSET = 2;
+        public static final double VAL_RIGHT_ANGLE_OFFSET = 2;
         public static final double VAL_MIN_POWER = 0.01;
     }
 

@@ -34,17 +34,15 @@ public class Cascade extends Subsystem610 {
 
     /**
      * Spins the Cascade motor, in terms of percentage.
-     * 
-     * @param spin The desired speed percentage
+     * @param spin The desired percent output
      */
     public void spin(double spin) {
         cascadeFX_m.set(ControlMode.PercentOutput, spin);
     }
 
     /**
-     * Spin the cascade motor using Motion Magic based on direction to move
-     * 
-     * @param down Direction the cascade is moving
+     * Spin the cascade motor using Motion Magic with different PID slots based on direction to move
+     * @param down True if cascade is retracting
      */
     public void spinMagic(boolean down) {
         if (down) {
@@ -54,8 +52,6 @@ public class Cascade extends Subsystem610 {
             cascadeFX_m.configMotionAcceleration(VAL_MAX_ACCEL_UP, VAL_CONFIG_TIMEOUT);
             cascadeFX_m.configMotionCruiseVelocity(VAL_CRUISE_VELO_UP, VAL_CONFIG_TIMEOUT);
         }
-        // cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m,
-        // DemandType.ArbitraryFeedForward, VAL_FEEDFORWARD);
         cascadeFX_m.set(ControlMode.MotionMagic, targetPos_m);
     }
 
@@ -67,23 +63,22 @@ public class Cascade extends Subsystem610 {
     }
 
     /**
-     * @return If the bottom limit switch is pressed
+     * @return True only when the bottom limit switch is pressed
      */
     public boolean cascadeBotLimitCheck() {
         return cascadeFX_m.isRevLimitSwitchClosed() == 1;
     }
 
     /**
-     * @return True when the ticks are greater than our soft limit
+     * @return True only when the ticks are greater than our soft limit
      */
     public boolean cascadeTopLimitCheck() {
         return cascadeFX_m.getSelectedSensorPosition() >= VAL_MAX_TICKS;
     }
 
-    // ? Accessors
+    //? Accessors
     /**
      * Safety on means will NOT move
-     * 
      * @param safety The value to set safety to
      */
     public void setSafety(boolean safety) {
@@ -93,14 +88,14 @@ public class Cascade extends Subsystem610 {
     }
 
     /**
-     * @return The safety state of the cascade
+     * @return True only when the safety for the cascade is on
      */
     public boolean getSafety() {
         return safety_m;
     }
 
     /**
-     * @return The target position the cascade is moving to
+     * @return The target position in ticks the cascade is moving to
      */
     public double getTargetPos() {
         return targetPos_m;
@@ -108,7 +103,6 @@ public class Cascade extends Subsystem610 {
 
     /**
      * Setting the target position for the cascade to move to
-     * 
      * @param targetPos The target position in ticks
      */
     public void setTargetPos(double targetPos) {
@@ -123,17 +117,15 @@ public class Cascade extends Subsystem610 {
     }
 
     /**
-     * Setting the tick count of the cascade TalonFX
-     * 
-     * @param ticks The tick count to set it to
+     * Manually specifying the current tick count of the cascade TalonFX
+     * @param ticks The tick count to set
      */
     public void setTicks(double ticks) {
         cascadeFX_m.setSelectedSensorPosition(ticks);
     }
 
     /**
-     * converts ticks of cascade encoder to inches travelled
-     * 
+     * Converts ticks of cascade encoder to inches travelled
      * @param ticks: encoder ticks of distance travelled
      * @return inches of distance travelled
      */
@@ -143,7 +135,6 @@ public class Cascade extends Subsystem610 {
 
     /**
      * Converts inches of cascade travel to encoder ticks
-     * 
      * @param in: inches of cascade travelled
      * @return encoder ticks travelled
      */
@@ -153,7 +144,6 @@ public class Cascade extends Subsystem610 {
 
     /**
      * Converts ticks of cascade into percent travelled
-     * 
      * @return The percent the cascade has travelled from the bottom
      */
     public double cascadeTickPercent() {
@@ -167,6 +157,7 @@ public class Cascade extends Subsystem610 {
         SmartDashboard.putBoolean("Cascade Manual Mode", getManual());
         SmartDashboard.putNumber("Cascade Supply Current", cascadeFX_m.getSupplyCurrent());
     }
+
     @Override
     public void periodic() {
         writeSmartDashboard();

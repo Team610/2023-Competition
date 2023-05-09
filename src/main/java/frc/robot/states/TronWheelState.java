@@ -18,7 +18,6 @@ public enum TronWheelState {
     }
 
     /**
-     * 
      * @return The current cone angle of the tron wheel
      */
     public double getConeAng() {
@@ -26,7 +25,6 @@ public enum TronWheelState {
     }
 
     /**
-     * 
      * @return The current cube angle of the tron wheel
      */
     public double getCubeAng() {
