@@ -114,17 +114,20 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    driver_s.rightTrigger().whileTrue(new T_Intake_In());
+    driver_s.rightTrigger(0.5).whileTrue(new T_Intake_In());
     driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
     driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
-    driver_s.a().onTrue(new T_Cascade_Preset(VAL_TRANSPORT_PRESET));
+    driver_s.a().onTrue(new T_Cascade_Preset(VAL_GROUND_PRESET));
     driver_s.y().onTrue(new T_Cascade_Preset(VAL_HIGH_PRESET));
-    driver_s.b().onTrue(new T_TronWheel_Preset(VAL_ANGLE_SCORE));
-    driver_s.x().onTrue(new T_TronWheel_Preset(VAL_ANGLE_HYBRID));
-    driver_s.rightBumper().onTrue(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE), 
-      Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
+    driver_s.b().onTrue(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT));
+    driver_s.x().onTrue(new T_TronWheel_Preset(VAL_ANGLE_SCORE));
+    driver_s.rightBumper().onTrue(new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT));
+    driver_s.leftBumper().onTrue(new T_Cascade_Preset(VAL_MID_PRESET));
+    driver_s.back()
+        .onTrue(Commands.parallel(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
+            new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming)));
 
-    driver_s.a().toggleOnTrue(new T_Vision_Light());
+    //driver_s.a().toggleOnTrue(new T_Vision_Light());
     // driver_s.b().whileTrue(new T_Vision_Drive());
     // driver_s.b().whileTrue(new T_Vision_Aim());
 
