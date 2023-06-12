@@ -29,7 +29,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         //left joystick for up/down movement
         double y = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftY(), VAL_DEADBAND);
         //right joystick for left/right movement
-        double x = MathUtil.applyDeadband(RobotContainer.driver_s.getRightX(), VAL_DEADBAND);
+        double x = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftX(), VAL_DEADBAND);
         //left bumper for turbo mode when held
         boolean turbo = RobotContainer.driver_s.leftBumper().getAsBoolean();
 
@@ -45,12 +45,12 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         } else if(new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean()){
             offset += 0.1;
         } else if(cascadeInt_m.cascadeTickPercent() >= .45){
-            y *= turbo ? (1-(0.3*cascadeInt_m.cascadeTickPercent())) : (0.8-(0.7*cascadeInt_m.cascadeTickPercent()));
+            y *= 0.5;
         } else {
             offset = 0;
-            y *= turbo ? 1 : 0.8;
+            y *=  0.5;
         }
-        x *= 0.7;
+        x *= 0.5;
         double leftSpeed = -y + x + offset;
         double rightSpeed = -y - x - offset;
         drivetrainInst_m.setLeft(leftSpeed);
