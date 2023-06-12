@@ -45,12 +45,12 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         } else if(new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean()){
             offset += 0.1;
         } else if(cascadeInt_m.cascadeTickPercent() >= .45){
-            y *= 0.5;
+            y *= 0.35;
         } else {
             offset = 0;
-            y *=  0.5;
+            y *=  0.35;
         }
-        x *= 0.5;
+        x *= 0.35;
         double leftSpeed = -y + x + offset;
         double rightSpeed = -y - x - offset;
         drivetrainInst_m.setLeft(leftSpeed);
