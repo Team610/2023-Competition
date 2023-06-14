@@ -51,8 +51,8 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
             y *=  0.35;
         }
         x *= 0.35;
-        double leftSpeed = -y + x + offset;
-        double rightSpeed = -y - x - offset;
+        double leftSpeed = -y + x;
+        double rightSpeed = -y - x;
         drivetrainInst_m.setLeft(leftSpeed);
         drivetrainInst_m.setRight(rightSpeed);
     }
