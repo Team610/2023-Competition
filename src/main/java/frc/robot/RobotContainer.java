@@ -153,9 +153,9 @@ public class RobotContainer {
             .whenPressed(
                 Commands.parallel(new T_Cascade_Preset(CascadeState.GROUND),
                     new T_TronWheel_Preset(TronWheelState.GROUND)));  
-    driver_s.a().toggleOnTrue(new T_Vision_Light());
-    driver_s.b().whileTrue(new T_Vision_Aim());
-    driver_s.x().whileTrue(new T_Pidgey_Aim());
+    // driver_s.a().toggleOnTrue(new T_Vision_Light());
+    // driver_s.b().whileTrue(new T_Vision_Aim());
+    //driver_s.x().whileTrue(new T_Pidgey_Aim());
 
     // ! Operator Controls
     new ComboButton(operator_s.start(), operator_s.back())
