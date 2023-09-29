@@ -130,7 +130,29 @@ public class RobotContainer {
     driver_s.start().whileTrue(new T_Intake_Out(true));
     driver_s.rightBumper().onTrue(
         Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(TronWheelState.HYBRID)));
-    
+    new ComboButton(driver_s.start(), driver_s.y())
+        .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
+        .whenPressed(
+            Commands.parallel(new T_Cascade_Preset(CascadeState.HIGH),
+                new T_TronWheel_Preset(TronWheelState.SCORE)));
+    new ComboButton(driver_s.start(), driver_s.x())
+                .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
+                .whenPressed(
+                    Commands.parallel(new T_Cascade_Preset(CascadeState.MID),
+                        new T_TronWheel_Preset(TronWheelState.SCORE)));
+    new ComboButton(driver_s.start(), driver_s.b())
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP), new T_TronWheel_Preset(TronWheelState.SCORE),
+            Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT),
+            new T_TronWheel_Preset(TronWheelState.TRANSPORT)));
+
+    new ComboButton(driver_s.start(), driver_s.a())
+            .whenShiftPressed(
+                Commands.parallel(new T_Cascade_Preset(CascadeState.RAMP),
+                    new T_TronWheel_Preset(TronWheelState.RAMP)))
+            .whenPressed(
+                Commands.parallel(new T_Cascade_Preset(CascadeState.GROUND),
+                    new T_TronWheel_Preset(TronWheelState.GROUND)));  
     driver_s.a().toggleOnTrue(new T_Vision_Light());
     driver_s.b().whileTrue(new T_Vision_Aim());
     driver_s.x().whileTrue(new T_Pidgey_Aim());

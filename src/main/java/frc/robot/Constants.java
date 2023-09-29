@@ -102,7 +102,7 @@ public final class Constants {
         public static final double VAL_TRANSPORT_CONE_PRESET = 14000;
         public static final double VAL_LINEUP_CONE_PRESET = 50000;
         public static final double VAL_AUTO_CONE_PRESET = 12180;
-        public static final double VAL_GROUND_CONE_PRESET = 6000;
+        public static final double VAL_GROUND_CONE_PRESET = 6400; 
 
         public static final double VAL_MID_CUBE_PRESET = 90000;
         public static final double VAL_HIGH_CUBE_PRESET = 137000;
@@ -110,7 +110,7 @@ public final class Constants {
         public static final double VAL_TRANSPORT_CUBE_PRESET = 14000;
         public static final double VAL_LINEUP_CUBE_PRESET = 50000;
         public static final double VAL_AUTO_CUBE_PRESET = 12180;
-        public static final double VAL_GROUND_CUBE_PRESET = 0;
+        public static final double VAL_GROUND_CUBE_PRESET = 0; 
         
         /**
          * Converts vertical height to ticks for cascade arm to travel
@@ -156,7 +156,7 @@ public final class Constants {
         public static final int CAN_INTAKE_SRX = 3;
 
         public static final double VAL_IN_PERCENT = 1.0;
-        public static final double VAL_OUT_CONE_NORMAL = -0.4;
+        public static final double VAL_OUT_CONE_NORMAL = -0.4; 
         public static final double VAL_OUT_CUBE_NORMAL = -0.5;
         public static final double VAL_OUT_TURBO = -0.8;
         public static final double VAL_HOLD_PERCENT = 0.3;

@@ -24,7 +24,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         //left joystick for up/down movement
         double y = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftY(), VAL_DEADBAND);
         //right joystick for left/right movement
-        double x = MathUtil.applyDeadband(RobotContainer.driver_s.getRightX(), VAL_DEADBAND);
+        double x = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftX(), VAL_DEADBAND);
         //left bumper for turbo mode when held
         boolean turbo = RobotContainer.driver_s.leftBumper().getAsBoolean();
 
@@ -49,6 +49,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
 
         double leftSpeed = -y + x + offset;
         double rightSpeed = -y - x - offset;
+    
         RobotContainer.drivetrainInst_s.setLeft(leftSpeed);
         RobotContainer.drivetrainInst_s.setRight(rightSpeed);
     }
