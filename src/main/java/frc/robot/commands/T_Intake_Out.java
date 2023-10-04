@@ -1,29 +1,26 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Vision;
+import frc.robot.RobotContainer;
+
+import static frc.robot.Constants.Intake.*;
 
 public class T_Intake_Out extends CommandBase {
-    private Intake intakeInst_m;
-    private Vision visionInst_m;
-    private double speed_m;
+    private boolean turbo_m;
 
-    public T_Intake_Out(double speed) {
-        speed_m = speed;
-        intakeInst_m = Intake.getInstance();
-        visionInst_m = Vision.getInstance();
-        addRequirements(intakeInst_m);
+    public T_Intake_Out(boolean turbo) {
+        turbo_m = turbo;
+        addRequirements(RobotContainer.intakeInst_s);
     }
 
     @Override
     public void initialize() {
-        intakeInst_m.setIntaking(false);
+        RobotContainer.intakeInst_s.setIntaking(false);
     }
 
     @Override
     public void execute() {
-        intakeInst_m.intake(speed_m);
+        RobotContainer.intakeInst_s.intake(turbo_m ? VAL_OUT_TURBO : RobotContainer.coneMode_s ? VAL_OUT_CONE_NORMAL : VAL_OUT_CUBE_NORMAL);
     }
 
     /**
@@ -36,8 +33,8 @@ public class T_Intake_Out extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        intakeInst_m.stopIntake();
+        RobotContainer.intakeInst_s.stopIntake();
         //reset cone position
-        visionInst_m.setConePosition(0);
+        RobotContainer.visionInst_s.setConePosition(0);
     }
 }

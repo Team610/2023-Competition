@@ -7,30 +7,34 @@ package frc.robot;
 import frc.robot.commands.T_Cascade_Home;
 import frc.robot.commands.T_Cascade_Move;
 import frc.robot.commands.T_Cascade_Preset;
-import frc.robot.commands.T_Cone_Position;
-import frc.robot.commands.G_BlueLeftGrid2;
+import frc.robot.commands.B_LCube_2;
 import frc.robot.commands.G_Preload;
 import frc.robot.commands.G_PreloadBalance;
-import frc.robot.commands.G_PreloadLeave;
-import frc.robot.commands.G_PreloadLeaveCube;
-import frc.robot.commands.G_RedLeftGrid1Half;
-import frc.robot.commands.G_RedLeftGrid1HalfCube;
-import frc.robot.commands.G_RedLeftGridTwo;
-import frc.robot.commands.G_BlueRightGrid1Half;
-import frc.robot.commands.G_BlueRightGrid1HalfCube;
-import frc.robot.commands.G_BlueRightGridTwo;
+import frc.robot.commands.B_CCone_1Half_Bal;
+import frc.robot.commands.RB_CCone_1_Bal;
+import frc.robot.commands.RB_CCube_1_Bal;
+import frc.robot.commands.R_CCone_1Half_Bal;
+import frc.robot.commands.R_LConeL_1Half_Bal;
+import frc.robot.commands.R_LCube_1Half_Bal;
+import frc.robot.commands.R_LCube_2;
+import frc.robot.commands.B_RConeR_1Half_Bal;
+// import frc.robot.commands.B_RCube_1Half_Bal;
+import frc.robot.commands.B_RCube_2;
 import frc.robot.commands.T_Drivetrain_ArcadeDrive;
 import frc.robot.subsystems.Cascade;
 import frc.robot.commands.T_Intake_In;
 import frc.robot.commands.T_Intake_Out;
+import frc.robot.commands.T_Pidgey_Aim;
 import frc.robot.commands.T_Subsystem_Manual;
 import frc.robot.commands.T_TronWheel_Home;
 import frc.robot.commands.T_TronWheel_Move;
 import frc.robot.commands.T_TronWheel_Preset;
 import frc.robot.commands.T_Vision_Aim;
-import frc.robot.commands.T_Vision_Drive;
 import frc.robot.commands.T_Vision_Light;
+import frc.robot.states.CascadeState;
+import frc.robot.states.TronWheelState;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Infrastructure;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
 import frc.robot.subsystems.Vision;
@@ -41,8 +45,6 @@ import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
 
 import static frc.robot.Constants.*;
@@ -60,7 +62,7 @@ public class RobotContainer {
   public static CommandXboxController operator_s;
   public static XboxController driverRumble_s;
   public static XboxController operatorRumble_s;
-  
+
   public static boolean driverDPadLeft_s, driverDPadRight_s;
 
   public static Drivetrain drivetrainInst_s;
@@ -70,7 +72,8 @@ public class RobotContainer {
   public static Vision visionInst_s;
 
   public static WPI_Pigeon2 pidgey_s;
-  public static PowerDistribution pdb_s;
+  public static Infrastructure infrastructure_s;
+  public static boolean coneMode_s; // 1 for cone, 0 for cube
 
   public RobotContainer() {
     drivetrainInst_s = Drivetrain.getInstance();
@@ -82,20 +85,22 @@ public class RobotContainer {
     intakeInst_s = Intake.getInstance();
     intakeInst_s.setDefaultCommand(new T_Intake_In());
     visionInst_s = Vision.getInstance();
-    pdb_s = new PowerDistribution();
+    infrastructure_s = Infrastructure.getInstance();
+
     pidgey_s = new WPI_Pigeon2(CAN_PIDGEY, CAN_BUS_NAME);
     
-    autoChooser_m.setDefaultOption("Preload Balance", new G_PreloadBalance());
-    autoChooser_m.addOption("Preload", new G_Preload());
-    autoChooser_m.addOption("Leave Comm, Bal", new G_PreloadLeave());
-    autoChooser_m.addOption("Leave Comm, Bal CUBE", new G_PreloadLeaveCube());
-    autoChooser_m.addOption("B LeftGrid 2", new G_BlueLeftGrid2());
-    autoChooser_m.addOption("B RightGrid 1.5 Bal", new G_BlueRightGrid1Half());
-    autoChooser_m.addOption("B RightGrid Cube 1.5 Bal", new G_BlueRightGrid1HalfCube());
-    autoChooser_m.addOption("B RightGrid 2", new G_BlueRightGridTwo());
-    autoChooser_m.addOption("R LeftGrid 1.5 Bal", new G_RedLeftGrid1Half());
-    autoChooser_m.addOption("R LeftGrid Cube 1.5 Bal", new G_RedLeftGrid1HalfCube());
-    autoChooser_m.addOption("R LeftGrid 2", new G_RedLeftGridTwo());
+    // autoChooser_m.addOption("Preload", new G_Preload());
+    autoChooser_m.setDefaultOption("RB Coop Cone 1 Bal", new RB_CCone_1_Bal());
+    autoChooser_m.addOption("RB Coop Cube 1 Bal", new RB_CCube_1_Bal());
+    autoChooser_m.addOption("B Coop Cone 1.5 Bal", new B_CCone_1Half_Bal());
+    autoChooser_m.addOption("B Left Cube 2", new B_LCube_2());
+    autoChooser_m.addOption("B Right Cone Right 1.5 Bal", new B_RConeR_1Half_Bal());
+    // autoChooser_m.addOption("B Right Cube 1.5 Bal", new B_RCube_1Half_Bal());
+    autoChooser_m.addOption("B Right Cube 2", new B_RCube_2());
+    autoChooser_m.addOption("R Left Cone Left 1.5", new R_LConeL_1Half_Bal());
+    autoChooser_m.addOption("R Left Cube 1.5 Bal", new R_LCube_1Half_Bal());
+    autoChooser_m.addOption("R Left Cube 2", new R_LCube_2());
+    autoChooser_m.addOption("R Coop Cone 1.5 Bal", new R_CCone_1Half_Bal());
     SmartDashboard.putData("Auto Chooser", autoChooser_m);
 
     driver_s = new CommandXboxController(PORT_DRIVER);
@@ -106,7 +111,13 @@ public class RobotContainer {
     driverRumble_s = new XboxController(PORT_DRIVER);
     operatorRumble_s = new XboxController(PORT_OPERATOR);
 
+    coneMode_s = true;
+
     configureBindings();
+  }
+
+  public static boolean getConeMode() {
+    return coneMode_s;
   }
 
   /**
@@ -114,56 +125,86 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // ! Driver Controls
-    driver_s.rightTrigger(0.5).whileTrue(new T_Intake_In());
-    driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(VAL_OUT_NORMAL));
-    driver_s.start().whileTrue(new T_Intake_Out(VAL_OUT_TURBO));
-    driver_s.a().onTrue(new T_Cascade_Preset(VAL_GROUND_PRESET));
-    driver_s.y().onTrue(new T_Cascade_Preset(VAL_HIGH_PRESET));
-    driver_s.b().onTrue(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT));
-    driver_s.x().onTrue(new T_TronWheel_Preset(VAL_ANGLE_SCORE));
-    driver_s.rightBumper().onTrue(new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT));
-    driver_s.leftBumper().onTrue(new T_Cascade_Preset(VAL_MID_PRESET));
-    driver_s.back()
-        .onTrue(Commands.parallel(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
-            new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming)));
+    driver_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
+    driver_s.leftTrigger(0.5).whileTrue(new T_Intake_Out(false));
+    driver_s.start().whileTrue(new T_Intake_Out(true));
+    driver_s.rightBumper().onTrue(
+        Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT), new T_TronWheel_Preset(TronWheelState.HYBRID)));
+    new ComboButton(driver_s.start(), driver_s.y())
+        .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
+        .whenPressed(
+            Commands.parallel(new T_Cascade_Preset(CascadeState.HIGH),
+                new T_TronWheel_Preset(TronWheelState.SCORE)));
+    new ComboButton(driver_s.start(), driver_s.x())
+                .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
+                .whenPressed(
+                    Commands.parallel(new T_Cascade_Preset(CascadeState.MID),
+                        new T_TronWheel_Preset(TronWheelState.SCORE)));
+    new ComboButton(driver_s.start(), driver_s.b())
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP), new T_TronWheel_Preset(TronWheelState.SCORE),
+            Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT),
+            new T_TronWheel_Preset(TronWheelState.TRANSPORT)));
 
-    //driver_s.a().toggleOnTrue(new T_Vision_Light());
-    // driver_s.b().whileTrue(new T_Vision_Drive());
+    new ComboButton(driver_s.start(), driver_s.a())
+            .whenShiftPressed(
+                Commands.parallel(new T_Cascade_Preset(CascadeState.RAMP),
+                    new T_TronWheel_Preset(TronWheelState.RAMP)))
+            .whenPressed(
+                Commands.parallel(new T_Cascade_Preset(CascadeState.GROUND),
+                    new T_TronWheel_Preset(TronWheelState.GROUND)));  
+    // driver_s.a().toggleOnTrue(new T_Vision_Light());
     // driver_s.b().whileTrue(new T_Vision_Aim());
+    //driver_s.x().whileTrue(new T_Pidgey_Aim());
 
     // ! Operator Controls
-    operator_s.back()
-        .onTrue(Commands.parallel(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
-            new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming)));
+    new ComboButton(operator_s.start(), operator_s.back())
+        .whenShiftPressed(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming))
+        .whenPressed( Commands.parallel(new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
+        new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming))
+        );
 
     new ComboButton(operator_s.start(), operator_s.a())
         .whenShiftPressed(new T_Subsystem_Manual(tronWheelInst_s))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_MID_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
+        .whenPressed(
+            Commands.parallel(new T_Cascade_Preset(CascadeState.MID),
+                new T_TronWheel_Preset(TronWheelState.SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.b())
         .whenShiftPressed(new T_Subsystem_Manual(cascadeInst_s))
-        .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_HIGH_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE)));
+        .whenPressed(
+            Commands.parallel(new T_Cascade_Preset(CascadeState.HIGH),
+                new T_TronWheel_Preset(TronWheelState.SCORE)));
 
     new ComboButton(operator_s.start(), operator_s.x())
-      .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_RAMP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_RAMP)))
-      .whenPressed(
-          Commands.parallel(new T_Cascade_Preset(VAL_GROUND_PRESET), new T_TronWheel_Preset(VAL_ANGLE_GROUND_INIT)));
+        .whenShiftPressed(
+            Commands.parallel(new T_Cascade_Preset(CascadeState.RAMP),
+                new T_TronWheel_Preset(TronWheelState.RAMP)))
+        .whenPressed(
+            Commands.parallel(new T_Cascade_Preset(CascadeState.GROUND),
+                new T_TronWheel_Preset(TronWheelState.GROUND)));
 
-    operator_s.y().onTrue(
-        Commands.parallel(new T_TronWheel_Preset(VAL_ANGLE_TRANSPORT), new T_Cascade_Preset(VAL_TRANSPORT_PRESET)));
-
-    
+    new ComboButton(operator_s.start(), operator_s.y())
+        .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP), new T_TronWheel_Preset(TronWheelState.SCORE),
+        Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.TRANSPORT),
+            new T_TronWheel_Preset(TronWheelState.TRANSPORT)));
 
     new ComboButton(operator_s.start(), operator_s.rightBumper())
-      .whenShiftPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET), new T_TronWheel_Preset(VAL_ANGLE_SCORE), 
-      Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
-      .whenPressed(Commands.parallel(new T_Cascade_Preset(VAL_LINEUP_PRESET),
+        .whenShiftPressed(
+            Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP),
+                new T_TronWheel_Preset(TronWheelState.SCORE),
+                Commands.runOnce(() -> intakeInst_s.setIntaking(true))))
+        .whenPressed(Commands.parallel(new T_Cascade_Preset(CascadeState.LINEUP),
             Commands.runOnce(() -> intakeInst_s.setIntaking(true))));
-    operator_s.leftBumper().onTrue(Commands.runOnce(() -> pdb_s.setSwitchableChannel(!pdb_s.getSwitchableChannel())));
+
+    operator_s.leftBumper().onTrue(Commands.runOnce(() -> coneMode_s = !coneMode_s));
     operator_s.rightTrigger().onTrue(Commands.runOnce(() -> intakeInst_s.setIntaking(!intakeInst_s.getIntaking())));
-    
-    // new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
-    // new POVButton(operator_s.getHID(), 180).onTrue(Commands.runOnce(()-> RobotContainer.drivetrainInst_s.setBrake()).ignoringDisable(true));
+
+    // new POVButton(operator_s.getHID(), 0).onTrue(Commands.runOnce(()->
+    // RobotContainer.drivetrainInst_s.setCoast()).ignoringDisable(true));
+    // new POVButton(operator_s.getHID(), 180).onTrue(Commands.runOnce(()->
+    // RobotContainer.drivetrainInst_s.setBrake()).ignoringDisable(true));
   }
 
   public Command getAutonomousCommand() {

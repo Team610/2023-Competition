@@ -8,7 +8,9 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.A_Disable_Safeties;
+import frc.robot.Constants.Vision;
+
+import static frc.robot.Constants.TronWheel.*;
 
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer_m;
@@ -19,21 +21,25 @@ public class Robot extends TimedRobot {
     robotContainer_m = new RobotContainer();
     RobotContainer.drivetrainInst_s.resetSensors();
     RobotContainer.cascadeInst_s.setSafety(true);
-    RobotContainer.tronWheelInst_s.setSafety(true);
-    RobotContainer.pdb_s.setSwitchableChannel(false);
+    RobotContainer.tronWheelInst_s.setSafety(false);  // Change to true to reenable safety
+    RobotContainer.infrastructure_s.setSwitchable(false);
     RobotContainer.visionInst_s.setLedMode(1);
+    RobotContainer.visionInst_s.setCamMode(1);
+    RobotContainer.tronWheelInst_s.setTicks(VAL_ANG_CONE_TRANSPORT);
   }
 
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
+    SmartDashboard.putBoolean("Cone Mode", RobotContainer.coneMode_s);
+    // RobotContainer.visionInst_s.visionTab_m.addBoolean("Cone Mode Vision", RobotContainer::getConeMode);
   }
 
   @Override
   public void disabledInit() {
-    RobotContainer.drivetrainInst_s.setCoast();
+    RobotContainer.drivetrainInst_s.setBrake();
     RobotContainer.cascadeInst_s.setSafety(true);
-    RobotContainer.tronWheelInst_s.setSafety(true);
+    RobotContainer.tronWheelInst_s.setSafety(false);
     RobotContainer.visionInst_s.setLedMode(1);
   }
 
@@ -41,7 +47,7 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     RobotContainer.drivetrainInst_s.setBrake();
     RobotContainer.cascadeInst_s.setSafety(SmartDashboard.getBoolean("Cascade Safety", true));
-    RobotContainer.tronWheelInst_s.setSafety(SmartDashboard.getBoolean("Tron Wheel Safety", true));
+    RobotContainer.tronWheelInst_s.setSafety(SmartDashboard.getBoolean("Tron Wheel Safety", false));
   }
 
   @Override
@@ -69,7 +75,6 @@ public class Robot extends TimedRobot {
     RobotContainer.drivetrainInst_s.setBrake();
     RobotContainer.cascadeInst_s.setManual(false);
     RobotContainer.tronWheelInst_s.setManual(false);
-    new A_Disable_Safeties();
 
     if (autonomousCommand_m != null) {
       autonomousCommand_m.cancel();

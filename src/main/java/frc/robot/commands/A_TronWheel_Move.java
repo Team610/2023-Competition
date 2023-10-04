@@ -1,41 +1,42 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.TronWheel;
+import frc.robot.RobotContainer;
+import frc.robot.states.TronWheelState;
 
 public class A_TronWheel_Move extends CommandBase {
-    private TronWheel tronWheelInst_m;
-    private double preset_m;
+    private TronWheelState preset_m;
+    boolean coneMode_m;
     private int timer_m;
 
-    public A_TronWheel_Move(double preset, int timer) {
+    public A_TronWheel_Move(TronWheelState preset, boolean coneMode, int timer) {
         preset_m = preset;
+        coneMode_m = coneMode;
         timer_m = timer;
-        tronWheelInst_m = TronWheel.getInstance();
-        addRequirements(tronWheelInst_m);
+        addRequirements(RobotContainer.tronWheelInst_s);
     }
 
     @Override
     public void initialize() {
-        tronWheelInst_m.setTargetPos(preset_m);
-        tronWheelInst_m.resetLoopCount();
+        RobotContainer.tronWheelInst_s.setTargetPos(coneMode_m ? preset_m.getConeAng() : preset_m.getCubeAng());
+        RobotContainer.tronWheelInst_s.resetLoopCount();
     }
 
     @Override
     public void execute() {
-        tronWheelInst_m.incrementLoopCount();
-        if(!tronWheelInst_m.getSafety()){
-            tronWheelInst_m.rotateMagic();
+        RobotContainer.tronWheelInst_s.incrementLoopCount();
+        if(!RobotContainer.tronWheelInst_s.getSafety()){
+            RobotContainer.tronWheelInst_s.rotateMagic();
         }
     }
 
     @Override
     public boolean isFinished() {
-        return tronWheelInst_m.getLoopCount() >= timer_m;
+        return RobotContainer.tronWheelInst_s.getLoopCount() >= timer_m;
     }
 
     @Override
     public void end(boolean interrupted) {
-        tronWheelInst_m.stopRotate();
+        RobotContainer.tronWheelInst_s.stopRotate();
     }
 }

@@ -12,26 +12,28 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.util.RamseteSetup;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.RobotContainer;
+import frc.robot.states.CascadeState;
+import frc.robot.states.TronWheelState;
+
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.Cascade.*;
 
-public class G_RedLeftGrid1Half extends SequentialCommandGroup {
-        private Drivetrain drivetrainInst_m;
+public class R_LCube_1Half_Bal extends SequentialCommandGroup {
         private Trajectory preload_m, pickup_m;
 
         /**
          * Add all the commands you would like to happen in auto to this, in order of
          * occurence
          */
-        public G_RedLeftGrid1Half() {
-                String preloadHigh = "paths/output/RedLeftPreloadLeft.wpilib.json";
+        public R_LCube_1Half_Bal() {
+                String preloadHigh = "paths/output/RedLeftCubePreload.wpilib.json";
                 Path preload = Filesystem.getDeployDirectory().toPath().resolve(preloadHigh);
                 String pickupHigh = "paths/output/RedLeftPickupBalance.wpilib.json";
                 Path pickup = Filesystem.getDeployDirectory().toPath().resolve(pickupHigh);
-                drivetrainInst_m = Drivetrain.getInstance();
-                addRequirements(drivetrainInst_m);
-                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_PRESET);
-                RobotContainer.tronWheelInst_s.setTicks(VAL_TRANSPORT_PRESET);
+                RobotContainer.drivetrainInst_s = Drivetrain.getInstance();
+                addRequirements(RobotContainer.drivetrainInst_s);
+                RobotContainer.cascadeInst_s.setTicks(VAL_AUTO_CONE_PRESET);
+                RobotContainer.tronWheelInst_s.setTicks(VAL_TRANSPORT_CONE_PRESET);
 
                 preload_m = pickup_m = null;
 
@@ -44,20 +46,22 @@ public class G_RedLeftGrid1Half extends SequentialCommandGroup {
 
                 addCommands(
                         new A_Disable_Safeties(),
-                        Commands.parallel(new A_Cascade_Move(VAL_HIGH_PRESET, 110), new A_TronWheel_Move(VAL_ANGLE_SCORE, 110), new A_Intake_In(110)),
+                        Commands.parallel(new A_Cascade_Move(CascadeState.HIGH, false, 110), new A_TronWheel_Move(TronWheelState.SCORE, false, 70), new A_Intake_In(110)),
                         new WaitCommand(0.1),
-                        new A_Intake_Out(),
+                        new A_Intake_Out(false),
                         Commands.parallel(new A_Intake_In(400),
                                 Commands.sequence(
                                         Commands.parallel(
-                                                Commands.sequence(new A_Reset_Odometry(preload_m), RamseteSetup.initializeRamseteCommand(preload_m)),
-                                                        // new A_Reset_Odometry(pickup_m), RamseteSetup.initializeRamseteCommand(pickup_m)),
+                                                Commands.sequence(
+                                                        new A_RamsetePath(preload_m),
+                                                        new A_RamsetePath(pickup_m)
+                                                ),
                                                 Commands.sequence(
                                                         Commands.parallel(
-                                                                Commands.sequence(new A_Cascade_Move(VAL_RAMP_PRESET, 110), new T_Cascade_Home(), new A_Cascade_Move(VAL_GROUND_PRESET, 110)),
-                                                                new A_TronWheel_Move(VAL_ANGLE_GROUND_INIT, 110)))
-                                        )
-                                        // Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(VAL_ANGLE_TRANSPORT, 110))
+                                                                Commands.sequence(new A_Cascade_Move(CascadeState.RAMP, true, 110), new T_Cascade_Home(), new A_Cascade_Move(CascadeState.GROUND, true, 110)),
+                                                                new A_TronWheel_Move(TronWheelState.GROUND, true, 70)))
+                                        ),
+                                        Commands.parallel(new A_Pidgeon_Balance(), new A_TronWheel_Move(TronWheelState.TRANSPORT, true, 70))
                                 )
                         )
                 );

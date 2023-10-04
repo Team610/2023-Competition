@@ -20,12 +20,12 @@ public final class Constants {
         public static final double VAL_PIDGEY_RANGE = 2.0;
 
         // units are in meters for Ramsete
-        public static final double VAL_RAMSETE_B = 1;
+        public static final double VAL_RAMSETE_B = 1.0;
         public static final double VAL_RAMSETE_ZETA = 0.7;
         
         public static final double UNIT_FEET_IN_METERS = 3.280;
         public static final double UNIT_METERS_IN_FEET = 0.305;
-        public static final double UNIT_TICKS_PER_REV = 29500;
+        public static final double UNIT_TICKS_PER_REV = 25210;
         public static final double UNIT_DIST_PER_REV = 0.47878;
         
         public static final double CALC_TICKS_TO_METERS(double ticks) {
@@ -34,25 +34,31 @@ public final class Constants {
         public static final double CALC_METERS_TO_TICKS(double meters) {
             return (meters/UNIT_DIST_PER_REV)*UNIT_TICKS_PER_REV;
         }
-        
-        public static final double VAL_KS = 0.076361;
-        public static final double VAL_KV = 3.4151;
-        public static final double VAL_KA = 0.40329;
-        public static final double VAL_KP = 0.43731;
+
+        public static final double VAL_KS = 0.1;
+        public static final double VAL_KV = 2.5; //3.6
+        public static final double VAL_KA = 0.1; //0.42962;
+        public static final double VAL_KP_L = 3.0643;
+        public static final double VAL_KP_R = 2.0331;
         public static final double VAL_KD = 0.0;
         public static final double VAL_KI = 0;
 
-        public static final double VAL_TRACK_WIDTH = 0.5877;
+        public static final double VAL_TRACK_WIDTH = 0.62425;
         public static final DifferentialDriveKinematics DRIVE_KINEMATICS = new DifferentialDriveKinematics(VAL_TRACK_WIDTH);
 
         public static final double VAL_WHEEL_DIA = 0.1524;
-        public static final double VAL_MAX_VELO = 1.93;
-        public static final double VAL_MAX_ACCEL = VAL_MAX_VELO*0.5;
-        public static final double VAL_MAX_VOLTS = 11;
+        public static final double VAL_MAX_VELO = 2.8;
+        public static final double VAL_MAX_ACCEL = 1.8;
+        public static final double VAL_MAX_VOLTS = 10;
 
-        public static final double VAL_MAX_SPEED = 0.8;
-        public static final double VAL_TURBO_SPEED = 1.0;
+        public static final double VAL_MAX_SPEED = 1.0;
+        public static final double VAL_SLOW_SPEED = 0.6;
         public static final double VAL_TURN_SPEED = 0.7;
+        public static final double VAL_SLOW_TURN_SPEED = 0.35;
+
+        public static final double VAL_ANGLE_KP = 0.01;
+        public static final double VAL_ANGLE_KI = 0;
+        public static final double VAL_ANGLE_KD = 0.001;
     }
 
     public static class Cascade {
@@ -60,6 +66,8 @@ public final class Constants {
         public static final double VAL_MAX_SPEED_MANUAL = 0.5;
         public static final double VAL_MAX_SPEED_OUT = 0.3;
         public static final double VAL_MAX_SPEED_IN = 0.2;
+        public static final int VAL_AUTO_TIMEOUT = 110;
+
 
         public static final int VAL_MAX_TICKS = 145000;  // Max ticks for cascade to extend
         public static final double VAL_CRUISE_VELO_UP = 15000;  // Ticks per 100ms
@@ -88,14 +96,22 @@ public final class Constants {
         public static final double UNIT_ANGLE = Math.toRadians(37.5); // Angle of cascade arm to ground
 
         // Preset units are in ticks
-        public static final double VAL_MID_PRESET = 109000;
-        public static final double VAL_HIGH_PRESET = 145000;
-        public static final double VAL_RAMP_PRESET = 8060;
-        public static final double VAL_GROUND_PRESET = 5500;
-        public static final double VAL_TRANSPORT_PRESET = 14000;
-        public static final double VAL_LINEUP_PRESET = 50000;
-        public static final double VAL_AUTO_PRESET = 12180;
+        public static final double VAL_MID_CONE_PRESET = 102100;
+        public static final double VAL_HIGH_CONE_PRESET = 141300;
+        public static final double VAL_RAMP_CONE_PRESET = 10060;
+        public static final double VAL_TRANSPORT_CONE_PRESET = 15300;
+        public static final double VAL_LINEUP_CONE_PRESET = 52000;
+        public static final double VAL_AUTO_CONE_PRESET = 14180;
+        public static final double VAL_GROUND_CONE_PRESET = 7000; 
 
+        public static final double VAL_MID_CUBE_PRESET = 90000;
+        public static final double VAL_HIGH_CUBE_PRESET = 137000;
+        public static final double VAL_RAMP_CUBE_PRESET = 8060;
+        public static final double VAL_TRANSPORT_CUBE_PRESET = 14000;
+        public static final double VAL_LINEUP_CUBE_PRESET = 50000;
+        public static final double VAL_AUTO_CUBE_PRESET = 12180;
+        public static final double VAL_GROUND_CUBE_PRESET = 0; 
+        
         /**
          * Converts vertical height to ticks for cascade arm to travel
          * @param inches Vertical height to input
@@ -112,34 +128,42 @@ public final class Constants {
         public static final double VAL_MAX_SPEED = 0.5;
         public static final double VAL_DEGREES_TO_TICKS = 93.75;  // Ticks/degree
 
-        public static final double VAL_FWD_LIM = 30000;
+        public static final double VAL_FWD_LIM = 30000+ 937.5;
         
-        public static final double VAL_MAX_ACCEL = 4480;
-        public static final double VAL_MAX_VELO = 2240;  // Ticks per 100 ms
-        public static final double VAL_CRUISE_VELO = VAL_MAX_VELO * 0.7;
+        public static final double VAL_MAX_ACCEL = 12000;
+        public static final double VAL_CRUISE_VELO = 3000;  // Ticks per 100 ms
 
-        public static final double VAL_KP = 0.4;
+        public static final double VAL_KP = 0.45;
         public static final double VAL_KI = 0;
-        public static final double VAL_KD = 0;
-        public static final double VAL_KF = 0.4;
+        public static final double VAL_KD = 12;
+        public static final double VAL_KF = 0.341;
 
-        public static final double VAL_ANGLE_RAMP = 14000;  // ticks
-        public static final double VAL_ANGLE_SCORE = 0;
-        public static final double VAL_ANGLE_GROUND_INIT = 28500;   // angle to pickup from ground start
-        public static final double VAL_ANGLE_GROUND_FINAL = VAL_ANGLE_GROUND_INIT+3000;  // angle to pickup from ground finish
-        public static final double VAL_ANGLE_TRANSPORT = 10000;
-        public static final double VAL_ANGLE_HYBRID = 18000;
+        public static final double VAL_ANG_CONE_RAMP = 14000 + 937.5;  // ticks
+        public static final double VAL_ANG_CONE_SCORE = 0;
+        public static final double VAL_ANG_CONE_GROUND = 29000; // 27200 + 937.5;   // angle to pickup from ground start
+        public static final double VAL_ANG_CONE_TRANSPORT = 10000 + 937.5;
+        public static final double VAL_ANG_CONE_HYBRID = 18000 + 937.5;
+
+        public static final double VAL_ANG_CUBE_RAMP = 14000 + 937.5;  // ticks
+        public static final double VAL_ANG_CUBE_SCORE = 13600;
+        public static final double VAL_ANG_CUBE_GROUND = 0;   // angle to pickup from ground start
+        public static final double VAL_ANG_CUBE_TRANSPORT = 19500 + 937.5;
+        public static final double VAL_ANG_CUBE_HYBRID = 18000 + 937.5;
     }
 
     public static class Intake {
+        public static final int CAN_KICKER_SRX = 1;
         public static final int CAN_INTAKE_SRX = 3;
 
-        public static final double VAL_IN_PERCENT = 0.8;
-        public static final double VAL_OUT_NORMAL = -0.3;
-        public static final double VAL_OUT_TURBO = -0.5;
+        public static final double VAL_IN_PERCENT = 1.0;
+        public static final double VAL_OUT_CONE_NORMAL = -0.4; 
+        public static final double VAL_OUT_CUBE_NORMAL = -0.5;
+        public static final double VAL_OUT_TURBO = -0.8;
+        public static final double VAL_OUT_CONE_AUTO = -0.6; 
+        public static final double VAL_OUT_CUBE_AUTO = -0.5; //! NOT SURE IF THIS NEED TO BE cHANGED
         public static final double VAL_HOLD_PERCENT = 0.3;
 
-        public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 5;
+        public static final int VAL_CONTINUOUS_CURRENT_LIMIT = 15;
         
         public static final double VAL_STALL_TIME = 0.5 *1000; // ms
         public static final int VAL_SAMPLES = (int) VAL_STALL_TIME/20;
@@ -154,10 +178,11 @@ public final class Constants {
         public static final double VAL_DRIVE_KD = 0.0005;
         public static final double VAL_LEFT_ANGLE_OFSET = 2;
         public static final double VAL_RIGHT_ANGLE_OFSET = 2;
+        public static final double VAL_MIN_POWER = 0.01;
     }
 
     public static class PigeonBalance{
-        public static final double VAL_KP_BAL_PID = 0.007;
+        public static final double VAL_KP_BAL_PID = 0.01;
         public static final double VAL_KI_BAL_PID = 0.00;
         public static final double VAL_KD_BAL_PID = 0.0005;
         public static final double VAL_BAL_TOLERANCE = 0.4;
