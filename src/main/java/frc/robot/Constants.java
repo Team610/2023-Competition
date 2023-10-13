@@ -140,7 +140,7 @@ public final class Constants {
 
         public static final double VAL_ANG_CONE_RAMP = 14000 + 937.5;  // ticks
         public static final double VAL_ANG_CONE_SCORE = 0;
-        public static final double VAL_ANG_CONE_GROUND = 29000; // 27200 + 937.5;   // angle to pickup from ground start
+        public static final double VAL_ANG_CONE_GROUND = 28200; // 27200 + 937.5;   // angle to pickup from ground start
         public static final double VAL_ANG_CONE_TRANSPORT = 10000 + 937.5;
         public static final double VAL_ANG_CONE_HYBRID = 18000 + 937.5;
 

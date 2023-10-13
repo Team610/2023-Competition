@@ -46,8 +46,8 @@ public class B_CCone_1Half_Bal extends SequentialCommandGroup {
                 addCommands(
                         new A_Disable_Safeties(),
                         new G_Score(true, CascadeState.HIGH, TronWheelState.SCORE, VAL_AUTO_TIMEOUT),
-                        new A_Cascade_Move(CascadeState.TRANSPORT, true, VAL_AUTO_TIMEOUT)
-                        .alongWith(new A_TronWheel_Move(TronWheelState.TRANSPORT, true, VAL_AUTO_TIMEOUT)),
+                        new A_Cascade_Move(CascadeState.GROUND, true, VAL_AUTO_TIMEOUT)
+                        .alongWith(new A_TronWheel_Move(TronWheelState.GROUND, true, VAL_AUTO_TIMEOUT)),
                         new A_RamsetePath(preload_m)
                         .alongWith(new A_Cascade_Move(CascadeState.GROUND, true, 200))
                         .alongWith(new A_TronWheel_Move(TronWheelState.GROUND, true, 200))
