@@ -1,20 +1,22 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Cascade;
 
 import static frc.robot.Constants.Cascade.*;
 
 public class T_Cascade_Home extends CommandBase {
+    private Cascade cascadeInst_m;
 
     public T_Cascade_Home() {
-        addRequirements(RobotContainer.cascadeInst_s);
+        cascadeInst_m = Cascade.getInstance();
+        addRequirements(cascadeInst_m);
     }
 
     @Override
     public void initialize() {
-        RobotContainer.cascadeInst_s.cascadeBotLimitCheck();
-        RobotContainer.cascadeInst_s.spin(-0.2);
+        cascadeInst_m.cascadeBotLimitCheck();
+        cascadeInst_m.spin(-0.2);
     }
 
     @Override
@@ -27,13 +29,13 @@ public class T_Cascade_Home extends CommandBase {
     
     @Override
     public boolean isFinished() {
-        return RobotContainer.cascadeInst_s.cascadeBotLimitCheck();
+        return cascadeInst_m.cascadeBotLimitCheck();
     }
 
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.cascadeInst_s.stop();
-        RobotContainer.cascadeInst_s.setTargetPos(VAL_GROUND_CONE_PRESET);
-        RobotContainer.cascadeInst_s.setSafety(false);
+        cascadeInst_m.stop();
+        cascadeInst_m.setTargetPos(VAL_GROUND_PRESET);
+        cascadeInst_m.setSafety(false);
     }
 }

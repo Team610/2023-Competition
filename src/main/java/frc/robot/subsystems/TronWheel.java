@@ -20,7 +20,7 @@ public class TronWheel extends Subsystem610 {
     private TronWheel() {
         super("TronWheel");
         safety_m = true;
-        targetPos_m = VAL_ANG_CONE_TRANSPORT;
+        targetPos_m = 0;
         rotateSRX_m = MotorConfig.configTronRotateMotor(CAN_ROTATE_SRX);
     }
 
@@ -114,7 +114,6 @@ public class TronWheel extends Subsystem610 {
     public void writeSmartDashboard() {
         SmartDashboard.putString("Tron Command", getCurrentCommand() != null ? getCurrentCommand().getName() : "null");
         SmartDashboard.putNumber("Tron Preset", targetPos_m);
-        SmartDashboard.putNumber("Tron Current Tick", rotateSRX_m.getSelectedSensorPosition());
         SmartDashboard.putBoolean("Tron Manual Mode", getManual());
     }
 

@@ -3,24 +3,27 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.TronWheel;
 
 import static frc.robot.Constants.TronWheel.*;
 import static frc.robot.Constants.*;
 
 public class T_TronWheel_Move extends CommandBase {
+    private TronWheel tronWheelInst_m;
 
     public T_TronWheel_Move() {
-        addRequirements(RobotContainer.tronWheelInst_s);
+        tronWheelInst_m = TronWheel.getInstance();
+        addRequirements(tronWheelInst_m);
     }
 
     @Override
     public void execute() {
-        if(!RobotContainer.tronWheelInst_s.getSafety()){
-            if(RobotContainer.tronWheelInst_s.getManual()) {
+        if(!tronWheelInst_m.getSafety()){
+            if(tronWheelInst_m.getManual()) {
                 double speed = MathUtil.applyDeadband(-RobotContainer.operator_s.getRightY() * VAL_MAX_SPEED, VAL_DEADBAND);
-                RobotContainer.tronWheelInst_s.rotate(speed);
+                tronWheelInst_m.rotate(speed);
             } else {
-                RobotContainer.tronWheelInst_s.rotateMagic();
+                tronWheelInst_m.rotateMagic();
             }
         }
     }
@@ -32,6 +35,6 @@ public class T_TronWheel_Move extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-        RobotContainer.tronWheelInst_s.stopRotate();
+        tronWheelInst_m.stopRotate();
     }
 }

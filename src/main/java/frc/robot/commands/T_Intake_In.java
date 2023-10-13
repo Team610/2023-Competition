@@ -3,15 +3,21 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TronWheel;
 
 import static frc.robot.Constants.Intake.*;
 import static frc.robot.Constants.TronWheel.*;
 
 
 public class T_Intake_In extends CommandBase {
+    private Intake intakeInst_m;
+    private TronWheel tronWheelInst_m;
 
     public T_Intake_In() {
-        addRequirements(RobotContainer.intakeInst_s);
+        intakeInst_m = Intake.getInstance();
+        tronWheelInst_m = TronWheel.getInstance();
+        addRequirements(intakeInst_m);
     }
 
     @Override
@@ -20,17 +26,17 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public void execute() {
-        if(RobotContainer.intakeInst_s.getIntaking()) {
+        if(intakeInst_m.getIntaking()) {
             RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
             RobotContainer.operatorRumble_s.setRumble(RumbleType.kBothRumble, 0.02);
-            RobotContainer.intakeInst_s.intake(VAL_IN_PERCENT);
+            intakeInst_m.intake(VAL_IN_PERCENT);
         } else {
             RobotContainer.driverRumble_s.setRumble(RumbleType.kBothRumble, 0);
             RobotContainer.operatorRumble_s.setRumble(RumbleType.kBothRumble, 0);
-            RobotContainer.intakeInst_s.stopIntake();
+            intakeInst_m.stopIntake();
         }
-        if(RobotContainer.tronWheelInst_s.getTargetPos() == VAL_ANG_CONE_GROUND && RobotContainer.tronWheelInst_s.checkClosedLoop()){
-            if(RobotContainer.intakeInst_s.getHasGamePiece()) {
+        if(tronWheelInst_m.getTargetPos() == VAL_ANGLE_GROUND_INIT && tronWheelInst_m.checkClosedLoop()){
+            if(intakeInst_m.getHasGamePiece()) {
                 // CommandScheduler.getInstance().schedule(new T_TronWheel_Preset(VAL_ANGLE_GROUND_FINAL));
             }
         }
@@ -38,7 +44,7 @@ public class T_Intake_In extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        // return filter_m.calculate(RobotContainer.intakeInst_s.getSRXSupplyCurrent()) > (VAL_CONTINUOUS_CURRENT_LIMIT+1);
+        // return filter_m.calculate(intakeInst_m.getSRXSupplyCurrent()) > (VAL_CONTINUOUS_CURRENT_LIMIT+1);
         return false;
     }
 }

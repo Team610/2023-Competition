@@ -1,40 +1,37 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TronWheel;
 
 import static frc.robot.Constants.TronWheel.*;
 
-public class T_TronWheel_Home extends CommandBase {
+public class T_TronWheel_Ground extends CommandBase {
     private TronWheel tronWheelInst_m;
-
-    public T_TronWheel_Home() {
+    private Intake intakeInst_m;
+    
+    public T_TronWheel_Ground() {
         tronWheelInst_m = TronWheel.getInstance();
-        addRequirements(tronWheelInst_m);
+        intakeInst_m = Intake.getInstance();
+        addRequirements(tronWheelInst_m, intakeInst_m);
     }
 
     @Override
     public void initialize() {
-        tronWheelInst_m.tronRevLimit();
-        tronWheelInst_m.rotate(-0.5);
     }
 
     @Override
     public void execute() {
+        if(intakeInst_m.getHasGamePiece()) tronWheelInst_m.setTargetPos(VAL_ANGLE_GROUND_FINAL);
     }
 
-    /**
-     * Finish when the cascade limit switch is pressed
-     */
     @Override
     public boolean isFinished() {
-        return tronWheelInst_m.tronRevLimit();
+        return intakeInst_m.getHasGamePiece();
     }
 
     @Override
     public void end(boolean interrupted) {
-        tronWheelInst_m.stopRotate();
-        tronWheelInst_m.setTargetPos(VAL_ANGLE_GROUND_INIT);
-        tronWheelInst_m.setSafety(false);
+        
     }
 }

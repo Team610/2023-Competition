@@ -27,7 +27,7 @@ public class Vision extends Subsystem610{
     private int conePosition_m;
     private double angleSetPoint_m;
     private int distanceSetPoint_m;
-    public ShuffleboardTab visionTab_m;
+    private Shuffleboard visionTab;
 
     public static Vision getInstance() {
         if (visionInst_s == null)
@@ -44,9 +44,9 @@ public class Vision extends Subsystem610{
         distanceSetPoint_m = 372;
         drivetrain_m = Drivetrain.getInstance();
 
-        visionTab_m = Shuffleboard.getTab("test");
+        ShuffleboardTab visionTab = Shuffleboard.getTab("test");
 
-        visionTab_m.add("Limelight", new HttpCamera("limelight", "http://10.6.10.12:5800/stream.mjpg"))
+        visionTab.add("Limelight", new HttpCamera("limelight", "http://10.6.10.12:5800/stream.mjpg"))
             .withWidget(BuiltInWidgets.kCameraStream)
             .withPosition(0, 0)
             .withSize(3, 3);
@@ -56,7 +56,6 @@ public class Vision extends Subsystem610{
         networkTable_m = NetworkTableInstance.getDefault().getTable("limelight");
 
         networkTable_m.getEntry("ledMode").setNumber(ledMode_m);
-        setCamMode(0);
         pidAngle_m = new PIDController(VAL_ANGLE_KP, VAL_ANGLE_KI, VAL_ANGLE_KD);
         pidDrive_m = new PIDController(VAL_DRIVE_KP, VAL_DRIVE_KI, VAL_DRIVE_KD);
 
@@ -129,32 +128,15 @@ public class Vision extends Subsystem610{
      * @return Boolean if the limelight is within the set threshold range
      */
     public boolean checkAim(){
-        return Math.abs(calcTx()) > 0 ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 && calcDistance() - distanceSetPoint_m < 10 : false;
-    }
-
-    public double[] getAimPID(){
-        double steeringAdjust = pidAngle_m.calculate(calcTx(), angleSetPoint_m);
-
-        return new double[]{-steeringAdjust, steeringAdjust};
-
+        return Math.abs(calcTx()) > 0 ? isAimed_m = Math.abs(calcTx()) < 2 && tv_m > 0 : false;
     }
 
     /**
-     * Use WPILib PID to turn and drive the robot to the desired direction
+     * Use WPILib PID to turn the robot to the desired direction
      */
     public void aim() {
-        double distanceError = calcDistance() - distanceSetPoint_m;
-        double[] steeringAdjust = getAimPID();
-
-        // steeringAdjust = (pidAngle_m.calculate(headingError) + VAL_MIN_POWER) * (headingError > 1 ? -1 : 1);
-
-
-        // drivetrain_m.setLeft(steeringAdjust + pidDrive_m.calculate(distanceError));
-        // drivetrain_m.setRight(steeringAdjust + pidDrive_m.calculate(distanceError));
-
-        drivetrain_m.setLeft(steeringAdjust[0]);
-        drivetrain_m.setRight(steeringAdjust[1]);
-
+        drivetrain_m.setLeft(-pidAngle_m.calculate(calcTx(), angleSetPoint_m));
+        drivetrain_m.setRight(pidAngle_m.calculate(calcTx(), angleSetPoint_m));
     }
 
     /**
@@ -169,11 +151,9 @@ public class Vision extends Subsystem610{
         SmartDashboard.putNumber("Angle", Math.round(calcTx() * 1e5) / 1e5);
         SmartDashboard.putBoolean("Aimed", isAimed_m);
         SmartDashboard.putNumber("Cone Poisition", conePosition_m);
-        SmartDashboard.putNumber("Heading Error", calcTx() - angleSetPoint_m);
-        SmartDashboard.putNumber("Distance Error", calcDistance() - distanceSetPoint_m);
-        SmartDashboard.putNumber("PID LEFT", getAimPID()[0]);
-        SmartDashboard.putNumber("PID RIGHT", getAimPID()[1]);
-        SmartDashboard.putNumber("PID", pidAngle_m.calculate(calcTx() - angleSetPoint_m));
+        SmartDashboard.putNumber("distance", Math.round(calcDistance() * 1e5) / 1e5);
+        SmartDashboard.putNumber("PID LEFT ANGLE", -pidAngle_m.calculate(calcTx(), angleSetPoint_m)*0.3);
+        SmartDashboard.putNumber("PID LEFT DRIVE", -pidDrive_m.calculate(calcDistance(), distanceSetPoint_m)*0.3);
     }
 
     @Override

@@ -1,9 +1,10 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
+import frc.robot.subsystems.Vision;
 
 public class T_Cone_Position extends CommandBase{
+    private Vision visionInst_m;
     private int conePosition_m;
     public T_Cone_Position (int conePosition){
         conePosition_m = conePosition;
@@ -14,7 +15,7 @@ public class T_Cone_Position extends CommandBase{
      */
     @Override
     public void initialize() {
-        RobotContainer.visionInst_s.setConePosition(0);
+        visionInst_m.setConePosition(0);
     }
 
     /**
@@ -22,7 +23,7 @@ public class T_Cone_Position extends CommandBase{
      */
     @Override
     public void execute() {
-        RobotContainer.visionInst_s.setConePosition(conePosition_m);
+        visionInst_m.setConePosition(conePosition_m);
     }
 
     @Override

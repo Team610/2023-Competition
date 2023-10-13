@@ -3,14 +3,17 @@ package frc.robot.commands;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Drivetrain;
 
 import static frc.robot.Constants.PigeonBalance.*;
 
 public class A_Pidgeon_Balance extends CommandBase {
+    private Drivetrain driveInst_m;
     private PIDController pidBal_m;
 
     public A_Pidgeon_Balance() {
-        addRequirements(RobotContainer.drivetrainInst_s);
+        driveInst_m = Drivetrain.getInstance();
+        addRequirements(driveInst_m);
     }
 
     @Override
@@ -22,8 +25,20 @@ public class A_Pidgeon_Balance extends CommandBase {
 
     @Override
     public void execute() {
-        RobotContainer.drivetrainInst_s.setLeft(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
-        RobotContainer.drivetrainInst_s.setRight(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
+        driveInst_m.setLeft(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
+        driveInst_m.setRight(pidBal_m.calculate(RobotContainer.pidgey_s.getPitch(), VAL_BAL_SETPOINT));
+        
+        //curAng_s = RobotContainer.pidgey_s.getPitch();
+        // if(curAng_s < -VAL_PIDGEY_RANGE){
+        //     driveInst_m.setLeft(0.1);
+        //     driveInst_m.setRight(0.1);
+        // } else if (curAng_s > VAL_PIDGEY_RANGE){
+        //     driveInst_m.setLeft(-0.1);
+        //     driveInst_m.setRight(-0.1);
+        // } else {
+        //     driveInst_m.setLeft(0);
+        //     driveInst_m.setRight(0);
+        // }
     }
 
     @Override

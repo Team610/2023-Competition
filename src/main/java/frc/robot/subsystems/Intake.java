@@ -7,23 +7,20 @@ import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.RobotContainer;
 import frc.robot.util.MotorConfig;
 import frc.robot.util.Subsystem610;
 
 import static frc.robot.Constants.Intake.*;
-import static frc.robot.Constants.TronWheel.*;
 
 public class Intake extends Subsystem610 {
     private static Intake intakeInst_s;
-    private WPI_TalonSRX intakeSRX_m, kickerSRX_m;
+    private WPI_TalonSRX intakeSRX_m;
     private static LinearFilter singlePoleIIR;
     private boolean intaking_m;
 
     private Intake() {
         super("Intake");
-        intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX, 40);
-        kickerSRX_m = MotorConfig.configKickerMotor(CAN_KICKER_SRX);
+        intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX);
         singlePoleIIR = LinearFilter.singlePoleIIR(0.5, 0.02);
         intaking_m = false;
     }
@@ -41,11 +38,7 @@ public class Intake extends Subsystem610 {
      * @param spin Output percentage
      */
     public void intake(double spin) {
-        spin = RobotContainer.coneMode_s ? spin : -spin;
         intakeSRX_m.set(ControlMode.PercentOutput, spin);
-        if(RobotContainer.tronWheelInst_s.getTargetPos() == VAL_ANG_CUBE_GROUND && !RobotContainer.coneMode_s){
-            kickerSRX_m.set(ControlMode.PercentOutput, -spin);
-        }
     }
 
     /**
@@ -53,7 +46,6 @@ public class Intake extends Subsystem610 {
      */
     public void stopIntake() {
         intakeSRX_m.set(ControlMode.PercentOutput, 0);
-        kickerSRX_m.set(ControlMode.PercentOutput, 0);
     }
 
     /**
@@ -104,7 +96,6 @@ public class Intake extends Subsystem610 {
         SmartDashboard.putNumber("single pole", singlePoleIIR.calculate(getSRXSupplyCurrent()));
         SmartDashboard.putBoolean("Floor Lim", getHasGamePiece());
         SmartDashboard.putBoolean("Rollers Running", getIntaking());
-        SmartDashboard.putBoolean("Cone", RobotContainer.getConeMode());
     }
 
     @Override

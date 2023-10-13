@@ -1,15 +1,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
-import frc.robot.states.TronWheelState;
+import frc.robot.subsystems.TronWheel;
 
 public class T_TronWheel_Preset extends CommandBase {
-    private TronWheelState state_m;
-
-    public T_TronWheel_Preset(TronWheelState state) {
-        state_m = state;
-        addRequirements(RobotContainer.tronWheelInst_s);
+    private TronWheel tronWheelInst_m;
+    private double target_m;
+    
+    public T_TronWheel_Preset(double target) {
+        tronWheelInst_m = TronWheel.getInstance();
+        target_m = target;
+        addRequirements(tronWheelInst_m);
     }
 
     @Override
@@ -18,7 +19,7 @@ public class T_TronWheel_Preset extends CommandBase {
 
     @Override
     public void execute() {
-        RobotContainer.tronWheelInst_s.setTargetPos(RobotContainer.coneMode_s ? state_m.getConeAng() : state_m.getCubeAng());
+        tronWheelInst_m.setTargetPos(target_m);
     }
 
     @Override
@@ -28,6 +29,6 @@ public class T_TronWheel_Preset extends CommandBase {
 
     @Override
     public void end(boolean interrupted) {
-
+        
     }
 }
