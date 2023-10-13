@@ -22,7 +22,7 @@ public class Intake extends Subsystem610 {
 
     private Intake() {
         super("Intake");
-        intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX, 40);
+        intakeSRX_m = MotorConfig.configIntakeMotor(CAN_INTAKE_SRX);
         kickerSRX_m = MotorConfig.configKickerMotor(CAN_KICKER_SRX);
         singlePoleIIR = LinearFilter.singlePoleIIR(0.5, 0.02);
         intaking_m = false;

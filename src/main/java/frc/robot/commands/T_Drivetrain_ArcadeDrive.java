@@ -36,7 +36,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         slow = RobotContainer.driver_s.leftBumper().getAsBoolean();
         new POVButton(RobotContainer.driver_s.getHID(), 270).getAsBoolean();
         new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean();
-        
+
         y = y * y * y;
         x = x * x * x;
         if(new POVButton(RobotContainer.driver_s.getHID(), 270).getAsBoolean()){

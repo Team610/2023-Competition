@@ -116,7 +116,7 @@ public class MotorConfig {
         return talon;
     }
 
-    public static WPI_TalonSRX configIntakeMotor(int CAN_ID, int desired_Current) {
+    public static WPI_TalonSRX configIntakeMotor(int CAN_ID) {
         WPI_TalonSRX talon = (WPI_TalonSRX)MotorConfig.createDefaultTalon(CAN_ID, false);
         talon.setNeutralMode(NeutralMode.Brake);
         talon.setInverted(true);
@@ -128,7 +128,7 @@ public class MotorConfig {
         talon.configNominalOutputReverse(-0.3);
         talon.configPeakOutputForward(0.8);
         talon.configPeakOutputReverse(-0.8);
-        talon.configPeakCurrentLimit(desired_Current);
+        talon.configPeakCurrentLimit(27);
         talon.configContinuousCurrentLimit(VAL_CONTINUOUS_CURRENT_LIMIT);
         talon.configPeakCurrentDuration(100);
         talon.enableCurrentLimit(true);
