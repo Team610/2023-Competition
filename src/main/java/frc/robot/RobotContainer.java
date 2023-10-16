@@ -160,7 +160,7 @@ public class RobotContainer {
     // ! Operator Controls
     new ComboButton(operator_s.start(), operator_s.back())
         .whenShiftPressed(new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming))
-        .whenPressed( Commands.parallel(new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
+        .whenPressed( Commands.sequence(new T_Cascade_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming),
         new T_TronWheel_Home().withInterruptBehavior(InterruptionBehavior.kCancelIncoming))
         );
 
