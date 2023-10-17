@@ -29,7 +29,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         double x = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftX(), VAL_DEADBAND);
         //left bumper for slow mode when held
         double offset = 0.0;
-        boolean slow = RobotContainer.driver_s.leftBumper().getAsBoolean();
+        boolean slow = RobotContainer.operator_s.leftTrigger().getAsBoolean();
         SmartDashboard.putBoolean("Slow mode", slow);
         new POVButton(RobotContainer.driver_s.getHID(), 270).getAsBoolean();
         new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean();
