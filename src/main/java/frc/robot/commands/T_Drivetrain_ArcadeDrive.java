@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-
 import frc.robot.RobotContainer;
 
 import edu.wpi.first.math.MathUtil;
@@ -42,7 +41,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         } else if(new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean()){
             offset += 0.1;
         } else if(RobotContainer.cascadeInst_s.cascadeTickPercent() >= .45){
-            y *= slow ? (VAL_SLOW_SPEED-(0.3*RobotContainer.cascadeInst_s.cascadeTickPercent())) : (VAL_MAX_SPEED-(0.5*RobotContainer.cascadeInst_s.cascadeTickPercent()));
+            y *= slow ? (VAL_SLOW_SPEED-(0.6*RobotContainer.cascadeInst_s.cascadeTickPercent())) : (VAL_MAX_SPEED-(0.3*RobotContainer.cascadeInst_s.cascadeTickPercent()));
         } else {
             offset = 0;
             y *= slow ? VAL_SLOW_SPEED : VAL_MAX_SPEED;
