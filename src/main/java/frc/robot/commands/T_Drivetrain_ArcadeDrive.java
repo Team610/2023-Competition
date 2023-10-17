@@ -4,7 +4,6 @@ package frc.robot.commands;
 import frc.robot.RobotContainer;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -17,11 +16,8 @@ import static frc.robot.Constants.Drivetrain.*;
 
  
 public class T_Drivetrain_ArcadeDrive extends CommandBase {
-    //test slow mode static var
-    private static boolean slow;
 
     public T_Drivetrain_ArcadeDrive() {
-        SmartDashboard.putBoolean("Slow mode", slow);
         addRequirements(RobotContainer.drivetrainInst_s);
     }
 
@@ -33,7 +29,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         double x = MathUtil.applyDeadband(RobotContainer.driver_s.getLeftX(), VAL_DEADBAND);
         //left bumper for slow mode when held
         double offset = 0.0;
-        slow = RobotContainer.driver_s.leftBumper().getAsBoolean();
+        boolean slow = RobotContainer.driver_s.leftTrigger().getAsBoolean();
         new POVButton(RobotContainer.driver_s.getHID(), 270).getAsBoolean();
         new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean();
 
@@ -44,7 +40,7 @@ public class T_Drivetrain_ArcadeDrive extends CommandBase {
         } else if(new POVButton(RobotContainer.driver_s.getHID(), 90).getAsBoolean()){
             offset += 0.1;
         } else if(RobotContainer.cascadeInst_s.cascadeTickPercent() >= .45){
-            y *= slow ? (VAL_SLOW_SPEED-(0.3*RobotContainer.cascadeInst_s.cascadeTickPercent())) : (VAL_MAX_SPEED-(0.5*RobotContainer.cascadeInst_s.cascadeTickPercent()));
+            y *= slow ? (VAL_SLOW_SPEED-(0.7*RobotContainer.cascadeInst_s.cascadeTickPercent())) : (VAL_MAX_SPEED-(0.3*RobotContainer.cascadeInst_s.cascadeTickPercent()));
         } else {
             offset = 0;
             y *= slow ? VAL_SLOW_SPEED : VAL_MAX_SPEED;
